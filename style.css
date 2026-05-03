@@ -1,0 +1,350 @@
+@import url(css/components/variable.css);
+@import url(css/components/stracture.css);
+@import url(css/components/header.css);
+
+
+
+/* Modern Category Pills (instead of select) */
+.category-filters {
+
+    display: flex;
+    gap: 12px;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.filter-pill {
+    padding: 8px 20px;
+    border-radius: 20px;
+    background: var(--white);
+    color: var(--second-color);
+    text-decoration: none;
+    border: 2px solid var(--second-color);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.filter-pill.active {
+    background: var(--second-color);
+    color: var(--white);
+}
+
+
+
+
+
+main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+}
+
+.hero-section {
+    margin-bottom: 3rem;
+
+}
+
+.hero-section h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    letter-spacing: -1px;
+}
+
+
+
+/* Modern Category Pills (instead of select) */
+.category-filters {
+
+    display: flex;
+    gap: 12px;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.filter-pill {
+    padding: 8px 20px;
+    border-radius: 20px;
+    background: var(--white);
+    color: var(--second-color);
+    text-decoration: none;
+    border: 2px solid var(--second-color);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.filter-pill.active {
+    background: var(--second-color);
+    color: var(--white);
+}
+
+
+
+
+.featured-card {
+
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    margin-bottom: 6rem;
+}
+
+
+.featured-img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    border-radius: 24px;
+}
+
+.tag-news {
+    background-color: var(--second-color);
+    width: fit-content;
+    padding: 0.5rem 30px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--white);
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.featured-title {
+    font-size: 2.2rem;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+}
+
+.featured-desc {
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    font-weight: 700;
+
+}
+
+.btn-read {
+    background: var(--second-color);
+    color: var(--white);
+    padding: 12px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-block;
+}
+
+
+
+/* style article design */
+.article-card {
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+    padding: 0;
+    margin-bottom: 4rem;
+}
+
+/* 2. Individual Card Styling */
+.article {
+    background-color: var(--white);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    height: 400px;
+    width: 100%;
+    padding-bottom: 20px;
+    cursor: pointer;
+    position: relative;
+}
+
+
+
+
+.article img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.article .category {
+    margin-top: 15px;
+    margin-left: 10px;
+    width: fit-content;
+    padding-right: 15px;
+}
+
+.article .category P {
+    background-color: var(--second-color);
+    color: var(--white);
+    padding: 0.3rem 20px;
+    border-radius: 7px;
+}
+
+
+.article .con {
+    margin-top: 10px;
+    padding: 8px;
+    color: var(--second-color);
+    font-weight: 800;
+    margin-left: 10px;
+    font-size: 1.4rem;
+}
+
+
+.pagination {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 50px;
+}
+
+.pagination__btn {
+    width: 40px;
+    height: 40px;
+    background-color: var(--second-color);
+    color: var(--white);
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+
+
+
+/* --- RESPONSIVE DESIGN --- */
+
+/* 1. Large Tablets & Laptops (Max 1200px) */
+@media (max-width: 1200px) {
+    main {
+        max-width: 100%;
+        padding: 2rem 1.5rem;
+    }
+
+    .featured-card {
+        gap: 2rem;
+    }
+
+    .featured-title {
+        font-size: 2rem;
+    }
+}
+
+/* 2. Tablets (Max 992px) */
+@media (max-width: 992px) {
+    .hero-section h1 {
+        font-size: 2.8rem;
+    }
+
+
+    .featured-card {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 4rem;
+    }
+
+    .featured-img {
+        height: 350px;
+    }
+
+    .featured-content {
+        text-align: center;
+        align-items: center;
+    }
+
+    .article-card {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .article {
+        width: 100%;
+        height: auto;
+    }
+}
+
+/* 3. Mobile Phones (Max 768px) */
+@media (max-width: 768px) {
+
+    /* Header & Nav Fix */
+    .head {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .head div {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    nav a {
+        margin-left: 0 !important;
+        font-size: 0.9rem;
+    }
+
+    /* Hero Section */
+    .hero-section h1 {
+        font-size: 2.2rem;
+        text-align: center;
+    }
+
+    .category-filters {
+        justify-content: center;
+    }
+
+    /* Articles Grid ywelli fih 1 f l-ster */
+    .article-card {
+        grid-template-columns: 1fr;
+    }
+
+    .article {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    /* Footer */
+    .footer__cta {
+        padding: 2rem 1rem;
+    }
+
+    .cta__title {
+        font-size: 1.5rem;
+    }
+}
+
+/* 4. Small Mobile (Max 480px) */
+@media (max-width: 480px) {
+    .hero-section h1 {
+        font-size: 1.8rem;
+    }
+
+    .filter-pill {
+        padding: 6px 15px;
+        font-size: 0.8rem;
+    }
+
+    .featured-img {
+        height: 250px;
+    }
+
+    .featured-title {
+        font-size: 1.5rem;
+    }
+}
