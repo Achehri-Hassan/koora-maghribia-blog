@@ -93,68 +93,20 @@ $articles = $article->readAll();
 
       <?php foreach ($articles as $art): ?>
 
-          <div class="article">
-            <img src="assest/<?= htmlspecialchars($art['image']) ?>" alt="">
-            <p class="con">
-              <?= htmlspecialchars(($art['content'])) ?>
-            </p>
+        <div class="article">
+          <img src="assest/<?= htmlspecialchars($art['image']) ?>" alt="">
+
+          <div class="category">
+            <p><?= date("d-m-Y", strtotime($art["created_at"])) ?></p>
           </div>
-  
+          <!-- <p><?= date("d-m-Y", strtotime($art["created_at"])) ?></p> -->
+          <p class="con">
+            <?= htmlspecialchars(($art['title'])) ?>
+          </p>
+        </div>
+
       <?php endforeach; ?>
-      <div class="article">
-        <img src="assest/A3.jpg" alt="مباراة" />
-        <div class="category">
-          <p>15 أبريل 2026</p>
-        </div>
-        <p class="con">
-          مباراة قوية ضمن منافسات البطولة الاحترافية شهدت أداءً رائعاً وفرصاً
-          عديدة للتسجيل.
-        </p>
-      </div>
 
-      <div class="article">
-        <img src="assest/mas.jpg" alt="تحليل" />
-        <div class="category">
-          <p>20 أبريل 2026</p>
-        </div>
-        <p class="con">
-          تحليل تكتيكي لأداء الفرق في الجولة الأخيرة وأهم نقاط القوة والضعف.
-        </p>
-      </div>
-
-      <div class="article">
-        <img src="assest/moro.jpg" alt="انتقالات" />
-        <div class="category">
-          <p>20 أبريل 2026</p>
-        </div>
-        <p class="con">
-          أبرز أخبار سوق الانتقالات والصفقات المنتظرة في البطولة المغربية.
-        </p>
-      </div>
-
-      <div class="article">
-        <img src="assest/mas.jpg" alt="مباراة" />
-        <div class="category">
-          <p>20 أبريل 2026</p>
-        </div>
-        <p class="con">نتائج مباريات الجولة الأخيرة وأهم اللحظات الحاسمة.</p>
-      </div>
-
-      <div class="article">
-        <img src="assest/mas.jpg" alt="مباراة" />
-        <div class="category">
-          <p>20 أبريل 2026</p>
-        </div>
-        <p class="con">نتائج مباريات الجولة الأخيرة وأهم اللحظات الحاسمة.</p>
-      </div>
-
-      <div class="article">
-        <img src="assest/mas.jpg" alt="مباراة" />
-        <div class="category">
-          <p>20 أبريل 2026</p>
-        </div>
-        <p class="con">نتائج مباريات الجولة الأخيرة وأهم اللحظات الحاسمة.</p>
-      </div>
     </section>
 
     <!-- PAGINATION -->
@@ -166,6 +118,7 @@ $articles = $article->readAll();
         <a href="#" class="pagination__btn">التالي</a>
       </div>
     </section>
+
   </main>
 
   <!-- FOOTER -->

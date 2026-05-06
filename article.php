@@ -45,7 +45,7 @@ class Article
 
     public function Update($id, $title, $content, $image, $author ,$category)
     {
-        $sql = "UPDATE articles set title=:title , content=:content , category:category , image=:image Where id=:id";
+        $sql = "UPDATE articles set title=:title , content=:content , category=:category , image=:image Where id=:id";
 
         $stmt = $this->conn->prepare($sql);
 
