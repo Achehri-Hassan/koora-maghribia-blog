@@ -26,11 +26,11 @@ class Article
     }
 
 
-    public function createArticle($title, $content, $image, $author)
+    public function createArticle($title , $content, $image, $author ,$category)
     {
 
 
-        $sql = "INSERT into articles (title , content , image  , author) VALUES (:title , :content , :image , :author)";
+        $sql = "INSERT into articles (title , content , image  , author , category) VALUES (:title , :content , :image , :author  , :category)";
         $stmt = $this->conn->prepare($sql);
 
         $stmt->execute([
@@ -38,13 +38,14 @@ class Article
             "title" => $title,
             "content" => $content,
             "image" => $image,
-            "author" => $author
+            "author" => $author,
+            "category" => $category
         ]);
     }
 
-    public function Update($id, $title, $content, $created_at, $image)
+    public function Update($id, $title, $content, $image, $author ,$category)
     {
-        $sql = "UPDATE articles set title=:title , content=:content , created_at=:created_at , image=:image Where id=:id";
+        $sql = "UPDATE articles set title=:title , content=:content , category:category , image=:image Where id=:id";
 
         $stmt = $this->conn->prepare($sql);
 
@@ -53,8 +54,9 @@ class Article
             "id" => $id,
             "title" => $title,
             "content" => $content,
-            "created_at" => $created_at,
-            "image" => $image
+            "category" => $category,
+            "image" => $image,
+            "author" => $author
 
         ]);
     }
