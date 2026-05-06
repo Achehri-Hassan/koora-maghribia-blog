@@ -26,7 +26,7 @@ class Article
     }
 
 
-    public function createArticle($title , $content, $image, $author ,$category)
+    public function createArticle($title, $content, $image, $author, $category)
     {
 
 
@@ -43,7 +43,7 @@ class Article
         ]);
     }
 
-    public function Update($id, $title, $content, $image, $author ,$category)
+    public function Update($id, $title, $content, $image, $author, $category)
     {
         $sql = "UPDATE articles set title=:title , content=:content , category=:category , image=:image Where id=:id";
 
@@ -81,6 +81,15 @@ class Article
         $stmt->execute(["id" => $id]);
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+
+    public function getRelated($currentId)
+    {
+        $sql = "SELECT * FROM articles WHERE id != :id ORDER BY id DESC LIMIT 3";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(["id" => $currentId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 

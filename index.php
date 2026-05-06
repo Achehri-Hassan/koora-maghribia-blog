@@ -43,14 +43,14 @@ $articles = $article->readAll();
   <!-- HEADER -->
   <header>
     <div class="head">
-      <button class="btn-login">تسجيل الخروج</button>
+    <a href="logout.php"><button class="btn-login">تسجيل الخروج</button></a>
 
       <div>
         <a href="#" class="logo">
           <i class="fa-brands fa-readme"></i>
         </a>
         <nav>
-          <a href="#">الرئيسية</a>
+          <a href="index.php">الرئيسية</a>
           <a href="#">من نحن</a>
           <a href="#">اتصل بنا</a>
         </nav>
@@ -92,7 +92,8 @@ $articles = $article->readAll();
     <section class="article-card">
 
       <?php foreach ($articles as $art): ?>
-
+        
+        <a href="adetails.php?id=<?= $art['id']?>">
         <div class="article">
           <img src="assest/<?= htmlspecialchars($art['image']) ?>" alt="">
 
@@ -104,6 +105,7 @@ $articles = $article->readAll();
             <?= htmlspecialchars(($art['title'])) ?>
           </p>
         </div>
+        </a>
 
       <?php endforeach; ?>
 
