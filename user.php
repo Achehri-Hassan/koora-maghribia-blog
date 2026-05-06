@@ -13,19 +13,20 @@ class User
     }
 
     // Register new user
-    public function create($name, $email, $password)
+    public function create($name, $email, $password ,$role)
     {
         $sql = "INSERT INTO users
-                (username, email, password) 
+                (username, email, password , role) 
                 VALUES 
-                (:username, :email, :password)";
+                (:username, :email, :password , :role)";
 
         $stmt = $this->conn->prepare($sql);
 
         return $stmt->execute([
             "username" => $name,
             "email" => $email,
-            "password" => password_hash($password, PASSWORD_DEFAULT)
+            "password" => password_hash($password, PASSWORD_DEFAULT),
+            "role" => $role
         ]);
     }
 

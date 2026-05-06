@@ -2,10 +2,12 @@
 
 session_start();
 require_once "user.php";
-$error = null;
+
 $userModel = new User();
+$error = null;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
   $username = trim($_POST['username'] ?? '');
   $email    = trim($_POST['email'] ?? '');
   $password = $_POST['password'] ?? '';
@@ -18,19 +20,46 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   } else {
 
 
-    $result = $userModel->create($username, $email, $password);
+    $role = "user";
 
-    if ($result) {
-      $_SESSION["username"] = $username;
-      $_SESSION["email"] = $email;
-      header("Location: index.php");
-      exit();
-    } else {
-      $error = "هاد البريد الإلكتروني مستعمل ديجا";
+    try {
+
+      $result = $userModel->create($username, $email, $password, $role);
+
+      if ($result) {
+
+        loginUser($username, $email, $role);
+      }
+      
+    } catch (PDOException $e) {
+
+      if ($e->getCode() == 23000) {
+        $error = "هاد الإيميل مستعمل ديجا";
+      } else {
+        $error = "وقع خطأ، حاول مرة أخرى";
+      }
     }
   }
 }
+
+function loginUser($username, $email, $role)
+{
+  $_SESSION["username"] = $username;
+  $_SESSION["email"] = $email;
+  $_SESSION["role"] = $role;
+
+  session_regenerate_id(true);
+
+  header("Location: index.php");
+  exit();
+}
 ?>
+
+?>
+
+
+
+
 
 
 
