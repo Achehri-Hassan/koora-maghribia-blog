@@ -43,8 +43,11 @@
             min-height: 400px;
             font-size: 17px;
             line-height: 1.8;
-            border-bottom-left-radius: 8px !important;
-            border-bottom-right-radius: 8px !important;
+        }
+
+        /* هاد الكود هو اللي كيحيد Powered by CKEditor */
+        .ck-powered-by {
+            display: none !important;
         }
 
         .actions {
@@ -115,14 +118,9 @@
         });
 
     function copyPlainText() {
-        // هادي هي الخدمة: كنجيبو الداتا
         const htmlData = editorInstance.getData();
-        
-        // كنحولها لـ Text صافي باستعمال Temporary Div
         const tempDiv = document.createElement("div");
         tempDiv.innerHTML = htmlData;
-        
-        // .innerText كتحيد كاع الـ Tags وكتخلي غير النص
         const plainText = tempDiv.innerText || tempDiv.textContent || "";
 
         if (!plainText.trim()) {
@@ -142,8 +140,6 @@
     }
 </script>
 
-
-
-
 </body>
 </html>
+

@@ -130,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
           <div class="divider">أو</div>
 
-          <a href="#" class="btn-back">لوحة التحكم</a>
+          <a href="dashboard.php" class="btn-back">لوحة التحكم</a>
         </form>
       </div>
 
