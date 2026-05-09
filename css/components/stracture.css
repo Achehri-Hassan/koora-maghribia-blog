@@ -15,3 +15,7 @@ body {
     font-family: 'Cairo', sans-serif;
 
 }
+
+a{
+    text-decoration: none;
+}

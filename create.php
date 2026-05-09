@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   if (isset($_POST['add_article'])) {
 
 
-    $title =  trim($_POST['title']) ;
+    $title =  trim($_POST['title']);
     $content = trim($_POST['content']);
     $author = trim($_POST["author"]);
     $category = $_POST["select"];
@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $imageName = $_FILES['image']['name'];
     $tmpName = $_FILES['image']['tmp_name'];
 
-     if (
+    if (
       empty($title) ||
       empty($content) ||
       empty($author) ||
@@ -103,6 +103,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                   <option value="" disabled selected>اختر النوع</option>
                   <option value="news">أخبار</option>
                   <option value="matches">مباريات</option>
+                  <option value="matches">تحليل</option>
+                  <option value="matches">انتقالات</option>
                 </select>
                 <i class="fa-solid fa-tag"></i>
               </div>
@@ -117,12 +119,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
           </div>
 
-          <div class="input-group">
+          <!-- <div class="input-group">
             <label>المحتوى</label>
             <div class="input-box">
               <textarea
                 rows="4"
                 placeholder="اكتب محتوى المقال..." name="content"></textarea>
+            </div>
+          </div> -->
+
+          <div class="input-group">
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+              <label style="margin: 0;">المحتوى</label>
+              <a href="editor.html" target="_blank" style="font-size: 13px; color: #007bff; text-decoration: none; font-weight: bold;">
+                <i class="fa-solid fa-up-right-from-square"></i> فتح محرر الكتابة (Copy/Paste)
+              </a>
+            </div>
+            <div class="input-box">
+              <textarea rows="8" name="content" id="mainContent" placeholder="الصق المحتوى هنا بعد نسخه من المحرر..." id="mainContent"><?= $art['content'] ?? ''  ?></textarea>
             </div>
           </div>
 

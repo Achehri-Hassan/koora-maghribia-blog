@@ -45,7 +45,7 @@ header {
     padding: 0.6rem 40px;
     border-radius: 10px;
     color: var(--second-color);
-    font-weight: 600;
+    /* font-weight: 600; */
     font-size: 14px;
     cursor: pointer;
     background-color: var(--white);

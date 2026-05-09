@@ -6,15 +6,15 @@
 
 
 /* Modern Category Pills (instead of select) */
-.category-filters {
+/* .category-filters {
 
     display: flex;
     gap: 12px;
     margin-bottom: 3rem;
     flex-wrap: wrap;
-}
+} */
 
-.filter-pill {
+/* .filter-pill {
     padding: 8px 20px;
     border-radius: 20px;
     background: var(--white);
@@ -24,21 +24,20 @@
     font-size: 0.9rem;
     font-weight: 500;
     transition: 0.3s;
-}
+    
+} */
 
-.filter-pill.active {
+/* .filter-pill.active {
     background: var(--second-color);
     color: var(--white);
-}
-
-
-
+} */
 
 
 main {
     max-width: 1400px;
     margin: 0 auto;
     padding: 4rem 2rem;
+    
 }
 
 .hero-section {
@@ -65,8 +64,8 @@ main {
 }
 
 .filter-pill {
-    padding: 8px 20px;
-    border-radius: 20px;
+    padding: 8px 40px;
+    border-radius: 10px;
     background: var(--white);
     color: var(--second-color);
     text-decoration: none;

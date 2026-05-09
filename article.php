@@ -91,7 +91,20 @@ class Article
         $stmt->execute(["id" => $currentId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
+    // F-west l-Class Article
+    public function readByCategory($category)
+    {
+        $sql = "SELECT * FROM articles WHERE category = :category ORDER BY id DESC";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['category' => $category]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
+
+
+
 
 
 ?>

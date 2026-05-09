@@ -5,8 +5,14 @@
 require "article.php";
 
 $article = new Article();
-$articles = $article->readAll();
 
+
+if (isset($_GET['cat']) && !empty($_GET['cat'])) {
+  $category = $_GET['cat'];
+  $articles = $article->readByCategory($category);
+} else {
+  $articles = $article->readAll();
+}
 
 
 
@@ -43,7 +49,7 @@ $articles = $article->readAll();
   <!-- HEADER -->
   <header>
     <div class="head">
-    <a href="logout.php"><button class="btn-login">تسجيل الخروج</button></a>
+      <a href="logout.php"><button class="btn-login">تسجيل الخروج</button></a>
 
       <div>
         <a href="#" class="logo">
@@ -64,12 +70,24 @@ $articles = $article->readAll();
     <section class="hero-section">
       <h1>آخر أخبار البطولة الاحترافية المغربية</h1>
 
-      <div class="category-filters">
+      <!-- <div class="category-filters">
         <a href="#" class="filter-pill active">All</a>
         <a href="#" class="filter-pill">أخبار</a>
         <a href="#" class="filter-pill">مباريات</a>
         <a href="#" class="filter-pill">تحليل</a>
         <a href="#" class="filter-pill">انتقالات</a>
+      </div> -->
+
+      <div class="category-filters">
+        <!-- "All" kadi l-index.php bla hta paramètre -->
+        <a href="index.php" class="filter-pill <?= !isset($_GET['cat']) ? 'active' : '' ?>">All</a>
+
+        <!-- L-khrin katsift cat=smia_d-l-category -->
+        <a href="index.php?cat=news" class="filter-pill <?= (isset($_GET['cat']) && $_GET['cat'] == 'news') ? 'active' : '' ?>">أخبار</a>
+
+        <a href="index.php?cat=matches" class="filter-pill <?= (isset($_GET['cat']) && $_GET['cat'] == 'matches') ? 'active' : '' ?>">مباريات</a>
+
+        
       </div>
     </section>
 
@@ -92,19 +110,19 @@ $articles = $article->readAll();
     <section class="article-card">
 
       <?php foreach ($articles as $art): ?>
-        
-        <a href="adetails.php?id=<?= $art['id']?>">
-        <div class="article">
-          <img src="assest/<?= htmlspecialchars($art['image']) ?>" alt="">
 
-          <div class="category">
-            <p><?= date("d-m-Y", strtotime($art["created_at"])) ?></p>
+        <a href="adetails.php?id=<?= $art['id'] ?>">
+          <div class="article">
+            <img src="assest/<?= htmlspecialchars($art['image']) ?>" alt="">
+
+            <div class="category">
+              <p><?= date("d-m-Y", strtotime($art["created_at"])) ?></p>
+            </div>
+            <!-- <p><?= date("d-m-Y", strtotime($art["created_at"])) ?></p> -->
+            <p class="con">
+              <?= htmlspecialchars(($art['title'])) ?>
+            </p>
           </div>
-          <!-- <p><?= date("d-m-Y", strtotime($art["created_at"])) ?></p> -->
-          <p class="con">
-            <?= htmlspecialchars(($art['title'])) ?>
-          </p>
-        </div>
         </a>
 
       <?php endforeach; ?>

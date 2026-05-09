@@ -1,145 +1,89 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>محرر النص الصافي - البطولة</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
     <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
-    
-    <style>
-        body {
-            font-family: 'Cairo', sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
 
-        .editor-container {
-            width: 95%;
-            max-width: 850px;
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-        }
+    <link rel="stylesheet" href="css/editor.css" />
+  </head>
+  <body>
+    <div class="editor">
+      <div class="editor-container">
+        <div class="header">
+          <h2><i class="fa-solid fa-file-lines"></i> اكتب مقالك هنا</h2>
+          <span id="copyStatus"
+            ><i class="fa-solid fa-check"></i> تم نسخ النص </span
+          >
+        </div>
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #f1f1f1;
-            padding-bottom: 10px;
-        }
+        <div id="editor"></div>
 
-        .header h2 { margin: 0; color: #333; font-size: 20px; }
-
-        .ck-editor__editable {
-            min-height: 400px;
-            font-size: 17px;
-            line-height: 1.8;
-        }
-
-        /* هاد الكود هو اللي كيحيد Powered by CKEditor */
-        .ck-powered-by {
-            display: none !important;
-        }
-
-        .actions {
-            margin-top: 20px;
-            display: flex;
-            gap: 12px;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-family: 'Cairo';
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.2s;
-        }
-
-        .btn-copy { background-color: #007bff; color: white; }
-        .btn-copy:hover { background-color: #0056b3; }
-
-        .btn-clear { background-color: #dc3545; color: white; }
-        .btn-clear:hover { background-color: #a71d2a; }
-
-        #copyStatus {
-            color: #28a745;
-            font-size: 14px;
-            display: none;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-
-<div class="editor-container">
-    <div class="header">
-        <h2><i class="fa-solid fa-file-lines"></i> اكتب مقالك هنا</h2>
-        <span id="copyStatus"><i class="fa-solid fa-check"></i> تم نسخ النص الصافي!</span>
-    </div>
-
-    <div id="editor"></div>
-
-    <div class="actions">
-        <button class="btn btn-copy" onclick="copyPlainText()">
+        <div class="actions">
+          <button class="btn btn-copy" onclick="copyPlainText()">
             <i class="fa-regular fa-copy"></i>
-            نسخ النص فقط (بدون HTML)
-        </button>
-        <button class="btn btn-clear" onclick="clearAll()">
+            نسخ النص
+          </button>
+          <button class="btn btn-clear" onclick="clearAll()">
             <i class="fa-solid fa-eraser"></i>
             مسح
-        </button>
+          </button>
+            
+        </div>
+      </div>
     </div>
-</div>
 
-<script>
-    let editorInstance;
+    <script>
+      let editorInstance;
 
-    ClassicEditor.create(document.querySelector('#editor'), {
-            language: 'ar',
-            placeholder: 'اكتب المحتوى هنا...',
-            toolbar: ['bold', 'italic', 'bulletedList', 'numberedList', 'undo', 'redo']
-        })
-        .then(editor => {
-            editorInstance = editor;
-        });
+      ClassicEditor.create(document.querySelector("#editor"), {
+        language: "ar",
+        placeholder: "اكتب المحتوى هنا...",
+        toolbar: [
+          "bold",
+          "italic",
+          "bulletedList",
+          "numberedList",
+          "undo",
+          "redo",
+        ],
+      }).then((editor) => {
+        editorInstance = editor;
+      });
 
-    function copyPlainText() {
+      function copyPlainText() {
         const htmlData = editorInstance.getData();
         const tempDiv = document.createElement("div");
         tempDiv.innerHTML = htmlData;
         const plainText = tempDiv.innerText || tempDiv.textContent || "";
 
         if (!plainText.trim()) {
-            alert("المحرر فارغ!");
-            return;
+          alert("المحرر فارغ!");
+          return;
         }
 
         navigator.clipboard.writeText(plainText).then(() => {
-            const status = document.getElementById('copyStatus');
-            status.style.display = 'inline';
-            setTimeout(() => { status.style.display = 'none'; }, 2000);
+          const status = document.getElementById("copyStatus");
+          status.style.display = "inline";
+          setTimeout(() => {
+            status.style.display = "none";
+          }, 2000);
         });
-    }
+      }
 
-    function clearAll() {
-        if(confirm("تمسح كلشي؟")) editorInstance.setData('');
-    }
-</script>
-
-</body>
+      function clearAll() {
+        if (confirm("امسح كل شيء")) editorInstance.setData("");
+      }
+    </script>
+  </body>
 </html>
-
