@@ -2,11 +2,15 @@
 session_start();
 require_once "article.php";
 
-// I'tibarât dyal l-himaya (Security)
-// if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
-//     header("Location: index.php");
-//     exit();
-// }
+
+
+
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    header("Location: index.php");
+    exit();
+}
+
+
 
 $article = new Article();
 $articles = $article->readAll();
@@ -23,10 +27,10 @@ $articles = $article->readAll();
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-     
+
     <!-- link css design  -->
-     <link rel="stylesheet" href="css/dashboard.css">
-      
+    <link rel="stylesheet" href="css/dashboard.css">
+
 </head>
 
 <body>

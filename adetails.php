@@ -54,8 +54,6 @@ $relatedArticles = $article->getRelated($id);
           <a href="#">من نحن</a>
           <a href="#">اتصل بنا</a>
         </nav>
-
-
       </div>
 
     </div>
@@ -67,7 +65,6 @@ $relatedArticles = $article->getRelated($id);
     <section class="article-main">
 
       <div class="author-meta">
-        <img src="https://i.pravatar.cc/100" alt="Author" />
         <span> <?= htmlspecialchars($art['author'])  ?> <?= date("d-m-Y", strtotime($art["created_at"])) ?> </span>
       </div>
       <h1><?= htmlspecialchars($art['title']) ?></h1>
@@ -114,7 +111,7 @@ $relatedArticles = $article->getRelated($id);
         </div>
       </div>
 
-      
+
       <!-- related -->
       <div class="sidebar-section">
         <span class="sidebar-title">مقالات مشابهة</span>
@@ -122,7 +119,7 @@ $relatedArticles = $article->getRelated($id);
         <div class="related-list">
           <?php foreach ($relatedArticles as $related): ?>
             <a href="adetails.php?id=<?= $related['id'] ?>" class="related-item">
-        
+
               <img src="assest/<?= htmlspecialchars($related['image']) ?>" alt="<?= htmlspecialchars($related['title']) ?>" />
               <div>
                 <h4><?= htmlspecialchars($related['title']) ?></h4>

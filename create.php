@@ -114,26 +114,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           <div class="input-group">
             <label>صورة الغلاف</label>
             <div class="input-box">
-              <input type="file" name="image" />
+              <input type="file" name="image"  required/>
               <i class="fa-solid fa-image"></i>
             </div>
           </div>
-
-          <!-- <div class="input-group">
-            <label>المحتوى</label>
-            <div class="input-box">
-              <textarea
-                rows="4"
-                placeholder="اكتب محتوى المقال..." name="content"></textarea>
-            </div>
-          </div> -->
+   
 
           <div class="input-group">
             
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
               <label style="margin: 0;">المحتوى</label>
               <a href="editor.html" target="_blank" style="font-size: 13px; color: #007bff; text-decoration: none; font-weight: bold;">
-                <i class="fa-solid fa-up-right-from-square"></i> فتح محرر الكتابة (Copy/Paste)
+                <i class="fa-solid fa-up-right-from-square"></i> فتح محرر الكتابة
               </a>
             </div>
             <div class="input-box">

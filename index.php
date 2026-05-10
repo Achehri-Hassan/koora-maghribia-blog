@@ -1,11 +1,13 @@
 <?php
 
 
+session_start();
 
 require "article.php";
 
 $article = new Article();
 
+$isAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
 
 if (isset($_GET['cat']) && !empty($_GET['cat'])) {
   $category = $_GET['cat'];
@@ -52,6 +54,10 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
           <i class="fa-brands fa-readme"></i>
         </a>
         <nav>
+           <?php if ($isAdmin): ?>
+            
+            <a href="dashboard.php">لوحة التحكم</a>
+          <?php endif; ?>
           <a href="index.php">الرئيسية</a>
           <a href="#">من نحن</a>
           <a href="#">اتصل بنا</a>
@@ -68,7 +74,7 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
       <h1>آخر أخبار البطولة الاحترافية المغربية</h1>
 
       <div class="category-filters">
-      
+
         <a href="index.php" class="filter-pill <?= !isset($_GET['cat']) ? 'active' : '' ?>">All</a>
 
         <a href="index.php?cat=news" class="filter-pill <?= (isset($_GET['cat']) && $_GET['cat'] == 'news') ? 'active' : '' ?>">أخبار</a>
@@ -97,52 +103,35 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
       </div>
     </section>
 
-    <!-- ARTICLES -->
-    <!-- <section class="article-card">
+
+    <section class="modern-grid">
 
       <?php foreach ($articles as $art): ?>
 
-        <a href="adetails.php?id=<?= $art['id'] ?>">
-          <div class="article">
-            <img src="assest/<?= htmlspecialchars($art['image']) ?>" alt="">
-
-            <div class="category">
-              <p><?= date("d-m-Y", strtotime($art["created_at"])) ?></p>
+        <a href="adetails.php?id=<?= $art['id'] ?>" class="card-link">
+          <article class="modern-card">
+            <div class="card-image-wrapper">
+              <img src="assest/<?= htmlspecialchars($art['image']) ?>" alt="<?= htmlspecialchars($art['title']) ?>">
+              <div class="card-date-badge">
+                <?= date("d M", strtotime($art["created_at"])) ?>
+              </div>
             </div>
-            <p><?= date("d-m-Y", strtotime($art["created_at"])) ?></p>>
-            <p class="con">
-              <?= htmlspecialchars(($art['title'])) ?>
-            </p>
-          </div>
+
+            <div class="card-content">
+              <span class="card-tag">Article</span>
+              <h3 class="card-title"><?= htmlspecialchars($art['title']) ?></h3>
+              <div class="card-footer">
+                <span>Read More</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </div>
+            </div>
+          </article>
         </a>
-
       <?php endforeach; ?>
-
-    </section> -->
-
-    <section class="modern-grid">
-  <?php foreach ($articles as $art): ?>
-    <a href="adetails.php?id=<?= $art['id'] ?>" class="card-link">
-      <article class="modern-card">
-        <div class="card-image-wrapper">
-          <img src="assest/<?= htmlspecialchars($art['image']) ?>" alt="<?= htmlspecialchars($art['title']) ?>">
-          <div class="card-date-badge">
-             <?= date("d M", strtotime($art["created_at"])) ?>
-          </div>
-        </div>
-        
-        <div class="card-content">
-          <span class="card-tag">Article</span>
-          <h3 class="card-title"><?= htmlspecialchars($art['title']) ?></h3>
-          <div class="card-footer">
-            <span>Read More</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-          </div>
-        </div>
-      </article>
-    </a>
-  <?php endforeach; ?>
-</section>
+    </section>
 
     <!-- PAGINATION -->
     <section>

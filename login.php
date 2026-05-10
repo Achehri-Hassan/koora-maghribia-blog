@@ -9,8 +9,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["login"])) {
 
   $email = $_POST['email'];
   $pass  = $_POST['password'];
-
-
+   
+ 
   if (!empty($email) && !empty($pass)) {
     $userModel = new User();
     $user = $userModel->login($email);
