@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["login"])) {
       $_SESSION['user_id'] = $user['id'];
       $_SESSION['role']    = $user['role'];
 
- 
+
       header("Location: " . ($user['role'] === 'admin' ? "dashboard.php" : "index.php"));
       exit();
     } else {

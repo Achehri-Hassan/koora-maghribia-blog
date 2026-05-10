@@ -88,7 +88,12 @@ class Article
     {
         $sql = "SELECT * FROM articles WHERE id != :id ORDER BY id DESC LIMIT 3";
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute(["id" => $currentId]);
+        $stmt->execute(
+
+            [
+                "id" => $currentId
+            ]
+        );
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 

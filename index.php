@@ -15,11 +15,7 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
 }
 
 
-
 ?>
-
-
-
 
 
 <!doctype html>
@@ -64,36 +60,31 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
     </div>
   </header>
 
+
   <!-- MAIN -->
   <main>
     <!-- HERO -->
     <section class="hero-section">
       <h1>آخر أخبار البطولة الاحترافية المغربية</h1>
 
-      <!-- <div class="category-filters">
-        <a href="#" class="filter-pill active">All</a>
-        <a href="#" class="filter-pill">أخبار</a>
-        <a href="#" class="filter-pill">مباريات</a>
-        <a href="#" class="filter-pill">تحليل</a>
-        <a href="#" class="filter-pill">انتقالات</a>
-      </div> -->
-
       <div class="category-filters">
-        <!-- "All" kadi l-index.php bla hta paramètre -->
+      
         <a href="index.php" class="filter-pill <?= !isset($_GET['cat']) ? 'active' : '' ?>">All</a>
 
-        <!-- L-khrin katsift cat=smia_d-l-category -->
         <a href="index.php?cat=news" class="filter-pill <?= (isset($_GET['cat']) && $_GET['cat'] == 'news') ? 'active' : '' ?>">أخبار</a>
 
         <a href="index.php?cat=matches" class="filter-pill <?= (isset($_GET['cat']) && $_GET['cat'] == 'matches') ? 'active' : '' ?>">مباريات</a>
 
-        
+        <a href="index.php?cat=Analysis" class="filter-pill <?= (isset($_GET['cat']) && $_GET['cat'] == 'Analysis') ? 'active' : '' ?>">تحليل</a>
+
+        <a href="index.php?cat=Transfers" class="filter-pill <?= (isset($_GET['cat']) && $_GET['cat'] == 'Transfers') ? 'active' : '' ?>"> نتقالات</a>
+
       </div>
     </section>
 
     <!-- FEATURED -->
     <section class="featured-card">
-      <img src="assest/rajaM.jpg" alt="كرة القدم" class="featured-img" />
+      <img src="assest/inwi.jpg" alt="كرة القدم" class="featured-img" />
       <div class="featured-content">
         <span class="tag-news">أخبار</span>
         <h2 class="featured-title">
@@ -107,7 +98,7 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
     </section>
 
     <!-- ARTICLES -->
-    <section class="article-card">
+    <!-- <section class="article-card">
 
       <?php foreach ($articles as $art): ?>
 
@@ -118,7 +109,7 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
             <div class="category">
               <p><?= date("d-m-Y", strtotime($art["created_at"])) ?></p>
             </div>
-            <!-- <p><?= date("d-m-Y", strtotime($art["created_at"])) ?></p> -->
+            <p><?= date("d-m-Y", strtotime($art["created_at"])) ?></p>>
             <p class="con">
               <?= htmlspecialchars(($art['title'])) ?>
             </p>
@@ -127,7 +118,31 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
 
       <?php endforeach; ?>
 
-    </section>
+    </section> -->
+
+    <section class="modern-grid">
+  <?php foreach ($articles as $art): ?>
+    <a href="adetails.php?id=<?= $art['id'] ?>" class="card-link">
+      <article class="modern-card">
+        <div class="card-image-wrapper">
+          <img src="assest/<?= htmlspecialchars($art['image']) ?>" alt="<?= htmlspecialchars($art['title']) ?>">
+          <div class="card-date-badge">
+             <?= date("d M", strtotime($art["created_at"])) ?>
+          </div>
+        </div>
+        
+        <div class="card-content">
+          <span class="card-tag">Article</span>
+          <h3 class="card-title"><?= htmlspecialchars($art['title']) ?></h3>
+          <div class="card-footer">
+            <span>Read More</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </div>
+        </div>
+      </article>
+    </a>
+  <?php endforeach; ?>
+</section>
 
     <!-- PAGINATION -->
     <section>

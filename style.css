@@ -5,39 +5,12 @@
 
 
 
-/* Modern Category Pills (instead of select) */
-/* .category-filters {
-
-    display: flex;
-    gap: 12px;
-    margin-bottom: 3rem;
-    flex-wrap: wrap;
-} */
-
-/* .filter-pill {
-    padding: 8px 20px;
-    border-radius: 20px;
-    background: var(--white);
-    color: var(--second-color);
-    text-decoration: none;
-    border: 2px solid var(--second-color);
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: 0.3s;
-    
-} */
-
-/* .filter-pill.active {
-    background: var(--second-color);
-    color: var(--white);
-} */
-
 
 main {
     max-width: 1400px;
     margin: 0 auto;
     padding: 4rem 2rem;
-    
+
 }
 
 .hero-section {
@@ -139,60 +112,108 @@ main {
 
 
 
-/* style article design */
-.article-card {
-    margin-top: 4rem;
+.modern-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 30px;
-    padding: 0;
-    margin-bottom: 4rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 40px;
+    padding: 2rem;
+    margin-top: 2rem;
 }
 
-/* 2. Individual Card Styling */
-.article {
-    background-color: var(--white);
-    border-radius: 15px;
+.card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.modern-card {
+    background: var(--white);
+    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    height: 400px;
-    width: 100%;
-    padding-bottom: 20px;
-    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(0,0,0,0.05);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Hover Effect: Card jumps up and shadow expands */
+
+.card-image-wrapper {
     position: relative;
+    height: 220px;
+    overflow: hidden;
 }
 
-
-
-
-.article img {
+.card-image-wrapper img {
     width: 100%;
-    height: 200px;
+    height: 100%;
     object-fit: cover;
+    transition: transform 0.6s ease;
 }
 
-.article .category {
-    margin-top: 15px;
-    margin-left: 10px;
-    width: fit-content;
-    padding-right: 15px;
+.modern-card:hover .card-image-wrapper img {
+    transform: scale(1.1);
 }
 
-.article .category P {
-    background-color: var(--second-color);
-    color: var(--white);
-    padding: 0.3rem 20px;
-    border-radius: 7px;
-}
-
-
-.article .con {
-    margin-top: 10px;
-    padding: 8px;
+/* Floating Date Badge */
+.card-date-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background:var(--white);
+    backdrop-filter: blur(5px);
+    padding: 8px 15px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
     color: var(--second-color);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.card-content {
+    padding: 25px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-tag {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--second-color);
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.card-title {
+    font-size: 1.25rem;
     font-weight: 800;
-    margin-left: 10px;
-    font-size: 1.4rem;
+    line-height: 1.4;
+    color: var(--second-color);
+    margin-bottom: 20px;
+
+}
+
+.card-footer {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--second-color);
+    transition: color 0.3s ease;
+   
+}
+
+
+.card-footer svg {
+    transition: transform 0.3s ease;
+}
+
+.modern-card:hover .card-footer svg {
+    transform: translateX(5px);
 }
 
 

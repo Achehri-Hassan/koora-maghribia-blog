@@ -74,10 +74,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_article'])) {
                         </div>
                         <div class="input-group">
                             <label>التصنيف</label>
+
                             <div class="input-box">
                                 <select name="select" required>
                                     <option value="news" <?= ($art['category'] ?? '') == 'news' ? 'selected' : '' ?>>أخبار</option>
                                     <option value="matches" <?= ($art['category'] ?? '') == 'matches' ? 'selected' : '' ?>>مباريات</option>
+
+
+                                    <option value="Analysis" <?= ($art['category'] ?? '') == 'Analysis' ? 'selected' : '' ?>>تحليل</option>
+
+
+                                    <option value="Transfers" <?= ($art['category'] ?? '') == 'Transfers' ? 'selected' : '' ?>>نتقالات</option>
                                 </select>
                                 <i class="fa-solid fa-tag"></i>
                             </div>

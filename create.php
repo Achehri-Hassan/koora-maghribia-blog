@@ -103,8 +103,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                   <option value="" disabled selected>اختر النوع</option>
                   <option value="news">أخبار</option>
                   <option value="matches">مباريات</option>
-                  <option value="matches">تحليل</option>
-                  <option value="matches">انتقالات</option>
+                  <option value="Analysis">تحليل</option>
+                  <option value="Transfers">انتقالات</option>
                 </select>
                 <i class="fa-solid fa-tag"></i>
               </div>
