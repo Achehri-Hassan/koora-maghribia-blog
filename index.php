@@ -54,8 +54,8 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
           <i class="fa-brands fa-readme"></i>
         </a>
         <nav>
-           <?php if ($isAdmin): ?>
-            
+          <?php if ($isAdmin): ?>
+
             <a href="dashboard.php">لوحة التحكم</a>
           <?php endif; ?>
           <a href="index.php">الرئيسية</a>
@@ -65,7 +65,7 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
       </div>
     </div>
   </header>
-
+  <!-- End design -->
 
   <!-- MAIN -->
   <main>

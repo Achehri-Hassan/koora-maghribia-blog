@@ -2,16 +2,37 @@
 
 require_once "article.php";
 
-if (!isset($_GET["id"])) {
-  echo "Article Not found";
-  exit();
+// if (!isset($_GET["id"])) {
+//   echo "Article Not found";
+//   exit();
+// }
+
+// $id = $_GET['id'];
+
+// $article = new Article();
+// $art = $article->getById($id);
+
+// $relatedArticles = $article->getRelated($id);
+
+// ... الكود القديم ديالك ...
+$id = $_GET['id'];
+$article = new Article();
+
+// يلا صيفط المستخدم تعليق
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_comment'])) {
+  $username = htmlspecialchars($_POST['username']);
+  $comment_text = htmlspecialchars($_POST['comment']);
+
+  if (!empty($username) && !empty($comment_text)) {
+    $article->addComment($id, $username, $comment_text);
+    // إعادة تحميل الصفحة باش يبان التعليق
+    header("Location: adetails.php?id=" . $id);
+    exit();
+  }
 }
 
-$id = $_GET['id'];
-
-$article = new Article();
 $art = $article->getById($id);
-
+$comments = $article->getCommentsByArticle($id); // جلب التعليقات
 $relatedArticles = $article->getRelated($id);
 
 ?>
@@ -32,7 +53,7 @@ $relatedArticles = $article->getRelated($id);
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
 
   <!-- css -->
-  <link rel="stylesheet" href="details.css">
+  <link rel="stylesheet" href="css/details.css">
   <!-- font -->
   <link
     href="https://fonts.googleapis.com/css2?family=Cairo&display=swap"
@@ -50,7 +71,7 @@ $relatedArticles = $article->getRelated($id);
           <i class="fa-brands fa-readme"></i>
         </a>
         <nav>
-          <a href="#">الرئيسية</a>
+          <a href="index.php">الرئيسية</a>
           <a href="#">من نحن</a>
           <a href="#">اتصل بنا</a>
         </nav>
@@ -88,12 +109,41 @@ $relatedArticles = $article->getRelated($id);
         }
         ?>
       </div>
+      <!-- قسم التعليقات -->
+<section class="comments-section">
+    <h3>التعليقات (<?= count($comments) ?>)</h3>
 
-      <div class="post-footer-stats">
+    <!-- فورم إضافة تعليق -->
+    <form action="" method="POST" class="comment-form">
+        <input type="text" name="username" placeholder="إسمك" required>
+        <textarea name="comment" placeholder="أكتب تعليقك هنا..." required></textarea>
+        <button type="submit" name="submit_comment">نشر التعليق</button>
+    </form>
+
+    <hr>
+
+    <!-- عرض التعليقات -->
+    <div class="comments-list">
+        <?php if (empty($comments)): ?>
+            <p>لا توجد تعليقات بعد. كن أول من يعلق!</p>
+        <?php else: ?>
+            <?php foreach ($comments as $c): ?>
+                <div class="comment-item">
+                    <strong><?= htmlspecialchars($c['username']) ?></strong>
+                    <small><?= date("d-m-Y H:i", strtotime($c['created_at'])) ?></small>
+                    <p><?= nl2br(htmlspecialchars($c['comment'])) ?></p>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+</section>
+
+
+      <!-- <div class="post-footer-stats">
         <span><i class="fa-regular fa-thumbs-up"></i> 1.3 Likes</span>
         <span><i class="fa-regular fa-comment"></i> 55 Comments</span>
         <span><i class="fa-solid fa-share"></i> 960 Shares</span>
-      </div>
+      </div> -->
     </section>
 
 

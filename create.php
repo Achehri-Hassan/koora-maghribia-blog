@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
   <!-- link css design -->
-  <link rel="stylesheet" href="css/create.css" />
+  <link rel="stylesheet" href="css/create.css"/>
 </head>
 
 <body>
@@ -114,14 +114,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           <div class="input-group">
             <label>صورة الغلاف</label>
             <div class="input-box">
-              <input type="file" name="image"  required/>
+              <input type="file" name="image" required />
               <i class="fa-solid fa-image"></i>
             </div>
           </div>
-   
+
 
           <div class="input-group">
-            
+
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
               <label style="margin: 0;">المحتوى</label>
               <a href="editor.html" target="_blank" style="font-size: 13px; color: #007bff; text-decoration: none; font-weight: bold;">
