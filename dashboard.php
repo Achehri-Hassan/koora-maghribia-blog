@@ -54,55 +54,41 @@ $articles = $article->readAll();
                         <th width="30%">الإجراءات</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <?php if (empty($articles)): ?>
-                        <tr>
-                            <td colspan="3" style="text-align:center; padding: 40px; color: #95a5a6;">
-                                لا توجد مقالات حالياً.
-                            </td>
-                        </tr>
-                    <?php else: ?>
-                        <?php foreach ($articles as $art): ?>
+               <tbody>
+    <?php foreach ($articles as $art): ?>
+    <tr>
+        <td class="article-id">#<?= htmlspecialchars($art['id']) ?></td>
+        <td class="article-title">
+            <?= htmlspecialchars($art['title']) ?>
+            <?php if (isset($art['status']) && $art['status'] == 'pending'): ?>
+                <span style="color: orange; font-size: 0.8em;"> (قيد الانتظار)</span>
+            <?php endif; ?>
+        </td>
+        <td class="actions">
+            <div class="actions-wrap">
+                
+                <?php 
+                // الشرط: تظهر "موافقة" فقط إذا كان المقال pending 
+                // وَ الكاتب (user_id) ليس هو الأدمن الحالي المتصل
+                if (isset($art['status']) && $art['status'] == 'pending' && $art['user_id'] != $_SESSION['user_id']): 
+                ?>
+                    <a href="approve_article.php?id=<?= $art['id'] ?>" class="action-btn" style="background-color: #27ae60; color: white;">
+                        <i class="fa-solid fa-check"></i> موافقة
+                    </a>
+                <?php endif; ?>
 
-
-
-                            <tr>
-                                <td>#<?= htmlspecialchars($art['id']) ?></td>
-                                <td>
-                                    <?= htmlspecialchars($art['title']) ?>
-                                    <?php if ($art['status'] == 'pending'): ?>
-                                        <span style="color: orange; font-size: 0.8em;">(في انتظار الموافقة)</span>
-                                    <?php endif; ?>
-                                </td>
-                                <td class="actions">
-                                    <div class="actions-wrap">
-                                        <?php if ($art['status'] == 'pending'): ?>
-                                            <a href="approve_article.php?id=<?= $art['id'] ?>" class="action-btn edit-btn" style="background-color: green;">
-                                                <i class="fa-solid fa-check"></i> موافقة
-                                            </a>
-                                        <?php endif; ?>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="article-id">#<?= htmlspecialchars($art['id']) ?></td>
-                                <td class="article-title"><?= htmlspecialchars($art['title']) ?></td>
-                                <td class="actions">
-                                    <div class="actions-wrap">
-                                        <a href="update.php?id=<?= $art['id'] ?>" class="action-btn edit-btn">
-                                            <i class="fa-solid fa-pen-to-square"></i> تعديل
-                                        </a>
-                                        <a href="delete.php?id=<?= $art['id'] ?>"
-                                            class="action-btn delete-btn"
-                                            onclick="return confirm('هل أنت متأكد من حذف هذا المقال؟')">
-                                            <i class="fa-solid fa-trash"></i> حذف
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </tbody>
+                <a href="update.php?id=<?= $art['id'] ?>" class="action-btn edit-btn">
+                    <i class="fa-solid fa-pen-to-square"></i> تعديل
+                </a>
+                
+                <a href="delete.php?id=<?= $art['id'] ?>" class="action-btn delete-btn" onclick="return confirm('هل أنت متأكد؟')">
+                    <i class="fa-solid fa-trash"></i> حذف
+                </a>
+            </div>
+        </td>
+    </tr>
+<?php endforeach; ?>
+</tbody>
             </table>
         </div>
     </div>

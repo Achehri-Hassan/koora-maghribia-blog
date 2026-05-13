@@ -2,39 +2,52 @@
 require_once "article.php";
 session_start();
 
-// حماية الصفحة
+// 1. حماية الصفحة: التأكد من أن المستخدم مسجل الدخول
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
 
+// 2. معالجة البيانات عند إرسال النموذج (Form Submission)
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_article'])) {
   
+    // تنظيف البيانات المدخلة
     $title = trim($_POST['title']);
     $content = trim($_POST['content']);
     $category = $_POST["select"];
     
-    // جلب المعلومات من السيسيون مباشرة
+    // جلب معلومات المستخدم من الجلسة (Session)
     $user_id = $_SESSION['user_id']; 
     $author = $_SESSION['username']; 
 
+    // تحديد حالة المقال: إذا كان المستخدم أدمن يتم النشر مباشرة، وإلا يبقى معلقاً
+    $status = (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') ? 'approved' : 'pending';
+
+    // التعامل مع الصورة
     $imageName = $_FILES['image']['name'];
     $tmpName = $_FILES['image']['tmp_name'];
 
+    // التحقق من ملء جميع الحقول
     if (empty($title) || empty($content) || empty($category) || empty($imageName)) {
-        echo "خاصك تعمر جميع الخانات";
-        exit();
+        $error = "مرجو ملء جميع الخانات المطلوبة.";
+    } else {
+        // تحديد مسار حفظ الصورة
+        $path = "assest/" . $imageName;
+        
+        if (move_uploaded_file($tmpName, $path)) {
+            // إنشاء كائن من كلاس Article واستدعاء دالة الإضافة
+            $article = new Article();
+            
+            // ملاحظة: تأكد أن دالة createArticle في ملف article.php تقبل 7 برامترات
+            $article->createArticle($title, $content, $imageName, $author, $category, $user_id, $status);
+
+            // توجيه المستخدم بعد النجاح
+            header("Location: index.php?success=1");
+            exit();
+        } else {
+            $error = "فشل تحميل الصورة، يرجى المحاولة مرة أخرى.";
+        }
     }
-
-    $path = "assest/" . $imageName;
-    move_uploaded_file($tmpName, $path);
-
-    $article = new Article();
-    // صيفط الـ user_id كبارامتر جديد للدالة (تأكد أن الدالة في article.php كتقبل 6 ديال البرامترات)
-    $article->createArticle($title, $content, $imageName, $author, $category, $user_id);
-
-    header("Location: index.php");
-    exit();
 }
 ?>
 
@@ -59,9 +72,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_article'])) {
           <i class="fa-solid fa-pen-nib"></i>
           <h1>إضافة مقال جديد</h1>
           <div class="line"></div>
+          <?php if(isset($error)): ?>
+              <p style="color: #ff4d4d; font-size: 14px; margin-bottom: 10px;"><?php echo $error; ?></p>
+          <?php endif; ?>
         </div>
 
         <form method="post" enctype="multipart/form-data">
+          <!-- الحقول المخفية أو جلبها من السيسيون مباشرة أفضل أمنياً -->
           <input type="hidden" name="author" value="<?= htmlspecialchars($_SESSION['username']) ?>" />
 
           <div class="input-group">
@@ -101,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_article'])) {
               <label style="margin: 0;">المحتوى</label>
             </div>
             <div class="input-box">
-              <textarea rows="8" name="content" placeholder="اكتب محتوى المقال هنا..."></textarea>
+              <textarea rows="8" name="content" placeholder="اكتب محتوى المقال هنا..." required></textarea>
             </div>
           </div>
 
