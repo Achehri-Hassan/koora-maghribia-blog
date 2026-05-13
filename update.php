@@ -106,9 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_article'])) {
                                 <i class="fa-solid fa-up-right-from-square"></i> فتح محرر الكتابة (Copy/Paste)
                             </a> -->
 
-                            <a href="javascript:void(0)" onclick="openEditor()" style="font-size: 13px; color: #007bff; text-decoration: none; font-weight: bold;">
-                                <i class="fa-solid fa-up-right-from-square"></i> فتح محرر الكتابة (Popup)
-                            </a>
+
                         </div>
                         <div class="input-box">
                             <textarea rows="8" name="content" id="mainContent" placeholder="الصق المحتوى هنا بعد نسخه من المحرر..." id="mainContent"><?= $art['content'] ?? ''  ?></textarea>
@@ -125,13 +123,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_article'])) {
         </div>
     </div>
 
-    <script>
 
-        function openEditor() {
-            window.open('editor.html', 'CKEditorPopup', 'width=1000,height=700,scrollbars=yes');
-        }
-
-    </script>
 </body>
 
 

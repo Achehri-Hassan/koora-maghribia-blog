@@ -63,6 +63,27 @@ $articles = $article->readAll();
                         </tr>
                     <?php else: ?>
                         <?php foreach ($articles as $art): ?>
+
+
+
+                            <tr>
+                                <td>#<?= htmlspecialchars($art['id']) ?></td>
+                                <td>
+                                    <?= htmlspecialchars($art['title']) ?>
+                                    <?php if ($art['status'] == 'pending'): ?>
+                                        <span style="color: orange; font-size: 0.8em;">(في انتظار الموافقة)</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td class="actions">
+                                    <div class="actions-wrap">
+                                        <?php if ($art['status'] == 'pending'): ?>
+                                            <a href="approve_article.php?id=<?= $art['id'] ?>" class="action-btn edit-btn" style="background-color: green;">
+                                                <i class="fa-solid fa-check"></i> موافقة
+                                            </a>
+                                        <?php endif; ?>
+                                    </div>
+                                </td>
+                            </tr>
                             <tr>
                                 <td class="article-id">#<?= htmlspecialchars($art['id']) ?></td>
                                 <td class="article-title"><?= htmlspecialchars($art['title']) ?></td>

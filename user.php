@@ -13,7 +13,7 @@ class User
     }
 
     // Register new user
-    public function create($name, $email, $password ,$role)
+    public function create($name, $email, $password, $role)
     {
         $sql = "INSERT INTO users
                 (username, email, password , role) 
@@ -25,7 +25,7 @@ class User
         return $stmt->execute([
             "username" => $name,
             "email" => $email,
-            "password" => password_hash($password, PASSWORD_DEFAULT),
+            "password" => $password,
             "role" => $role
         ]);
     }
@@ -45,7 +45,7 @@ class User
     }
 
     // Get all users
-     public function all()
+    public function all()
     {
         $sql = "SELECT * FROM user ORDER BY id_user DESC";
 

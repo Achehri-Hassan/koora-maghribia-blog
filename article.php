@@ -26,21 +26,58 @@ class Article
     }
 
 
-    public function createArticle($title, $content, $image, $author, $category)
+    // public function createArticle($title, $content, $image, $author, $category)
+    // {
+
+
+    //     $sql = "INSERT into articles (title , content , image  , author , category) VALUES (:title , :content , :image , :author  , :category)";
+    //     $stmt = $this->conn->prepare($sql);
+
+    //     $stmt->execute([
+
+    //         "title" => $title,
+    //         "content" => $content,
+    //         "image" => $image,
+    //         "author" => $author,
+    //         "category" => $category
+    //     ]);
+    // }
+
+
+
+    // ... داخل كلاس Article
+
+    // تعديل إضافة المقال
+  public function createArticle($title, $content, $image, $author, $category, $user_id) {
+    // زدنا user_id هنا وفي الـ VALUES
+    $sql = "INSERT INTO articles (title, content, image, author, category, user_id , status) 
+            VALUES (:title, :content, :image, :author, :category, :user_id, 'pending')";
+            
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute([
+        "title" => $title,
+        "content" => $content,
+        "image" => $image,
+        "author" => $author,
+        "category" => $category,
+        "user_id" => $user_id // دبا المقال غيتربط بالمستخدم اللي حطو
+    ]);
+}
+
+    // دالة لجلب المقالات المقبولة فقط (للمستخدمين في index.php)
+    public function readApproved()
     {
+        $sql = "SELECT * FROM articles WHERE status = 'approved' ORDER BY id DESC";
+        $stmt = $this->conn->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
-
-        $sql = "INSERT into articles (title , content , image  , author , category) VALUES (:title , :content , :image , :author  , :category)";
+    // دالة للآدمين باش يوافق على المقال
+    public function approve($id)
+    {
+        $sql = "UPDATE articles SET status = 'approved' WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
-
-        $stmt->execute([
-
-            "title" => $title,
-            "content" => $content,
-            "image" => $image,
-            "author" => $author,
-            "category" => $category
-        ]);
+        return $stmt->execute(["id" => $id]);
     }
 
     public function Update($id, $title, $content, $image, $author, $category)

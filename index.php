@@ -13,7 +13,7 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
   $category = $_GET['cat'];
   $articles = $article->readByCategory($category);
 } else {
-  $articles = $article->readAll();
+  $articles = $article->readApproved();
 }
 
 
@@ -55,10 +55,12 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
         </a>
         <nav>
           <?php if ($isAdmin): ?>
-
             <a href="dashboard.php">لوحة التحكم</a>
           <?php endif; ?>
-          <a href="index.php">الرئيسية</a>
+
+          <?php if (isset($_SESSION['user_id'])): ?>
+            <a href="create.php" class="btn-read">إضافة مقال جديد</a>
+          <?php endif; ?> <a href="index.php">الرئيسية</a>
           <a href="#">من نحن</a>
           <a href="#">اتصل بنا</a>
         </nav>
@@ -71,6 +73,13 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
   <main>
     <!-- HERO -->
     <section class="hero-section">
+      <div class="user-info">
+        <?php if (isset($_SESSION["username"])): ?>
+          <p>مرحباً، <strong><?php echo htmlspecialchars($_SESSION["username"]); ?></strong></p>
+        <?php else: ?>
+          <a href="login.php" class="btn-login">تسجيل الدخول</a>
+        <?php endif; ?>
+      </div>
       <h1>آخر أخبار البطولة الاحترافية المغربية</h1>
 
       <div class="category-filters">
