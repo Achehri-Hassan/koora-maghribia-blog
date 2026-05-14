@@ -16,9 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["login"])) {
     $user = $userModel->login($email);
      
 
-    if ($user && $pass === $user['password']) {
+    if ($user &&   $pass === $user['password']) {
       $_SESSION['user_id'] = $user['id'];
-      $_SESSION['username'] = $user['username'];
       $_SESSION['role']    = $user['role'];
 
     

@@ -1,185 +1,388 @@
 <?php
 
-
 session_start();
 
-require "article.php";
+require_once "article.php";
 
 $article = new Article();
 
+/* =========================
+   CHECK ADMIN
+========================= */
+
 $isAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
 
-if (isset($_GET['cat']) && !empty($_GET['cat'])) {
-  $category = $_GET['cat'];
-  $articles = $article->readByCategory($category);
-} else {
-  $articles = $article->readApproved();
-}
+/* =========================
+   FILTER CATEGORY
+========================= */
 
+if (isset($_GET['cat']) && !empty($_GET['cat'])) {
+
+    $category = trim($_GET['cat']);
+
+    $articles = $article->readByCategory($category);
+
+} else {
+
+    $articles = $article->readAll();
+}
 
 ?>
 
-
 <!doctype html>
+
 <html lang="ar" dir="rtl">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- font -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cairo&display=swap"
-    rel="stylesheet" />
+    <meta charset="UTF-8" />
 
-  <!-- css -->
-  <link rel="stylesheet" href="style.css" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0" />
 
-  <!-- icons -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <title>
+        أخبار البطولة المغربية
+    </title>
 
-  <title>أخبار البطولة</title>
+    <!-- FONT -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo&display=swap"
+        rel="stylesheet" />
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- ICONS -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+
 </head>
 
 <body>
-  <!-- HEADER -->
-  <header>
-    <div class="head">
-      <a href="logout.php"><button class="btn-login">تسجيل الخروج</button></a>
 
-      <div>
-        <a href="#" class="logo">
-          <i class="fa-brands fa-readme"></i>
-        </a>
-        <nav>
-          <?php if ($isAdmin): ?>
-            <a href="dashboard.php">لوحة التحكم</a>
-          <?php endif; ?>
+    <!-- HEADER -->
 
-          <?php if (isset($_SESSION['user_id'])): ?>
-            <a href="create.php" class="btn-read">إضافة مقال جديد</a>
-          <?php endif; ?> <a href="index.php">الرئيسية</a>
-          <a href="#">من نحن</a>
-          <a href="#">اتصل بنا</a>
-        </nav>
-      </div>
-    </div>
-  </header>
-  <!-- End design -->
+    <header>
 
-  <!-- MAIN -->
-  <main>
+        <div class="head">
+
+            <a href="logout.php">
+
+                <button class="btn-login">
+                    تسجيل الخروج
+                </button>
+
+            </a>
+
+            <div>
+
+                <a href="#" class="logo">
+                    <i class="fa-brands fa-readme"></i>
+                </a>
+
+                <nav>
+
+                    <?php if ($isAdmin): ?>
+
+                        <a href="dashboard.php">
+                            لوحة التحكم
+                        </a>
+
+                    <?php endif; ?>
+
+                    <a href="index.php">
+                        الرئيسية
+                    </a>
+
+                    <a href="#">
+                        من نحن
+                    </a>
+
+                    <a href="#">
+                        اتصل بنا
+                    </a>
+
+                </nav>
+
+            </div>
+
+        </div>
+
+    </header>
+
     <!-- HERO -->
+
     <section class="hero-section">
-      <div class="user-info">
-        <?php if (isset($_SESSION["username"])): ?>
-          <p>مرحباً، <strong><?php echo htmlspecialchars($_SESSION["username"]); ?></strong></p>
-        <?php else: ?>
-          <a href="login.php" class="btn-login">تسجيل الدخول</a>
-        <?php endif; ?>
-      </div>
-      <h1>آخر أخبار البطولة الاحترافية المغربية</h1>
 
-      <div class="category-filters">
+        <h1>
+            آخر أخبار البطولة الاحترافية المغربية
+        </h1>
 
-        <a href="index.php" class="filter-pill <?= !isset($_GET['cat']) ? 'active' : '' ?>">All</a>
+        <!-- FILTERS -->
 
-        <a href="index.php?cat=news" class="filter-pill <?= (isset($_GET['cat']) && $_GET['cat'] == 'news') ? 'active' : '' ?>">أخبار</a>
+        <div class="category-filters">
 
-        <a href="index.php?cat=matches" class="filter-pill <?= (isset($_GET['cat']) && $_GET['cat'] == 'matches') ? 'active' : '' ?>">مباريات</a>
+            <a
+                href="index.php"
+                class="filter-pill <?= !isset($_GET['cat']) ? 'active' : '' ?>">
+                All
+            </a>
 
-        <a href="index.php?cat=Analysis" class="filter-pill <?= (isset($_GET['cat']) && $_GET['cat'] == 'Analysis') ? 'active' : '' ?>">تحليل</a>
+            <a
+                href="index.php?cat=news"
+                class="filter-pill <?= (isset($_GET['cat']) && $_GET['cat'] == 'news') ? 'active' : '' ?>">
+                أخبار
+            </a>
 
-        <a href="index.php?cat=Transfers" class="filter-pill <?= (isset($_GET['cat']) && $_GET['cat'] == 'Transfers') ? 'active' : '' ?>"> نتقالات</a>
+            <a
+                href="index.php?cat=matches"
+                class="filter-pill <?= (isset($_GET['cat']) && $_GET['cat'] == 'matches') ? 'active' : '' ?>">
+                مباريات
+            </a>
 
-      </div>
+            <a
+                href="index.php?cat=Analysis"
+                class="filter-pill <?= (isset($_GET['cat']) && $_GET['cat'] == 'Analysis') ? 'active' : '' ?>">
+                تحليل
+            </a>
+
+            <a
+                href="index.php?cat=Transfers"
+                class="filter-pill <?= (isset($_GET['cat']) && $_GET['cat'] == 'Transfers') ? 'active' : '' ?>">
+                انتقالات
+            </a>
+
+        </div>
+
     </section>
 
     <!-- FEATURED -->
+
     <section class="featured-card">
-      <img src="assest/inwi.jpg" alt="كرة القدم" class="featured-img" />
-      <div class="featured-content">
-        <span class="tag-news">أخبار</span>
-        <h2 class="featured-title">
-          تألق جديد في البطولة الاحترافية المغربية
-        </h2>
-        <p class="featured-desc">
-          تعرف على آخر أخبار الفرق وأبرز النجوم في منافسات البطولة هذا الموسم
-        </p>
-        <a href="#" class="btn-read">اقرأ المزيد</a>
-      </div>
+
+        <img
+            src="assest/inwi.jpg"
+            alt="كرة القدم"
+            class="featured-img" />
+
+        <div class="featured-content">
+
+            <span class="tag-news">
+                أخبار
+            </span>
+
+            <h2 class="featured-title">
+                تألق جديد في البطولة الاحترافية المغربية
+            </h2>
+
+            <p class="featured-desc">
+                تعرف على آخر أخبار الفرق وأبرز النجوم في منافسات البطولة هذا الموسم
+            </p>
+
+            <a href="#" class="btn-read">
+                اقرأ المزيد
+            </a>
+
+        </div>
+
     </section>
 
+    <!-- ARTICLES -->
 
-    <section class="modern-grid">
+    <main>
 
-      <?php foreach ($articles as $art): ?>
+        <section class="modern-grid">
 
-        <a href="adetails.php?id=<?= $art['id'] ?>" class="card-link">
-          <article class="modern-card">
-            <div class="card-image-wrapper">
-              <img src="assest/<?= htmlspecialchars($art['image']) ?>" alt="<?= htmlspecialchars($art['title']) ?>">
-              <div class="card-date-badge">
-                <?= date("d M", strtotime($art["created_at"])) ?>
-              </div>
+            <?php if (empty($articles)): ?>
+
+                <h2>
+                    لا توجد مقالات حاليا
+                </h2>
+
+            <?php else: ?>
+
+                <?php foreach ($articles as $art): ?>
+
+                    <?php
+                    $commentsCount = $article->getCommentsCount($art['id']);
+                    ?>
+
+                    <a
+                        href="adetails.php?id=<?= $art['id'] ?>"
+                        class="card-link">
+
+                        <article class="modern-card">
+
+                            <!-- IMAGE -->
+
+                            <div class="card-image-wrapper">
+
+                                <img
+                                    src="assest/<?= htmlspecialchars($art['image']) ?>"
+                                    alt="<?= htmlspecialchars($art['title']) ?>">
+
+                                <div class="card-date-badge">
+
+                                    <?= date("d M", strtotime($art["created_at"])) ?>
+
+                                </div>
+
+                            </div>
+
+                            <!-- CONTENT -->
+
+                            <div class="card-content">
+
+                                <span class="card-tag">
+
+                                    <?= htmlspecialchars($art['category']) ?>
+
+                                </span>
+
+                                <h3 class="card-title">
+
+                                    <?= htmlspecialchars($art['title']) ?>
+
+                                </h3>
+
+                                <!-- META -->
+
+                                <div class="card-meta">
+
+                                    <span>
+                                        💬 <?= $commentsCount ?> comments
+                                    </span>
+
+                                </div>
+
+                                <!-- FOOTER -->
+
+                                <div class="card-footer">
+
+                                    <span>
+                                        Read More
+                                    </span>
+
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round">
+
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+
+                                    </svg>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                    </a>
+
+                <?php endforeach; ?>
+
+            <?php endif; ?>
+
+        </section>
+
+        <!-- PAGINATION -->
+
+        <section>
+
+            <div class="pagination">
+
+                <a href="#" class="pagination__btn">
+                    السابق
+                </a>
+
+                <a href="#" class="pagination__btn">
+                    1
+                </a>
+
+                <a href="#" class="pagination__btn">
+                    2
+                </a>
+
+                <a href="#" class="pagination__btn">
+                    التالي
+                </a>
+
             </div>
 
-            <div class="card-content">
-              <span class="card-tag">Article</span>
-              <h3 class="card-title"><?= htmlspecialchars($art['title']) ?></h3>
-              <div class="card-footer">
-                <span>Read More</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                  <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-              </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <div class="footer__cta">
+
+            <h2 class="cta__title">
+                تابع آخر أخبار الكرة المغربية
+            </h2>
+
+            <p class="cta__text">
+                موقعك الأول لمتابعة أخبار البطولة الاحترافية المغربية.
+            </p>
+
+            <a href="#" class="cta__button">
+                اتصل بنا
+            </a>
+
+            <hr class="cta__divider" />
+
+            <nav class="footer__nav">
+
+                <a href="#">
+                    الرئيسية
+                </a>
+
+                <a href="#">
+                    من نحن
+                </a>
+
+                <a href="#">
+                    المقالات
+                </a>
+
+                <a href="#">
+                    اتصل بنا
+                </a>
+
+            </nav>
+
+        </div>
+
+        <div class="footer__bottom">
+
+            <div class="footer__logo">
+                <i class="fa-brands fa-readme"></i>
             </div>
-          </article>
-        </a>
-      <?php endforeach; ?>
-    </section>
 
-    <!-- PAGINATION -->
-    <section>
-      <div class="pagination">
-        <a href="#" class="pagination__btn">السابق</a>
-        <a href="#" class="pagination__btn">1</a>
-        <a href="#" class="pagination__btn">2</a>
-        <a href="#" class="pagination__btn">التالي</a>
-      </div>
-    </section>
+            <p class="footer__copyright">
+                2026 جميع الحقوق محفوظة
+            </p>
 
-  </main>
+        </div>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer__cta">
-      <h2 class="cta__title">تابع آخر أخبار الكرة المغربية</h2>
-      <p class="cta__text">
-        موقعك الأول لمتابعة أخبار البطولة الاحترافية المغربية.
-      </p>
-      <a href="#" class="cta__button">اتصل بنا</a>
+    </footer>
 
-      <hr class="cta__divider" />
-
-      <nav class="footer__nav">
-        <a href="#">الرئيسية</a>
-        <a href="#">من نحن</a>
-        <a href="#">المقالات</a>
-        <a href="#">اتصل بنا</a>
-      </nav>
-    </div>
-
-    <div class="footer__bottom">
-      <div class="footer__logo">
-        <i class="fa-brands fa-readme"></i>
-      </div>
-      <p class="footer__copyright">2026 جميع الحقوق محفوظة</p>
-    </div>
-  </footer>
 </body>
 
 </html>

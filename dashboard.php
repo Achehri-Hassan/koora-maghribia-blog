@@ -1,19 +1,38 @@
 <?php
+
 session_start();
 require_once "article.php";
 
-
-
-
+/* =========================
+   SECURITY (ADMIN ONLY)
+========================= */
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header("Location: index.php");
     exit();
 }
 
-
-
 $article = new Article();
-$articles = $article->readAll();
+
+/* =========================
+   SEARCH ARTICLES
+========================= */
+if (isset($_GET['search']) && !empty($_GET['search'])) {
+    $articles = $article->searchArticles($_GET['search']);
+} else {
+    $articles = $article->readAll();
+}
+
+/* =========================
+   COMMENTS (PENDING)
+========================= */
+$pendingComments = $article->getPendingComments();
+
+/* =========================
+   STATS
+========================= */
+$totalArticles = count($articles);
+$totalPending = count($pendingComments);
+
 ?>
 
 <!DOCTYPE html>
@@ -22,77 +41,157 @@ $articles = $article->readAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم | إدارة المقالات</title>
+    <title>لوحة التحكم</title>
 
-    <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <!-- link css design  -->
     <link rel="stylesheet" href="css/dashboard.css">
-
 </head>
 
 <body>
 
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <h1><i class="fa-solid fa-screwdriver-wrench"></i> لوحة التحكم</h1>
-            <a href="create.php" class="btn-add">
-                <i class="fa-solid fa-plus"></i> إضافة مقال جديد
-            </a>
-        </header>
+<div class="container">
 
-        <!-- Main Content -->
-        <div class="table-card">
-            <table>
-                <thead>
-                    <tr>
-                        <th width="10%">ID</th>
-                        <th width="60%">عنوان المقال</th>
-                        <th width="30%">الإجراءات</th>
-                    </tr>
-                </thead>
-               <tbody>
-    <?php foreach ($articles as $art): ?>
-    <tr>
-        <td class="article-id">#<?= htmlspecialchars($art['id']) ?></td>
-        <td class="article-title">
-            <?= htmlspecialchars($art['title']) ?>
-            <?php if (isset($art['status']) && $art['status'] == 'pending'): ?>
-                <span style="color: orange; font-size: 0.8em;"> (قيد الانتظار)</span>
-            <?php endif; ?>
-        </td>
-        <td class="actions">
-            <div class="actions-wrap">
-                
-                <?php 
-                // الشرط: تظهر "موافقة" فقط إذا كان المقال pending 
-                // وَ الكاتب (user_id) ليس هو الأدمن الحالي المتصل
-                if (isset($art['status']) && $art['status'] == 'pending' && $art['user_id'] != $_SESSION['user_id']): 
-                ?>
-                    <a href="approve_article.php?id=<?= $art['id'] ?>" class="action-btn" style="background-color: #27ae60; color: white;">
-                        <i class="fa-solid fa-check"></i> موافقة
-                    </a>
-                <?php endif; ?>
+    <!-- HEADER -->
+    <header class="header">
 
-                <a href="update.php?id=<?= $art['id'] ?>" class="action-btn edit-btn">
-                    <i class="fa-solid fa-pen-to-square"></i> تعديل
-                </a>
-                
-                <a href="delete.php?id=<?= $art['id'] ?>" class="action-btn delete-btn" onclick="return confirm('هل أنت متأكد؟')">
-                    <i class="fa-solid fa-trash"></i> حذف
-                </a>
-            </div>
-        </td>
-    </tr>
-<?php endforeach; ?>
-</tbody>
-            </table>
+        <h1>
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+            لوحة التحكم
+        </h1>
+
+        <a href="create.php" class="btn-add">
+            <i class="fa-solid fa-plus"></i>
+            إضافة مقال
+        </a>
+
+    </header>
+
+    <!-- STATS -->
+    <div class="stats">
+
+        <div class="card">
+            <h2><?= $totalArticles ?></h2>
+            <p>المقالات</p>
         </div>
+
+        <div class="card">
+            <h2><?= $totalPending ?></h2>
+            <p>تعليقات في الانتظار</p>
+        </div>
+
     </div>
 
-</body>
+    <!-- SEARCH -->
+    <form method="GET" class="search-box">
+        <input type="text" name="search" placeholder="بحث عن مقال...">
+        <button>بحث</button>
+    </form>
 
+    <!-- ARTICLES TABLE -->
+    <div class="table-card">
+
+        <table>
+
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>العنوان</th>
+                <th>التعليقات</th>
+                <th>الإجراءات</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <?php if (empty($articles)): ?>
+
+                <tr>
+                    <td colspan="4" style="text-align:center; padding:30px;">
+                        لا توجد مقالات
+                    </td>
+                </tr>
+
+            <?php else: ?>
+
+                <?php foreach ($articles as $art): ?>
+
+                    <tr>
+
+                        <td>#<?= $art['id'] ?></td>
+
+                        <td><?= htmlspecialchars($art['title']) ?></td>
+
+                        <td>
+                            <?= $article->getCommentsCount($art['id']) ?>
+                        </td>
+
+                        <td>
+
+                            <div class="actions-wrap">
+
+                                <a href="update.php?id=<?= $art['id'] ?>" class="edit-btn">
+                                    تعديل
+                                </a>
+
+                                <a href="delete.php?id=<?= $art['id'] ?>"
+                                   onclick="return confirm('متأكد من الحذف؟')"
+                                   class="delete-btn">
+                                    حذف
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                <?php endforeach; ?>
+
+            <?php endif; ?>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <!-- PENDING COMMENTS -->
+    <div class="comments-section">
+
+        <h2>تعليقات في الانتظار</h2>
+
+        <?php if (empty($pendingComments)): ?>
+
+            <p>لا توجد تعليقات في الانتظار</p>
+
+        <?php else: ?>
+
+            <?php foreach ($pendingComments as $c): ?>
+
+                <div class="comment-box">
+
+                    <strong><?= htmlspecialchars($c['username']) ?></strong>
+
+                    <p><?= htmlspecialchars($c['comment']) ?></p>
+
+                    <a href="approve_comment.php?id=<?= $c['id'] ?>" class="approve-btn">
+                        Approve
+                    </a>
+
+                    <a href="delete_comment.php?id=<?= $c['id'] ?>" class="delete-btn">
+                        Delete
+                    </a>
+
+                </div>
+
+            <?php endforeach; ?>
+
+        <?php endif; ?>
+
+    </div>
+
+</div>
+
+</body>
 </html>

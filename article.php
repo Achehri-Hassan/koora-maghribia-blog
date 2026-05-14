@@ -26,58 +26,21 @@ class Article
     }
 
 
-    // public function createArticle($title, $content, $image, $author, $category)
-    // {
-
-
-    //     $sql = "INSERT into articles (title , content , image  , author , category) VALUES (:title , :content , :image , :author  , :category)";
-    //     $stmt = $this->conn->prepare($sql);
-
-    //     $stmt->execute([
-
-    //         "title" => $title,
-    //         "content" => $content,
-    //         "image" => $image,
-    //         "author" => $author,
-    //         "category" => $category
-    //     ]);
-    // }
-
-
-
-    // ... داخل كلاس Article
-
-    // تعديل إضافة المقال
-  public function createArticle($title, $content, $image, $author, $category, $user_id) {
-    // زدنا user_id هنا وفي الـ VALUES
-    $sql = "INSERT INTO articles (title, content, image, author, category, user_id , status) 
-            VALUES (:title, :content, :image, :author, :category, :user_id, 'pending')";
-            
-    $stmt = $this->conn->prepare($sql);
-    $stmt->execute([
-        "title" => $title,
-        "content" => $content,
-        "image" => $image,
-        "author" => $author,
-        "category" => $category,
-        "user_id" => $user_id // دبا المقال غيتربط بالمستخدم اللي حطو
-    ]);
-}
-
-    // دالة لجلب المقالات المقبولة فقط (للمستخدمين في index.php)
-    public function readApproved()
+    public function createArticle($title, $content, $image, $author, $category)
     {
-        $sql = "SELECT * FROM articles WHERE status = 'approved' ORDER BY id DESC";
-        $stmt = $this->conn->query($sql);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
 
-    // دالة للآدمين باش يوافق على المقال
-    public function approve($id)
-    {
-        $sql = "UPDATE articles SET status = 'approved' WHERE id = :id";
+
+        $sql = "INSERT into articles (title , content , image  , author , category) VALUES (:title , :content , :image , :author  , :category)";
         $stmt = $this->conn->prepare($sql);
-        return $stmt->execute(["id" => $id]);
+
+        $stmt->execute([
+
+            "title" => $title,
+            "content" => $content,
+            "image" => $image,
+            "author" => $author,
+            "category" => $category
+        ]);
     }
 
     public function Update($id, $title, $content, $image, $author, $category)
@@ -145,27 +108,123 @@ class Article
     }
 
 
+    public function searchArticles($keyword)
+{
+    $sql = "SELECT * FROM articles
+            WHERE title LIKE :keyword
+            OR content LIKE :keyword
+            ORDER BY id DESC";
+
+    $stmt = $this->conn->prepare($sql);
+
+    $stmt->execute([
+        "keyword" => "%$keyword%"
+    ]);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+  public function addComment($article_id, $username, $comment)
+{
+    $sql = "INSERT INTO comments
+    (article_id, username, comment, status)
+
+    VALUES
+    (:article_id, :username, :comment, 'pending')";
+
+    $stmt = $this->conn->prepare($sql);
+
+    return $stmt->execute([
+        "article_id" => $article_id,
+        "username" => $username,
+        "comment" => $comment
+    ]);
+}
+
+public function getCommentsByArticle($article_id)
+{
+    $sql = "SELECT * FROM comments
+            WHERE article_id = :article_id
+            AND status = 'approved'
+            ORDER BY created_at DESC";
+
+    $stmt = $this->conn->prepare($sql);
+
+    $stmt->execute([
+        "article_id" => $article_id
+    ]);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+public function approveComment($id)
+{
+    $sql = "UPDATE comments
+            SET status = 'approved'
+            WHERE id = :id";
+
+    $stmt = $this->conn->prepare($sql);
+
+    return $stmt->execute([
+        "id" => $id
+    ]);
+}
+
+
+public function getPendingComments()
+{
+    $sql = "SELECT * FROM comments
+            WHERE status = 'pending'
+            ORDER BY created_at DESC";
+
+    return $this->conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+}
 
 
 
+public function deleteComment($id)
+{
+    $sql = "DELETE FROM comments WHERE id = :id";
 
-    public function addComment($article_id, $username, $comment)
+    $stmt = $this->conn->prepare($sql);
+
+    return $stmt->execute([
+        "id" => $id
+    ]);
+}
+
+    
+
+    public function getCommentsCount($article_id)
     {
-        $sql = "INSERT INTO comments (article_id, username, comment) VALUES (:article_id, :username, :comment)";
+        $sql = "SELECT COUNT(*) as total FROM comments WHERE article_id = :article_id";
+
         $stmt = $this->conn->prepare($sql);
 
-        return $stmt->execute([
-            "article_id" => $article_id,
-            "username" => $username,
-            "comment" => $comment
+        $stmt->execute([
+            "article_id" => $article_id
         ]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
     }
 
-    public function getCommentsByArticle($article_id)
+
+    public function getLatestComments($limit = 5)
     {
-        $sql = "SELECT * FROM comments WHERE article_id = :article_id ORDER BY created_at DESC";
+        $sql = "SELECT comments.*, articles.title
+            FROM comments
+            JOIN articles ON comments.article_id = articles.id
+            ORDER BY comments.created_at DESC
+            LIMIT :limit";
+
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute(["article_id" => $article_id]);
+
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+
+        $stmt->execute();
+
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
