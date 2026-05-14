@@ -7,7 +7,7 @@ class Database
 {
 
     private  $Server = "localhost";
-    private  $dbname  = "botola_mabghribiya";
+    private  $dbname  = "botola_maghribiya";
     private $root = "root";
     private $password = "";
 

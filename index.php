@@ -10,7 +10,7 @@ $article = new Article();
    CHECK ADMIN
 ========================= */
 
-$isAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
+$isAdmin = isset($_SESSION['user_id']) && $_SESSION['user_id'] == 1;
 
 /* =========================
    FILTER CATEGORY
@@ -123,7 +123,7 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
             آخر أخبار البطولة الاحترافية المغربية
         </h1>
 
-        <!-- FILTERS -->
+        
 
         <div class="category-filters">
 

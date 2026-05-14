@@ -1,16 +1,23 @@
-
+drop database if exists  botola_maghribiya;
 
 create database botola_maghribiya; 
+
 use botola_maghribiya;
 
 
+
 CREATE TABLE users (
+
   id INT AUTO_INCREMENT PRIMARY KEY,
+
   username VARCHAR(100) NOT NULL,
+
   email VARCHAR(150) NOT NULL UNIQUE,
+
   password VARCHAR(255) NOT NULL,
-  role ENUM('admin', 'user') DEFAULT 'user',
+
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
 );
 
 
@@ -22,26 +29,31 @@ CREATE TABLE articles (
   content TEXT NOT NULL,
   image VARCHAR(255),
   category VARCHAR(50),
-  user_id INT,
+  user_id int not null, 
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 
-
-
-
-
-
 CREATE TABLE comments (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  article_id INT NOT NULL,
-  username VARCHAR(100),
-  comment TEXT NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-  FOREIGN KEY (article_id) REFERENCES articles(id) ON DELETE CASCADE
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    article_id INT NOT NULL,
+
+    username VARCHAR(100) NOT NULL,
+
+    comment TEXT NOT NULL,
+
+    status ENUM('pending','approved')
+    DEFAULT 'pending',
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (article_id)
+    REFERENCES articles(id)
+    ON DELETE CASCADE
+
 );
 
 
@@ -95,3 +107,13 @@ INSERT INTO articles (title, author, content, image, category, user_id) VALUES
     'news',
     1
 );
+
+
+INSERT INTO users (username, email, password)
+VALUES (
+'admin',
+'admin@gmail.com',
+'1234'
+);
+
+select * from users;

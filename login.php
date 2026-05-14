@@ -13,16 +13,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["login"])) {
  
   if (!empty($email) && !empty($pass)) {
     $userModel = new User();
+
     $user = $userModel->login($email);
      
 
     if ($user &&   $pass === $user['password']) {
-      $_SESSION['user_id'] = $user['id'];
-      $_SESSION['role']    = $user['role'];
 
-    
-      header("Location: " . ($user['role'] === 'admin' ? "dashboard.php" : "index.php"));
+       $_SESSION['user_id'] = $user['id'];
+      header("Location: dashboard.php");
       exit();
+
+
     } else {
       $error = "الإيميل أو كلمة المرور غلط!";
     }
@@ -89,13 +90,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["login"])) {
           </div>
 
           <button type="submit" class="btn-login" name="login">تسجيل الدخول</button>
-
-          <div class="divider">أو</div>
-
-          <a href="register.php">
-            <button type="button" class="btn-reg">
-              <i class="fa-solid fa-user-plus"></i> إنشاء حساب جديد
-            </button></a>
         </form>
       </div>
 
