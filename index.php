@@ -20,7 +20,7 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
 
     $category = trim($_GET['cat']);
 
-    $articles = $article->readByCategory($category);
+    $articles = $article->getRelated($category);
 
 } else {
 
@@ -199,7 +199,7 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
         <section class="modern-grid">
 
             <?php if (empty($articles)): ?>
-
+ 
                 <h2>
                     لا توجد مقالات حاليا
                 </h2>

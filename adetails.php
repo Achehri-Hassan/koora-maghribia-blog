@@ -1,5 +1,5 @@
 <?php
-// تفعيل الجلسة للتحقق من هوية المدير
+// تفعيل الجلسة
 session_start();
 
 require_once "article.php";
@@ -24,45 +24,34 @@ if (!$art) {
 }
 
 /* =========================
-   إضافة تعليق جديد (المنطق المحدث)
+   إضافة تعليق جديد
 ========================= */
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_comment'])) {
     $username = trim(htmlspecialchars($_POST['username']));
     $comment_text = trim(htmlspecialchars($_POST['comment']));
 
     if (!empty($username) && !empty($comment_text)) {
+        // حفظ الاسم في الجلسة لملء الحقل تلقائياً المرة القادمة
+        $_SESSION['my_comment_name'] = $username;
         
-        // التحقق: إذا كان المدير مسجل دخوله، يتم نشر التعليق مباشرة (approved)
-        if (isset($_SESSION['user_id'])) {
-            $article->addComment($id, $username, $comment_text, 'approved');
-            $status_msg = "published";
-        } else {
-            // إذا كان زائراً عادياً، يبقى قيد الانتظار (pending)
-            $article->addComment($id, $username, $comment_text, 'pending');
-            $status_msg = "pending";
-        }
+        // إضافة التعليق مباشرة في قاعدة البيانات
+        $article->addComment($id, $username, $comment_text);
 
-        header("Location: adetails.php?id=" . $id . "&msg=" . $status_msg);
+        // إعادة التوجيه لمنع تكرار الإرسال عند تحديث الصفحة
+        header("Location: adetails.php?id=" . $id . "&msg=published");
         exit();
     }
 }
 
 /* =========================
-   جلب البيانات للعرض
+   جلب التعليقات للعرض
 ========================= */
-
-// المدير يرى كل شيء (المقبولة والمعلقة) لإدارتها
-if (isset($_SESSION['user_id'])) {
-    $comments = $article->getCommentsByArticleAdmin($id);
-} else {
-    // الزائر يرى المقبولة فقط
-    $comments = $article->getCommentsByArticle($id);
-}
-
-// المقالات ذات الصلة
+$comments = $article->getCommentsByArticle($id);
 $relatedArticles = $article->getRelated($id);
 
-
+// التحقق من حالة المدير لعرض أزرار لوحة التحكم فقط في الهيدر
+$isAdmin = isset($_SESSION['user_id']);
+$currentVisitorName = $_SESSION['my_comment_name'] ?? '';
 
 ?>
 
@@ -73,31 +62,28 @@ $relatedArticles = $article->getRelated($id);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($art['title']) ?></title>
     <link rel="stylesheet" href="css/details.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        .comment-pending { border: 2px dashed #ffc107; background-color: #fff8e1; padding: 10px; margin-bottom: 10px; }
-        .admin-badge { background: #ffc107; color: #000; padding: 2px 5px; font-size: 11px; border-radius: 4px; }
-        .admin-actions { margin-top: 8px; display: flex; gap: 15px; border-top: 1px solid #ddd; padding-top: 5px; }
-        .btn-approve { color: #27ae60; text-decoration: none; font-weight: bold; font-size: 0.9em; }
-        .btn-delete { color: #e74c3c; text-decoration: none; font-weight: bold; font-size: 0.9em; }
-        .msg-info { padding: 10px; margin-bottom: 15px; border-radius: 5px; text-align: center; }
+        .comment-item { border-bottom: 1px solid #eee; padding: 15px 0; margin-bottom: 10px; }
+        .comment-user { color: #2c3e50; font-weight: bold; font-size: 1.1em; }
+        .comment-date { color: #999; font-size: 0.85em; display: block; margin-top: 5px; }
+        .msg-success { padding: 12px; background: #d4edda; color: #155724; border-radius: 8px; text-align: center; margin-bottom: 20px; border: 1px solid #c3e6cb; }
+        .comments-section h3 { border-bottom: 2px solid #f1c40f; display: inline-block; padding-bottom: 5px; margin-bottom: 20px; }
     </style>
 </head>
 <body>
 
 <header>
     <div class="head">
-        <?php if (isset($_SESSION['user_id'])): ?>
+        <?php if ($isAdmin): ?>
             <a href="dashboard.php"><button class="btn-login">لوحة التحكم</button></a>
             <a href="logout.php"><button class="btn-login" style="background: #e74c3c;">خروج</button></a>
         <?php else: ?>
-            <a href="login.php"><button class="btn-login">دخول</button></a>
+            <a href="login.php"><button class="btn-login">دخول الإدارة</button></a>
         <?php endif; ?>
 
         <nav>
             <a href="index.php">الرئيسية</a>
-            <a href="#">من نحن</a>
-            <a href="#">اتصل بنا</a>
         </nav>
     </div>
 </header>
@@ -105,50 +91,39 @@ $relatedArticles = $article->getRelated($id);
 <main class="container">
     <section class="article-main">
         <h1><?= htmlspecialchars($art['title']) ?></h1>
-        <img src="assest/<?= htmlspecialchars($art['image']) ?>" class="main-img" alt="article image">
-        <p class="content-text"><?= nl2br(htmlspecialchars($art['content'])) ?></p>
+        
+        <?php if (!empty($art['image'])): ?>
+            <img src="assest/<?= htmlspecialchars($art['image']) ?>" class="main-img" alt="article image">
+        <?php endif; ?>
+
+        <div class="content-text">
+            <?= nl2br(htmlspecialchars($art['content'])) ?>
+        </div>
 
         <hr>
 
-        <?php if (isset($_GET['msg'])): ?>
-            <?php if ($_GET['msg'] == 'pending'): ?>
-                <div class="msg-info" style="background: #d1ecf1; color: #0c5460;">تم إرسال تعليقك وهو قيد المراجعة حالياً.</div>
-            <?php elseif ($_GET['msg'] == 'published'): ?>
-                <div class="msg-info" style="background: #d4edda; color: #155724;">تم نشر تعليقك مباشرة (مدير).</div>
-            <?php endif; ?>
+        <?php if (isset($_GET['msg']) && $_GET['msg'] == 'published'): ?>
+            <div class="msg-success">تم نشر تعليقك بنجاح!</div>
         <?php endif; ?>
 
         <section class="comments-section">
             <h3>التعليقات (<?= count($comments) ?>)</h3>
 
-            <form method="POST">
-                <input type="text" name="username" placeholder="اسمك" value="<?= isset($_SESSION['user_name']) ? $_SESSION['user_name'] : '' ?>" required>
-                <textarea name="comment" placeholder="اكتب تعليقك..." required></textarea>
-                <button type="submit" name="submit_comment">إرسال التعليق</button>
+            <form method="POST" class="comment-form">
+                <input type="text" name="username" placeholder="اسمك المستعار" value="<?= htmlspecialchars($currentVisitorName) ?>" required>
+                <textarea name="comment" placeholder="شاركنا برأيك حول هذا الموضوع..." required></textarea>
+                <button type="submit" name="submit_comment">نشر التعليق</button>
             </form>
 
             <div class="comments-list">
                 <?php if (empty($comments)): ?>
-                    <p>لا توجد تعليقات بعد لهذا المقال.</p>
+                    <p style="color: #7f8c8d;">لا توجد تعليقات بعد. كن أول من يشارك برأيه!</p>
                 <?php else: ?>
                     <?php foreach ($comments as $c): ?>
-                        <div class="comment <?= ($c['status'] == 'pending') ? 'comment-pending' : '' ?>">
-                            <div class="comment-header">
-                                <strong><?= htmlspecialchars($c['username']) ?></strong>
-                                <?php if ($c['status'] == 'pending'): ?>
-                                    <span class="admin-badge">قيد الانتظar</span>
-                                <?php endif; ?>
-                            </div>
-
+                        <div class="comment-item">
+                            <span class="comment-user"><?= htmlspecialchars($c['username']) ?></span>
                             <p><?= nl2br(htmlspecialchars($c['comment'])) ?></p>
-                            <small><?= date("d-m-Y H:i", strtotime($c['created_at'])) ?></small>
-
-                            <?php if (isset($_SESSION['user_id']) && $c['status'] == 'pending'): ?>
-                                <div class="admin-actions">
-                                    <a href="approve_comment.php?id=<?= $c['id'] ?>&art_id=<?= $id ?>" class="btn-approve">✅ موافقة</a>
-                                    <a href="delete_comment.php?id=<?= $c['id'] ?>&art_id=<?= $id ?>" class="btn-delete" onclick="return confirm('هل أنت متأكد من حذف هذا التعليق؟')">🗑️ حذف</a>
-                                </div>
-                            <?php endif; ?>
+                            <span class="comment-date">نُشر في: <?= date("d-m-Y H:i", strtotime($c['created_at'])) ?></span>
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>
@@ -157,15 +132,14 @@ $relatedArticles = $article->getRelated($id);
     </section>
 
     <aside class="sidebar">
-        <h3>مقالات مشابهة</h3>
+        <h3>قد يهمك أيضاً</h3>
         <div class="related-list">
             <?php foreach ($relatedArticles as $r): ?>
-                <a href="adetails.php?id=<?= $r['id'] ?>" class="related-item"><?= htmlspecialchars($r['title']) ?></a>
+                <a href="adetails.php?id=<?= $r['id'] ?>" class="related-item">
+                    <?= htmlspecialchars($r['title']) ?>
+                </a>
             <?php endforeach; ?>
         </div>
-
-        <br>
-       
     </aside>
 </main>
 

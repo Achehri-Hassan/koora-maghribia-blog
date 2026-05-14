@@ -11,11 +11,12 @@ class Article
         $db = new Database();
         $this->conn = $db->getConnection();
     }
- 
-     
-    
-    
 
+    /* =================================        
+       إدارة المقالات (Articles)
+    ================================= */
+
+    // جلب جميع المقالات
     public function readAll()
     {
         $sql = "SELECT * FROM articles ORDER BY id DESC";
@@ -23,6 +24,16 @@ class Article
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // جلب مقال واحد بواسطة ID
+    public function getById($id)
+    {
+        $sql = "SELECT * FROM articles WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    // إضافة مقال جديد
     public function createArticle($title, $content, $image, $author, $category)
     {
         $sql = "INSERT INTO articles (title, content, image, author, category) 
@@ -37,6 +48,7 @@ class Article
         ]);
     }
 
+    // تحديث مقال
     public function Update($id, $title, $content, $image, $author, $category)
     {
         $sql = "UPDATE articles SET title=:title, content=:content, category=:category, 
@@ -52,66 +64,42 @@ class Article
         ]);
     }
 
-    public function deleted($id)
+    // حذف مقال
+    public function delete($id)
     {
         $sql = "DELETE FROM articles WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
-        return $stmt->execute(["id" => $id]);
+        return $stmt->execute(['id' => $id]);
     }
 
-    public function getById($id)
+    // جلب مقالات مشابهة (عشوائية أو من نفس القسم)
+    public function getRelated($exclude_id)
     {
-        $sql = "SELECT * FROM articles WHERE id = :id";
+        $sql = "SELECT * FROM articles WHERE id != :id ORDER BY RAND() LIMIT 4";
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute(["id" => $id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-
-    public function getRelated($currentId)
-    {
-        $sql = "SELECT * FROM articles WHERE id != :id ORDER BY id DESC LIMIT 3";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute(["id" => $currentId]);
+        $stmt->execute(['id' => $exclude_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function readByCategory($category)
+    /* =================================        
+       إدارة التعليقات (Comments)
+    ================================= */
+
+    // إضافة تعليق
+    public function addComment($article_id, $username, $comment)
     {
-        $sql = "SELECT * FROM articles WHERE category = :category ORDER BY id DESC";
+        $sql = "INSERT INTO comments (article_id, username, comment, created_at)
+                VALUES (:article_id, :username, :comment, NOW())";
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute(['category' => $category]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-   
-
-    public function addComment($article_id, $username, $comment, $status = 'pending')
-    {
-        $sql = "INSERT INTO comments (article_id, username, comment, status)
-            VALUES (:article_id, :username, :comment, :status)";
-
-        $stmt = $this->conn->prepare($sql);
-
         return $stmt->execute([
             "article_id" => $article_id,
             "username" => $username,
-            "comment" => $comment,
-            "status" => $status
+            "comment" => $comment
         ]);
     }
-    // 
-    public function getCommentsByArticle($article_id)
-    {
-        $sql = "SELECT * FROM comments
-                WHERE article_id = :article_id AND status = 'approved'
-                ORDER BY created_at DESC";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute(["article_id" => $article_id]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
 
-    //
-    public function getCommentsByArticleAdmin($article_id)
+    // جلب تعليقات مقال معين (التي تستخدمها في dashboard و adetails)
+    public function getCommentsByArticle($article_id)
     {
         $sql = "SELECT * FROM comments 
                 WHERE article_id = :article_id 
@@ -121,57 +109,21 @@ class Article
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-
-
-    public function getLatestCommentsByArticle($article_id, $limit = 5)
-    {
-        $sql = "SELECT * FROM comments 
-                WHERE article_id = :article_id AND status = 'approved'
-                ORDER BY created_at DESC LIMIT :limit";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindValue(':article_id', (int)$article_id, PDO::PARAM_INT);
-        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function approveComment($id)
-    {
-        $sql = "UPDATE comments SET status = 'approved' WHERE id = :id";
-        $stmt = $this->conn->prepare($sql);
-        return $stmt->execute(["id" => $id]);
-    }
-
-
-
-
-    public function getPendingComments()
-    {
-        // JOIN articles
-        $sql = "SELECT comments.*, articles.title as article_title 
-            FROM comments 
-            JOIN articles ON comments.article_id = articles.id 
-            WHERE comments.status = 'pending' 
-            ORDER BY comments.created_at DESC";
-
-        return $this->conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-
-
-
-    public function deleteComment($id)
-    {
-        $sql = "DELETE FROM comments WHERE id = :id";
-        $stmt = $this->conn->prepare($sql);
-        return $stmt->execute(["id" => $id]);
-    }
-
+    // حساب عدد التعليقات لمقال معين (لعرضها في الجدول)
     public function getCommentsCount($article_id)
     {
         $sql = "SELECT COUNT(*) as total FROM comments WHERE article_id = :article_id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute(["article_id" => $article_id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'] ?? 0;
+    }
+
+    // حذف تعليق
+    public function deleteComment($id)
+    {
+        $sql = "DELETE FROM comments WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute(["id" => $id]);
     }
 }
