@@ -71,13 +71,16 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
 
         <div class="head">
 
+            <?php if ($isAdmin): ?>
             <a href="logout.php">
 
                 <button class="btn-login">
                     تسجيل الخروج
                 </button>
 
+                
             </a>
+            <?php endif; ?>
 
             <div>
 
@@ -380,7 +383,6 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
             </p>
 
         </div>
-
     </footer>
 
 </body>

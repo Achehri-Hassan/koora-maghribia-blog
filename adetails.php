@@ -110,7 +110,7 @@ $currentVisitorName = $_SESSION['my_comment_name'] ?? '';
             <h3>التعليقات (<?= count($comments) ?>)</h3>
 
             <form method="POST" class="comment-form">
-                <input type="text" name="username" placeholder="اسمك المستعار" value="<?= htmlspecialchars($currentVisitorName) ?>" required>
+                <input type="text" name="username" placeholder="اسمك المستعار"  required>
                 <textarea name="comment" placeholder="شاركنا برأيك حول هذا الموضوع..." required></textarea>
                 <button type="submit" name="submit_comment">نشر التعليق</button>
             </form>

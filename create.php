@@ -2,50 +2,47 @@
 require_once "article.php";
 session_start();
 
-// 1. حماية الصفحة: التأكد من أن المستخدم مسجل الدخول
+// 1. حماية الصفحة: إيلا ماكانش Admin داير Login يرجع لصفحة Login
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
 
-// 2. معالجة البيانات عند إرسال النموذج (Form Submission)
+$error = "";
+
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_article'])) {
   
-    // تنظيف البيانات المدخلة
-    $title = trim($_POST['title']);
-    $content = trim($_POST['content']);
+    $title    = trim($_POST['title']);
+    $content  = trim($_POST['content']);
     $category = $_POST["select"];
     
-    // جلب معلومات المستخدم من الجلسة (Session)
-    $user_id = $_SESSION['user_id']; 
-    $author = $_SESSION['username']; 
+    // جلب اسم الكاتب تلقائياً من السيسيون (بدون الحاجة لخانة في الفورم)
+    // ملاحظة: تأكد أنك خزنت 'username' في ملف login.php
+    $author = isset($_SESSION['username']) ? $_SESSION['username'] : 'Admin'; 
 
-    // تحديد حالة المقال: إذا كان المستخدم أدمن يتم النشر مباشرة، وإلا يبقى معلقاً
-    $status = (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') ? 'approved' : 'pending';
-
-    // التعامل مع الصورة
     $imageName = $_FILES['image']['name'];
-    $tmpName = $_FILES['image']['tmp_name'];
+    $tmpName   = $_FILES['image']['tmp_name'];
 
-    // التحقق من ملء جميع الحقول
     if (empty($title) || empty($content) || empty($category) || empty($imageName)) {
-        $error = "مرجو ملء جميع الخانات المطلوبة.";
+        $error = "المرجو ملء جميع الخانات المطلوبة.";
     } else {
-        // تحديد مسار حفظ الصورة
         $path = "assest/" . $imageName;
         
         if (move_uploaded_file($tmpName, $path)) {
-            // إنشاء كائن من كلاس Article واستدعاء دالة الإضافة
             $article = new Article();
             
-            // ملاحظة: تأكد أن دالة createArticle في ملف article.php تقبل 7 برامترات
-            $article->createArticle($title, $content, $imageName, $author, $category, $user_id, $status);
+            // استدعاء الدالة بـ 5 برامترات (Title, Content, Image, Author, Category)
+            $result = $article->createArticle($title, $content, $imageName, $author, $category);
 
-            // توجيه المستخدم بعد النجاح
-            header("Location: index.php?success=1");
-            exit();
+            if ($result) {
+                // النجاح: الرجوع للوحة التحكم
+                header("Location: dashboard.php?msg=success");
+                exit();
+            } else {
+                $error = "خطأ في قاعدة البيانات.";
+            }
         } else {
-            $error = "فشل تحميل الصورة، يرجى المحاولة مرة أخرى.";
+            $error = "فشل في رفع الصورة.";
         }
     }
 }
@@ -53,17 +50,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_article'])) {
 
 <!doctype html>
 <html lang="ar" dir="rtl">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>إضافة مقال - البطولة</title>
-
+  <title>إضافة مقال جديد</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link rel="stylesheet" href="css/create.css"/>
 </head>
-
 <body>
   <div class="form_container">
     <div class="login-card">
@@ -71,16 +64,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_article'])) {
         <div class="form-header">
           <i class="fa-solid fa-pen-nib"></i>
           <h1>إضافة مقال جديد</h1>
+          <p style="color: #666; font-size: 0.9rem;">أهلاً بك يا <strong><?= htmlspecialchars($_SESSION['username'] ?? 'المدير') ?></strong></p>
           <div class="line"></div>
-          <?php if(isset($error)): ?>
-              <p style="color: #ff4d4d; font-size: 14px; margin-bottom: 10px;"><?php echo $error; ?></p>
+          <?php if($error): ?>
+              <p style="color: #ff4d4d;"><?= $error ?></p>
           <?php endif; ?>
         </div>
 
         <form method="post" enctype="multipart/form-data">
-          <!-- الحقول المخفية أو جلبها من السيسيون مباشرة أفضل أمنياً -->
-          <input type="hidden" name="author" value="<?= htmlspecialchars($_SESSION['username']) ?>" />
-
           <div class="input-group">
             <label>عنوان المقال</label>
             <div class="input-box">
@@ -114,18 +105,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_article'])) {
           </div>
 
           <div class="input-group">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-              <label style="margin: 0;">المحتوى</label>
-            </div>
+            <label>المحتوى</label>
             <div class="input-box">
-              <textarea rows="8" name="content" placeholder="اكتب محتوى المقال هنا..." required></textarea>
+              <textarea rows="8" name="content" placeholder="اكتب محتوى المقال هنا..." required style="resize: vertical;"></textarea>
             </div>
           </div>
 
-          <button type="submit" class="btn-submit" name="add_article">نشر المقال</button>
+          <button type="submit" class="btn-submit" name="add_article">نشر المقال الآن</button>
 
           <div class="divider">أو</div>
-          <a href="index.php" class="btn-back">الرجوع للرئيسية</a>
+          <a href="dashboard.php" class="btn-back">الرجوع للوحة التحكم</a>
         </form>
       </div>
 

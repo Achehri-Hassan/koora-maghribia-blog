@@ -90,6 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["login"])) {
           </div>
 
           <button type="submit" class="btn-login" name="login">تسجيل الدخول</button>
+          <a href="index.php">Home page</a>
         </form>
       </div>
 
