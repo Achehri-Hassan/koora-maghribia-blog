@@ -1,24 +1,22 @@
 <?php
-// تفعيل الجلسة
+
+
 session_start();
 
 require_once "article.php";
 
 
 $isAdmin = isset($_SESSION['user_id']) && $_SESSION['user_id'] == 1;
-/* =========================
-   التحقق من المعرف (ID)
-========================= */
+
+
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     die("Article not found");
 }
 
-$id = (int) $_GET['id'];
+$id =$_GET['id'];
 $article = new Article();
 
-/* =========================
-   جلب بيانات المقال
-========================= */
+
 
 $art = $article->getById($id);
 
@@ -26,35 +24,32 @@ if (!$art) {
     die("Article not found");
 }
 
-/* =========================
-   إضافة تعليق جديد
-========================= */
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_comment'])) {
-    $username = trim(htmlspecialchars($_POST['username']));
-    $comment_text = trim(htmlspecialchars($_POST['comment']));
+
+    $username = trim($_POST['username']);
+
+    $comment_text = trim($_POST['comment']);
 
     if (!empty($username) && !empty($comment_text)) {
-        // حفظ الاسم في الجلسة لملء الحقل تلقائياً المرة القادمة
+
         $_SESSION['my_comment_name'] = $username;
 
-        // إضافة التعليق مباشرة في قاعدة البيانات
+
         $article->addComment($id, $username, $comment_text);
 
-        // إعادة التوجيه لمنع تكرار الإرسال عند تحديث الصفحة
-        header("Location: adetails.php?id=" . $id . "&msg=published");
+     
+        header("Location: adetails.php?id=" . $id );
         exit();
     }
 }
 
-/* =========================
-   جلب التعليقات للعرض
-========================= */
+
+
 $comments = $article->getCommentsByArticle($id);
 
-// $relatedArticles = $article->getRelated($id);
 
 
-$currentVisitorName = $_SESSION['my_comment_name'] ?? '';
 
 ?>
 
@@ -144,7 +139,7 @@ $currentVisitorName = $_SESSION['my_comment_name'] ?? '';
                 <?php foreach ($comments as $c): ?>
                     <div class="comment-item">
                         <span class="comment-user"><?= htmlspecialchars($c['username']) ?></span>
-                        <p><?= nl2br(htmlspecialchars($c['comment'])) ?></p>
+                        <p><?= htmlspecialchars($c['comment']) ?></p>
                         <span class="comment-date">نُشر في: <?= date("d-m-Y H:i", strtotime($c['created_at'])) ?></span>
                     </div>
                 <?php endforeach; ?>

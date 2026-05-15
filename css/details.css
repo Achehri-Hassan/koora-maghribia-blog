@@ -20,14 +20,7 @@
   margin-bottom: 1rem;
 }
 
-.author-meta {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #6b7280;
-  font-size: 0.9rem;
-  margin-bottom: 2rem;
-}
+
 
 .main-img {
   width: 100%;
@@ -35,6 +28,7 @@
   object-fit: cover;
   border-radius: 20px;
   margin-bottom: 2rem;
+  
 }
 
 .article-content h2 {
