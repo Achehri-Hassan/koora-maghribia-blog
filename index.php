@@ -64,58 +64,43 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
 <body>
 
     <!-- HEADER -->
+<header>
+    <div class="head">
 
-    <header>
+        <!-- Right Side -->
+        <div class="right-side">
 
-        <div class="head">
+            <a href="#" class="logo">
+                <i class="fa-brands fa-readme"></i>
+            </a>
 
-
-        <?php if ($isAdmin): ?>
-               <div>
-                 <a href="logout.php">
-
-                    <button class="btn-login">
-                        تسجيل الخروج
-                    </button>
-                </a>
-
-                        <a href="dashboard.php">
-                            لوحة التحكم
-                        </a>
-                
-               </div>
-            <?php endif; ?>
-            <div>
-
-                <a href="#" class="logo">
-                    <i class="fa-brands fa-readme"></i>
-                </a>
-
-                <nav>
-
-                    <a href="index.php">
-                        الرئيسية
-                    </a>
-
-                    <a href="#">
-                        من نحن
-                    </a>
-
-                    <a href="#">
-                        اتصل بنا
-                    </a>
-
-                </nav>
-
-            </div>
-
-
-            
-
+            <nav>
+                <a href="index.php">الرئيسية</a>
+                <a href="#">من نحن</a>
+                <a href="#">اتصل بنا</a>
+            </nav>
 
         </div>
 
-    </header>
+        <!-- Left Side -->
+        <?php if ($isAdmin): ?>
+        <div class="admin-actions">
+
+            <a href="dashboard.php">
+                لوحة التحكم
+            </a>
+
+            <a href="logout.php">
+                <button class="btn-login">
+                    تسجيل الخروج
+                </button>
+            </a>
+
+        </div>
+        <?php endif; ?>
+
+    </div>
+</header>
 
     <!-- HERO -->
 
@@ -304,6 +289,7 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
 
         </div>
 
+
         <div class="footer__bottom">
 
             <div class="footer__logo">
@@ -315,6 +301,8 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
             </p>
 
         </div>
+
+
     </footer>
 
 </body>

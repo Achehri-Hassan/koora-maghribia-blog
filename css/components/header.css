@@ -1,51 +1,51 @@
-
-
 header {
     background-color: var(--second-color);
+    padding: 10px;
 }
-
-    
-
 
 .head {
-
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    flex-direction: row-reverse;
+    align-items: center;
     padding-inline: 5rem;
+    
 }
 
-
-.head div {
+/* Right Side */
+.right-side {
     display: flex;
     align-items: center;
     gap: 60px;
-    padding: 20px;
-
-
+    
 }
 
-.head .logo i {
-    color: var(--white);
-    font-size: 30px;
-}
-
-
-
-.head div nav a {
+/* Nav */
+.right-side nav a {
     margin-left: 30px;
     color: var(--white);
     font-weight: 600;
     text-decoration: none;
+
 }
 
+/* Logo */
+.logo i {
+    color: var(--white);
+    font-size: 30px;
+}
 
+/* Left Side */
+.admin-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Button */
 .btn-login {
     padding: 0.6rem 40px;
     border-radius: 10px;
     color: var(--second-color);
-    /* font-weight: 600; */
     font-size: 14px;
     cursor: pointer;
     background-color: var(--white);
