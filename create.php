@@ -88,8 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_article'])) {
                   <option value="" disabled selected>اختر النوع</option>
                   <option value="news">أخبار</option>
                   <option value="matches">مباريات</option>
-                  <option value="Analysis">تحليل</option>
-                  <option value="Transfers">انتقالات</option>
+               
                 </select>
                 <i class="fa-solid fa-tag"></i>
               </div>

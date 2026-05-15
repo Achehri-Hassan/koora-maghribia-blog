@@ -17,6 +17,7 @@ $article = new Article();
 /* =========================
    جلب بيانات المقال
 ========================= */
+
 $art = $article->getById($id);
 
 if (!$art) {
@@ -47,7 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_comment'])) {
    جلب التعليقات للعرض
 ========================= */
 $comments = $article->getCommentsByArticle($id);
-$relatedArticles = $article->getRelated($id);
+
+// $relatedArticles = $article->getRelated($id);
 
 // التحقق من حالة المدير لعرض أزرار لوحة التحكم فقط في الهيدر
 $isAdmin = isset($_SESSION['user_id']);
@@ -75,20 +77,16 @@ $currentVisitorName = $_SESSION['my_comment_name'] ?? '';
 
 <header>
     <div class="head">
-        <?php if ($isAdmin): ?>
-            <a href="dashboard.php"><button class="btn-login">لوحة التحكم</button></a>
-            <a href="logout.php"><button class="btn-login" style="background: #e74c3c;">خروج</button></a>
-        <?php else: ?>
-            <a href="login.php"><button class="btn-login">دخول الإدارة</button></a>
-        <?php endif; ?>
-
-        <nav>
+    
+        <nav style="background-color: red;">
             <a href="index.php">الرئيسية</a>
         </nav>
     </div>
 </header>
 
 <main class="container">
+
+
     <section class="article-main">
         <h1><?= htmlspecialchars($art['title']) ?></h1>
         
@@ -100,13 +98,9 @@ $currentVisitorName = $_SESSION['my_comment_name'] ?? '';
             <?= nl2br(htmlspecialchars($art['content'])) ?>
         </div>
 
-        <hr>
+    </section>
 
-        <?php if (isset($_GET['msg']) && $_GET['msg'] == 'published'): ?>
-            <div class="msg-success">تم نشر تعليقك بنجاح!</div>
-        <?php endif; ?>
-
-        <section class="comments-section">
+    <section class="comments-section">
             <h3>التعليقات (<?= count($comments) ?>)</h3>
 
             <form method="POST" class="comment-form">
@@ -128,19 +122,8 @@ $currentVisitorName = $_SESSION['my_comment_name'] ?? '';
                     <?php endforeach; ?>
                 <?php endif; ?>
             </div>
-        </section>
     </section>
 
-    <aside class="sidebar">
-        <h3>قد يهمك أيضاً</h3>
-        <div class="related-list">
-            <?php foreach ($relatedArticles as $r): ?>
-                <a href="adetails.php?id=<?= $r['id'] ?>" class="related-item">
-                    <?= htmlspecialchars($r['title']) ?>
-                </a>
-            <?php endforeach; ?>
-        </div>
-    </aside>
 </main>
 
 </body>

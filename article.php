@@ -72,14 +72,17 @@ class Article
         return $stmt->execute(['id' => $id]);
     }
 
-    // جلب مقالات مشابهة (عشوائية أو من نفس القسم)
-    public function getRelated($exclude_id)
-    {
-        $sql = "SELECT * FROM articles WHERE id != :id ORDER BY RAND() LIMIT 4";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute(['id' => $exclude_id]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+ 
+
+    // f article.php dakhil l-class Article
+
+public function getByCategory($category)
+{
+    $sql = "SELECT * FROM articles WHERE category = :category ORDER BY id DESC";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute(['category' => $category]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
     /* =================================        
        إدارة التعليقات (Comments)

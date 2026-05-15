@@ -17,13 +17,11 @@ $isAdmin = isset($_SESSION['user_id']) && $_SESSION['user_id'] == 1;
 ========================= */
 
 if (isset($_GET['cat']) && !empty($_GET['cat'])) {
-
     $category = trim($_GET['cat']);
-
-    $articles = $article->getRelated($category);
-
+    // Khdem b l-fonction l-jdida li khdama b l-category machi b l-ID
+    $articles = $article->getByCategory($category);
 } else {
-
+    // Ila makànch filter, jib kolchi
     $articles = $article->readAll();
 }
 
@@ -71,17 +69,22 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
 
         <div class="head">
 
-            <?php if ($isAdmin): ?>
-            <a href="logout.php">
 
-                <button class="btn-login">
-                    تسجيل الخروج
-                </button>
+        <?php if ($isAdmin): ?>
+               <div>
+                 <a href="logout.php">
 
+                    <button class="btn-login">
+                        تسجيل الخروج
+                    </button>
+                </a>
+
+                        <a href="dashboard.php">
+                            لوحة التحكم
+                        </a>
                 
-            </a>
+               </div>
             <?php endif; ?>
-
             <div>
 
                 <a href="#" class="logo">
@@ -89,14 +92,6 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
                 </a>
 
                 <nav>
-
-                    <?php if ($isAdmin): ?>
-
-                        <a href="dashboard.php">
-                            لوحة التحكم
-                        </a>
-
-                    <?php endif; ?>
 
                     <a href="index.php">
                         الرئيسية
@@ -114,19 +109,29 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
 
             </div>
 
+
+            
+
+
         </div>
 
     </header>
 
     <!-- HERO -->
 
-    <section class="hero-section">
+   
+    
+    <!-- ARTICLES -->
+
+    <main>
+
+     <section class="hero-section">
 
         <h1>
             آخر أخبار البطولة الاحترافية المغربية
         </h1>
 
-        
+
 
         <div class="category-filters">
 
@@ -148,61 +153,15 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
                 مباريات
             </a>
 
-            <a
-                href="index.php?cat=Analysis"
-                class="filter-pill <?= (isset($_GET['cat']) && $_GET['cat'] == 'Analysis') ? 'active' : '' ?>">
-                تحليل
-            </a>
-
-            <a
-                href="index.php?cat=Transfers"
-                class="filter-pill <?= (isset($_GET['cat']) && $_GET['cat'] == 'Transfers') ? 'active' : '' ?>">
-                انتقالات
-            </a>
-
+          
         </div>
 
     </section>
-
-    <!-- FEATURED -->
-
-    <section class="featured-card">
-
-        <img
-            src="assest/inwi.jpg"
-            alt="كرة القدم"
-            class="featured-img" />
-
-        <div class="featured-content">
-
-            <span class="tag-news">
-                أخبار
-            </span>
-
-            <h2 class="featured-title">
-                تألق جديد في البطولة الاحترافية المغربية
-            </h2>
-
-            <p class="featured-desc">
-                تعرف على آخر أخبار الفرق وأبرز النجوم في منافسات البطولة هذا الموسم
-            </p>
-
-            <a href="#" class="btn-read">
-                اقرأ المزيد
-            </a>
-
-        </div>
-
-    </section>
-
-    <!-- ARTICLES -->
-
-    <main>
 
         <section class="modern-grid">
 
             <?php if (empty($articles)): ?>
- 
+
                 <h2>
                     لا توجد مقالات حاليا
                 </h2>
@@ -255,38 +214,25 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
 
                                 <!-- META -->
 
-                                <div class="card-meta">
-
-                                    <span>
-                                        💬 <?= $commentsCount ?> comments
-                                    </span>
-
-                                </div>
-
                                 <!-- FOOTER -->
 
                                 <div class="card-footer">
 
-                                    <span>
-                                        Read More
+                                
+                                      <span class="card_read_more">
+                                       ا ... قرأ المزيد
                                     </span>
 
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="20"
-                                        height="20"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round">
+                                  
 
-                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                 
+                                    
 
-                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    <span class="card_comment">
+                                      <?= $commentsCount ?> تعليقات
+                                    </span>
 
-                                    </svg>
+                               
 
                                 </div>
 
@@ -344,31 +290,17 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
                 موقعك الأول لمتابعة أخبار البطولة الاحترافية المغربية.
             </p>
 
-            <a href="#" class="cta__button">
-                اتصل بنا
-            </a>
-
+            <div class="sidebar-section">
+              <div class="share-icons">
+              <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+              <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+              <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+              <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+              <a href="#"><i class="fa-regular fa-envelope"></i></a>
+            </div>
             <hr class="cta__divider" />
 
-            <nav class="footer__nav">
-
-                <a href="#">
-                    الرئيسية
-                </a>
-
-                <a href="#">
-                    من نحن
-                </a>
-
-                <a href="#">
-                    المقالات
-                </a>
-
-                <a href="#">
-                    اتصل بنا
-                </a>
-
-            </nav>
+          
 
         </div>
 
