@@ -49,38 +49,52 @@ foreach ($articles as $a) {
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/dashboard.css">
-    <style>
-        /* ستايل إضافي للأيقونة الصفراء وقسم التعليقات */
-        .view-comments-btn { color: #f1c40f; margin-right: 12px; font-size: 1.1rem; transition: 0.3s; }
-        .view-comments-btn:hover { color: #f39c12; transform: scale(1.2); }
-        .comments-focus-area { background: #fff; border: 2px solid #f1c40f; border-radius: 12px; margin-top: 30px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .comment-row { border-bottom: 1px solid #f1f1f1; padding: 12px 0; display: flex; justify-content: space-between; align-items: center; }
-        .comment-row:last-child { border-bottom: none; }
-    </style>
+  
 </head>
 
 <body>
 
-    <div class="container">
-        <header class="header">
-            <h1><i class="fa-solid fa-gauge-high"></i> لوحة الإدارة</h1>
-            <a href="create.php" class="btn-add"><i class="fa-solid fa-plus"></i> إضافة مقال جديد</a>
-        </header>
+          
+ <!-- header -->
+       <div class="container">
+         <div class="header">
+
+        <h1>
+            <i class="fa-solid fa-gauge-high"></i>
+            لوحة الإدارة
+        </h1>
+
+        <div class="header-actions">
+            <a href="create.php" class="btn-add">
+                <i class="fa-solid fa-plus"></i>
+                إضافة مقال جديد
+            </a>
+
+            <a href="index.php" class="btn-add">
+                Home
+            </a>
+        </div>
+
+        </div>
+</div>
+ <!-- End Header -->
+
+  
 
         <div class="stats">
             <div class="card">
-                <i class="fa-solid fa-file-lines fa-2x" style="color: #3498db;"></i>
+               
                 <h2><?= $totalArticles ?></h2>
                 <p>إجمالي المقالات</p>
             </div>
             <div class="card">
-                <i class="fa-solid fa-comments fa-2x" style="color: #f1c40f;"></i>
+                
                 <h2><?= $totalCommentsCount ?></h2>
                 <p>إجمالي التعليقات</p>
             </div>
 
         </div>
-<a href="index.php">Home</a>
+
         <div class="table-card">
             <table>
                 <thead>
@@ -98,8 +112,8 @@ foreach ($articles as $a) {
                             <td><strong><?= htmlspecialchars($art['title']) ?></strong></td>
                             <td>
                                 <span class="badge"><?= $article->getCommentsCount($art['id']) ?></span>
-                                <a href="dashboard.php?view_comments=<?= $art['id'] ?>#comments-section" class="view-comments-btn" title="عرض تعليقات هذا المقال">
-                                    <i class="fa-solid fa-comment-dots"></i>
+                                <a href="dashboard.php?view_comments=<?= $art['id'] ?>#comments-section" class="view-comments-btn">
+                                    عرض تعليقات
                                 </a>
                             </td>
                             <td>
@@ -119,8 +133,8 @@ foreach ($articles as $a) {
                 <div class="comments-focus-area">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                         <h3 style="margin: 0; color: #2c3e50;">
-                            <i class="fa-solid fa-comments" style="color: #f1c40f;"></i> 
-                            تعليقات المقال: <span style="color: #e67e22;"><?= htmlspecialchars($selectedArticleTitle) ?></span>
+                           
+                            تعليقات المقال: <span ><?= htmlspecialchars($selectedArticleTitle) ?></span>
                         </h3>
                         <a href="dashboard.php" style="color: #95a5a6; text-decoration: none;"><i class="fa-solid fa-circle-xmark fa-xl"></i> إغلاق</a>
                     </div>

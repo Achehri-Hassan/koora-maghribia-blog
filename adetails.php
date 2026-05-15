@@ -4,6 +4,8 @@ session_start();
 
 require_once "article.php";
 
+
+$isAdmin = isset($_SESSION['user_id']) && $_SESSION['user_id'] == 1;
 /* =========================
    التحقق من المعرف (ID)
 ========================= */
@@ -51,8 +53,7 @@ $comments = $article->getCommentsByArticle($id);
 
 // $relatedArticles = $article->getRelated($id);
 
-// التحقق من حالة المدير لعرض أزرار لوحة التحكم فقط في الهيدر
-$isAdmin = isset($_SESSION['user_id']);
+
 $currentVisitorName = $_SESSION['my_comment_name'] ?? '';
 
 ?>
