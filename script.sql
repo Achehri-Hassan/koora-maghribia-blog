@@ -1,12 +1,14 @@
 drop database if exists  botola_maghribiya;
 
+-- start to create database 
 create database botola_maghribiya; 
 
+-- use this botola_maghribiya
 use botola_maghribiya;
 
 
-
-CREATE TABLE users (
+-- tables users
+CREATE TABLE admin(
 
   id INT AUTO_INCREMENT PRIMARY KEY,
 
@@ -18,11 +20,12 @@ CREATE TABLE users (
 
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
-);
+) COMMENT = 'Table The users';
 
 
-
+-- table articles
 CREATE TABLE articles (
+
   id INT AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
   author VARCHAR(40) not NULL,
@@ -32,29 +35,20 @@ CREATE TABLE articles (
   user_id int not null, 
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-);
+
+) COMMENT = 'Table the articles';
 
 
 CREATE TABLE comments (
 
     id INT AUTO_INCREMENT PRIMARY KEY,
-
     article_id INT NOT NULL,
-
     username VARCHAR(100) NOT NULL,
-
     comment TEXT NOT NULL,
-
-    status ENUM('pending','approved')
-    DEFAULT 'pending',
-
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (article_id) REFERENCES articles(id) ON DELETE CASCADE
 
-    FOREIGN KEY (article_id)
-    REFERENCES articles(id)
-    ON DELETE CASCADE
-
-);
+) COMMENT = 'Table the comments';
 
 
 
@@ -109,7 +103,7 @@ INSERT INTO articles (title, author, content, image, category, user_id) VALUES
 );
 
 
-INSERT INTO users (username, email, password)
+INSERT INTO admin (username, email, password)
 VALUES (
 'admin',
 'admin@gmail.com',
@@ -117,3 +111,6 @@ VALUES (
 );
 
 select * from users;
+select * from articles;
+select * from comments;
+

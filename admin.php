@@ -17,7 +17,7 @@ class User
     // Login user (IMPORTANT)
     public function login($email)
     {
-        $sql = "SELECT * FROM users WHERE email = :email LIMIT 1";
+        $sql = "SELECT * FROM users WHERE email = :email ";
 
         $stmt = $this->conn->prepare($sql);
 

@@ -2,7 +2,7 @@
 
 
 session_start();
-require_once "user.php";
+require_once "admin.php";
 $error = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["login"])) {

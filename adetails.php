@@ -4,6 +4,7 @@
 session_start();
 
 require_once "article.php";
+require_once "comments.php";
 
 
 $isAdmin = isset($_SESSION['user_id']) && $_SESSION['user_id'] == 1;
@@ -15,7 +16,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 
 $id =$_GET['id'];
 $article = new Article();
-
+$comments = new Comments();
 
 
 $art = $article->getById($id);
@@ -23,6 +24,7 @@ $art = $article->getById($id);
 if (!$art) {
     die("Article not found");
 }
+
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_comment'])) {
@@ -36,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_comment'])) {
         $_SESSION['my_comment_name'] = $username;
 
 
-        $article->addComment($id, $username, $comment_text);
+        $comments->addComment($id, $username, $comment_text);
 
      
         header("Location: adetails.php?id=" . $id );
@@ -46,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_comment'])) {
 
 
 
-$comments = $article->getCommentsByArticle($id);
+$comments = $comments->getCommentsByArticle($id);
 
 
 
@@ -71,46 +73,28 @@ $comments = $article->getCommentsByArticle($id);
 
 <body>
 
-   <header>
-    <div class="head">
-
-        <!-- Right Side -->
+      <!-- HEADER -->
+    <header>
+        <!-- Right Side  nav-->
         <div class="right-side">
-
-            <a href="#" class="logo">
-                <i class="fa-brands fa-readme"></i>
-            </a>
-
-            <nav>
-                <a href="index.php">الرئيسية</a>
-                <a href="#">من نحن</a>
-                <a href="#">اتصل بنا</a>
-            </nav>
-
+           <a href="index.php">الرئيسية</a>
+           <a href="#">من نحن</a>
+           <a href="#">اتصل بنا</a>
         </div>
 
-        <!-- Left Side -->
+        <!-- admin -->
         <?php if ($isAdmin): ?>
-        <div class="admin-actions">
-
-            <a href="dashboard.php">
-                لوحة التحكم
-            </a>
-
-            <a href="logout.php">
-                <button class="btn-login">
-                    تسجيل الخروج
-                </button>
-            </a>
-
-        </div>
+          <div class="admin-actions">
+             <a href="dashboard.php"> لوحة التحكم</a>
+             <a href="logout.php"> تسجيل الخروج </a>
+           </div>
         <?php endif; ?>
 
-    </div>
-</header>
+    </header>
 
+
+    <!-- main content  -->
     <main class="container">
-
 
         <section class="article-main">
             <h1><?= htmlspecialchars($art['title']) ?></h1>
@@ -150,52 +134,28 @@ $comments = $article->getCommentsByArticle($id);
     </main>
 
 
+    <footer class="footer">
 
+        <h2 class="foot__title"> تابع آخر أخبار الكرة المغربية</h2>
+        <p class="foot__text"> موقعك الأول لمتابعة أخبار البطولة الاحترافية المغربية.</p>
 
-      <!-- footer -->
-        <footer class="footer">
-
-        <div class="footer__cta">
-
-            <h2 class="cta__title">
-                تابع آخر أخبار الكرة المغربية
-            </h2>
-
-            <p class="cta__text">
-                موقعك الأول لمتابعة أخبار البطولة الاحترافية المغربية.
-            </p>
-
-            <div class="sidebar-section">
-              <div class="share-icons">
-              <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-              <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
-              <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-              <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-              <a href="#"><i class="fa-regular fa-envelope"></i></a>
-            </div>
-            <hr class="cta__divider" />
-
-          
-
+        <div class="share-icons">
+            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#"><i class="fa-regular fa-envelope"></i></a>
         </div>
 
+        <hr class="cta__divider" />
 
         <div class="footer__bottom">
-
-            <div class="footer__logo">
-                <i class="fa-brands fa-readme"></i>
-            </div>
-
-            <p class="footer__copyright">
-                2026 جميع الحقوق محفوظة
-            </p>
-
+            <i class="fa-brands fa-readme"></i>
+            <p class="footer__copyright">2026 جميع الحقوق محفوظة</p>
         </div>
 
-
     </footer>
-    
+
 
 </body>
-
 </html>

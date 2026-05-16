@@ -1,80 +1,39 @@
 @import url(components/stracture.css);
 @import url(components/variable.css);
+@import url(components/header.css);
 
 html {
   scroll-behavior: smooth;
 }
 
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
-}
 
-/* Header Section */
-.header {
-  background: var(--white);
-  padding: 25px;
-  border-radius: 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  margin-bottom: 30px;
-}
 
-.header h1 {
-  margin: 0;
-  font-size: 24px;
-  color: var(--second-color);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-/* Buttons Right */
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.btn-add {
-  background: var(--second-color);
-  color: var(--white);
-  text-decoration: none;
-  padding: 12px 25px;
-  border-radius: 10px;
-  font-weight: 600;
-  transition: 0.3s transform ease;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.btn-add:hover {
-  transform: translateY(-3px);
-}
-
-/* totla article and comments */
-
-.stats {
+/* totAL article and comments */
+.total {
   display: flex;
   align-items: center;
   gap: 30px;
+  margin-top: 40px;
+ margin-right: 40px;
+ margin-bottom: 40px;
 }
+
+
+
+
 
 /* Table Design */
 .table-card {
   background: var(--white);
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border-bottom: 2px solid var(--second-color);
 }
+
+
+
 
 table {
   width: 100%;
   border-collapse: collapse;
-  text-align: right;
 }
 
 thead {
@@ -86,6 +45,7 @@ th {
   color: var(--second-color);
   font-weight: 600;
   border-bottom: 2px solid var(--second-color);
+ 
 }
 
 td {
@@ -94,36 +54,16 @@ td {
   vertical-align: middle;
 }
 
-.article-id {
-  color: var(--second-color);
-  font-weight: bold;
-  font-family: sans-serif;
-}
 
-.article-title {
-  font-weight: 600;
-  color: var(--second-color);
-  font-size: 16px;
-}
 
 /* Actions Buttons */
 .actions-wrap {
   display: flex;
   gap: 10px;
+ 
 }
 
-.action-btn {
-  padding: 8px 15px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  transition: 0.2s;
-}
-
+/* Edit article */
 .edit-btn {
   background: var(--second-color);
   color: var(--white);
@@ -131,6 +71,7 @@ td {
   border-radius: 5px;
 }
 
+/* delete  */
 .delete-btn {
   background: rgb(221, 27, 27);
   color: var(--white);
@@ -138,54 +79,37 @@ td {
   border-radius: 5px;
 }
 
-@media (max-width: 768px) {
-  .header {
-    flex-direction: column;
-    gap: 20px;
-    text-align: center;
-  }
-
-  .actions-wrap {
-    flex-direction: column;
-  }
-}
 
 
 
-
-
-
-
-
-
-
-/* ستايل إضافي للأيقونة الصفراء وقسم التعليقات */
-.view-comments-btn {
+.view-comments{
   color: var(--second-color);
   margin-right: 12px;
   font-size: 1.1rem;
   transition: 0.3s;
+
 }
-.view-comments-btn:hover {
-  color: #0f80f1;
-  transform: scale(1.2);
-}
-.comments-focus-area {
- 
+
+
+.comments-card{
   max-width: 1100px;
   margin: auto;
   border-radius: 12px;
   margin-top: 30px;
   padding: 25px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
+
+.comments-card .title_article  a  i {
+   color: var(--second-color);
+}
+
+
 .comment-row {
-  border-bottom: 1px solid #f1f1f1;
+  border-bottom: 1px solid #edf2f7;
   padding: 12px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.comment-row:last-child {
-  border-bottom: none;
-}
+
+

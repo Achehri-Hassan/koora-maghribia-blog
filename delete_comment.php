@@ -1,28 +1,20 @@
 <?php
 
-require_once "article.php";
-
-/* =========================
-   VALIDATION
-========================= */
+require_once "comments.php";
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     die("Invalid request");
 }
 
-$id = (int) $_GET['id'];
+$id = $_GET['id'];
 
-$article = new Article();
+$comments = new Comments();
 
-/* =========================
-   DELETE COMMENT
-========================= */
 
-$article->deleteComment($id);
-
-/* =========================
-   REDIRECT BACK
-========================= */
+$comments->deleteComment($id);
 
 header("Location: dashboard.php");
 exit();
+
+
+?>

@@ -2,6 +2,8 @@
 
 require_once "connection.php";
 
+
+// create class
 class Article
 {
     private $conn;
@@ -12,11 +14,8 @@ class Article
         $this->conn = $db->getConnection();
     }
 
-    /* =================================        
-       إدارة المقالات (Articles)
-    ================================= */
 
-    // جلب جميع المقالات
+    // function to reade all article 
     public function readAll()
     {
         $sql = "SELECT * FROM articles ORDER BY id DESC";
@@ -24,7 +23,18 @@ class Article
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // جلب مقال واحد بواسطة ID
+
+    // function category
+    public function getByCategory($category)
+    {
+        $sql = "SELECT * FROM articles WHERE category = :category ORDER BY id DESC";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['category' => $category]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    // function to git  by id 
     public function getById($id)
     {
         $sql = "SELECT * FROM articles WHERE id = :id";
@@ -33,7 +43,7 @@ class Article
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // إضافة مقال جديد
+    //   function to create article 
     public function createArticle($title, $content, $image, $author, $category)
     {
         $sql = "INSERT INTO articles (title, content, image, author, category) 
@@ -48,7 +58,8 @@ class Article
         ]);
     }
 
-    // تحديث مقال
+
+    // function update article 
     public function Update($id, $title, $content, $image, $author, $category)
     {
         $sql = "UPDATE articles SET title=:title, content=:content, category=:category, 
@@ -64,69 +75,12 @@ class Article
         ]);
     }
 
-    // حذف مقال
+
+    // function delete article
     public function delete($id)
     {
         $sql = "DELETE FROM articles WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute(['id' => $id]);
-    }
-
- 
-
-    // f article.php dakhil l-class Article
-
-public function getByCategory($category)
-{
-    $sql = "SELECT * FROM articles WHERE category = :category ORDER BY id DESC";
-    $stmt = $this->conn->prepare($sql);
-    $stmt->execute(['category' => $category]);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-
-    /* =================================        
-       إدارة التعليقات (Comments)
-    ================================= */
-
-    // إضافة تعليق
-    public function addComment($article_id, $username, $comment)
-    {
-        $sql = "INSERT INTO comments (article_id, username, comment, created_at)
-                VALUES (:article_id, :username, :comment, NOW())";
-        $stmt = $this->conn->prepare($sql);
-        return $stmt->execute([
-            "article_id" => $article_id,
-            "username" => $username,
-            "comment" => $comment
-        ]);
-    }
-
-    // جلب تعليقات مقال معين (التي تستخدمها في dashboard و adetails)
-    public function getCommentsByArticle($article_id)
-    {
-        $sql = "SELECT * FROM comments 
-                WHERE article_id = :article_id 
-                ORDER BY created_at DESC";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute(["article_id" => $article_id]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    // حساب عدد التعليقات لمقال معين (لعرضها في الجدول)
-    public function getCommentsCount($article_id)
-    {
-        $sql = "SELECT COUNT(*) as total FROM comments WHERE article_id = :article_id";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute(["article_id" => $article_id]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result['total'] ?? 0;
-    }
-
-    // حذف تعليق
-    public function deleteComment($id)
-    {
-        $sql = "DELETE FROM comments WHERE id = :id";
-        $stmt = $this->conn->prepare($sql);
-        return $stmt->execute(["id" => $id]);
     }
 }

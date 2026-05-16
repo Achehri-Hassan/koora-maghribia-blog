@@ -1,14 +1,19 @@
 <?php
+
+
 require_once "article.php";
 $article = new Article();
 
 $art = null;
+
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $art = $article->getById($id);
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_article'])) {
+
+
     $id = $_POST['id'];
     $title = $_POST['title'];
     $content = $_POST['content'];
@@ -16,11 +21,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_article'])) {
     $author = $_POST["author"];
 
     if (!empty($_FILES['image']['name'])) {
+        
         $imageName = $_FILES['image']['name'];
         $tmpName = $_FILES['image']['tmp_name'];
         $path = "assest/" . $imageName;
         move_uploaded_file($tmpName, $path);
         $imageToSave = $imageName;
+
     } else {
         $imageToSave = $_POST['old_image'];
     }

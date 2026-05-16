@@ -6,28 +6,18 @@
 .footer {
     margin-top: -90px;
     padding: 60px 40px 20px 40px;
-    
-
-
-}
-
-/* Black Container */
-.footer__cta {
-    border-radius: 80px;
-    padding: 60px 20px;
     text-align: center;
-    color: var(--second-color);
     max-width: 1000px;
-    margin:auto;
+    margin: auto;
 }
 
-.cta__title {
+.foot__title {
     font-size: 2rem;
     margin-bottom: 10px;
    
 }
 
-.cta__text {
+.foot__text {
     color: var(--second-color);
     font-size: 0.9rem;
     margin-bottom: 25px;
@@ -36,14 +26,8 @@
 
 
 .cta__divider {
-  
-    border-top: 1px solid var(--second-color);
-    width: 80%;
-    margin: 0 auto 30px auto;
-  
+    margin-bottom: 25px;
 }
-
-
 
 
 
@@ -54,12 +38,11 @@
     justify-content: space-between;
     align-items: center;
  
-  
-
 }
 
-.footer__logo i{
+.footer__bottom i{
      font-size: 40px;
+     color: var(--second-color);
 }
 
 .footer__copyright {
