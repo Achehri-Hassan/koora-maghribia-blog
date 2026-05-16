@@ -73,9 +73,9 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
 
             <a href="index.php" class="filter-pill <?= !isset($_GET['cat']) ? 'active' : '' ?>"> All </a>
             <a href="index.php?cat=news" class="filter-pill <?= (isset($_GET['cat']) && $_GET['cat'] =='news') ? 'active' : '' ?>">  أخبار</a>
-            <a href="index.php?cat=matches" class="filter-pill <?= (isset($_GET['cat']) && $_GET['cat'] =='matches') ? 'active' : '' ?>"> مباريات </a>
+            <a href="index.php?cat=matches" class="filter-pill <?= (isset($_GET['cat']) && $_GET['cat'] =='Transfers') ? 'active' : '' ?>">انتقالات</a>
 
-            </div>
+          </div>
         </section>
          
         <!-- Article card -->
