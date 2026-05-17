@@ -27,10 +27,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_article'])) {
     $path = "assest/" . $imageName;
 
     if (move_uploaded_file($tmpName, $path)) {
-      $article = new Article();
+     
 
 
-      $result = $article->createArticle($title, $content, $imageName, $category, $_SESSION['user_id']);
+      $result = createArticle($title, $content, $imageName, $category, $_SESSION['user_id']);
 
       if ($result) {
 

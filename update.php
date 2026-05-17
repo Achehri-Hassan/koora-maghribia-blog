@@ -3,13 +3,12 @@
 
 require_once "article.php";
 
-$article = new Article();
 
 $art = null;
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    $art = $article->getById($id);
+    $art = getArticleById($id);
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_article'])) {
@@ -32,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_article'])) {
         $imageToSave = $_POST['old_image'];
     }
 
-    $article->Update($id, $title, $content, $imageToSave, $category);
+   updateArticle($id, $title, $content, $imageToSave, $category);
     header("Location: index.php");
     exit;
 }
@@ -63,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_article'])) {
 
         <div class="input-group">
             <label>عنوان المقال</label>
-            <input type="text" name="title value="<?= $art['title'] ?? '' ?> required >
+            <input type="text" name="title" value="<?= $art['title'] ?? '' ?>" required >
         </div>
 
         <div class="row">

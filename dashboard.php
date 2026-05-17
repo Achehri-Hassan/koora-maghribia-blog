@@ -13,9 +13,8 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 
-$comments = new Comments();
-$article = new Article();
-$articles = $article->readAll();
+
+$articles =readAllArticles();
 
 $selectedComments = null;
 $selectedArticleTitle = "";
@@ -24,9 +23,9 @@ if (isset($_GET['view_comments'])) {
 
     $art_id = $_GET['view_comments'];
 
-    $selectedComments = $comments->getCommentsByArticle($art_id);
+    $selectedComments = getCommentsByArticle($art_id);
 
-    $currentArt = $article->getById($art_id);
+    $currentArt = getArticleById($art_id);
 
     if ($currentArt) {
         $selectedArticleTitle = $currentArt['title'];
@@ -37,7 +36,7 @@ if (isset($_GET['view_comments'])) {
 $totalArticles = count($articles);
 $totalCommentsCount = 0;
 foreach ($articles as $a) {
-    $totalCommentsCount += $comments->getCommentsCount($a['id']);
+    $totalCommentsCount += getCommentsCount($a['id']);
 }
 ?>
 
@@ -97,7 +96,7 @@ foreach ($articles as $a) {
                         <td><strong><?= htmlspecialchars($art['title']) ?></strong></td>
                         <td>
                             <a href="dashboard.php?view_comments=<?= $art['id'] ?>#comments-section" class="view-comments">
-                                <?= $comments->getCommentsCount($art['id']) ?> عرض تعليقات
+                                <?= getCommentsCount($art['id']) ?> عرض تعليقات
                             </a>
                         </td>
                         <td>

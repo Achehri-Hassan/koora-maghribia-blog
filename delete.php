@@ -6,8 +6,8 @@ if (isset($_GET['id'])) {
 
     $id = $_GET['id'];
 
-    $article = new Article();
-    $article->delete($id);
+   
+  deleteArticle($id);
 
     header("Location: dashboard.php");
     exit;

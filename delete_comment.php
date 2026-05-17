@@ -8,10 +8,10 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 
 $id = $_GET['id'];
 
-$comments = new Comments();
 
 
-$comments->deleteComment($id);
+
+deleteComment($id);
 
 header("Location: dashboard.php");
 exit();

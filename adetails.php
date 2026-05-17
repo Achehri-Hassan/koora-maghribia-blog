@@ -15,11 +15,10 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 }
 
 $id =$_GET['id'];
-$article = new Article();
-$comments = new Comments();
 
 
-$art = $article->getById($id);
+
+$art = getArticleById($id);
 
 if (!$art) {
     die("Article not found");
@@ -38,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_comment'])) {
         $_SESSION['my_comment_name'] = $username;
 
 
-        $comments->addComment($id, $username, $comment_text);
+        addComment($id, $username, $comment_text);
 
      
         header("Location: adetails.php?id=" . $id );
@@ -48,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_comment'])) {
 
 
 
-$comments = $comments->getCommentsByArticle($id);
+$comments = getCommentsByArticle($id);
 
 
 

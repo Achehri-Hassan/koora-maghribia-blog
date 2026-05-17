@@ -1,37 +1,26 @@
-
-
 <?php
 
-
-class Database
+function getConnection()
 {
+    $server = "localhost";
+    $dbname = "botola_maghribiya";
+    $username = "root";
+    $password = "";
 
-    private  $Server = "localhost";
-    private  $dbname  = "botola_maghribiya";
-    private $root = "root";
-    private $password = "";
+    try {
 
-    public $conn;
+        $conn = new PDO(
+            "mysql:host=$server;dbname=$dbname;charset=utf8",
+            $username,
+            $password
+        );
 
-    public function getConnection()
-    {
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $this->conn = null;
+        return $conn;
 
-        try {
-            $this->conn = new PDO("mysql:host={$this->Server};dbname={$this->dbname};charset=utf8", $this->root, $this->password);
+    } catch (PDOException $e) {
 
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            die("Eroor" . $e->getMessage());
-        }
-
-        return $this->conn;
+        die("Error: " . $e->getMessage());
     }
 }
-
-
-
-
-
-?>

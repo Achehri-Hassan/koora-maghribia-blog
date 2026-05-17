@@ -3,12 +3,11 @@
 session_start();
 
 
-
+require_once "connection.php";
 require_once "article.php";
 require_once "comments.php";
 
-$article = new Article();
-$comments = new Comments();
+
 
 
 $isAdmin = isset($_SESSION['user_id']) && $_SESSION['user_id'] == 1;
@@ -17,10 +16,10 @@ $isAdmin = isset($_SESSION['user_id']) && $_SESSION['user_id'] == 1;
 if (isset($_GET['cat']) && !empty($_GET['cat'])) {
     $category = trim($_GET['cat']);
 
-    $articles = $article->getByCategory($category);
+    $articles = getArticlesByCategory($category);
 } else {
 
-    $articles = $article->readAll();
+    $articles = readAllArticles();
 }
 
 ?>
@@ -88,7 +87,7 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
            <?php else: ?>
 
            <?php foreach ($articles as $art): ?>
-             <?php $commentsCount = $comments->getCommentsCount($art['id']); ?>
+             <?php $commentsCount = getCommentsCount($art['id']); ?>
                 <a href="adetails.php?id=<?= $art['id'] ?>" class="card-link">
                     <div class="card">
                         <!-- IMAGE -->
