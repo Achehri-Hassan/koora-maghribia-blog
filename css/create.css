@@ -13,7 +13,7 @@
     padding: 20px;
 }
 
-.form_card{
+form{
 
     width: 100%;
     max-width: 850px;
@@ -23,7 +23,7 @@
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
-.form_card h1{
+form h1{
     text-align: center;
     margin-bottom: 25px;
     color: var(--second-color);
@@ -34,13 +34,13 @@
     gap: 15px;
 }
 
+
 .input-group{
     width: 100%;
     margin-bottom: 18px;
 }
 
 .input-group label{
-    
     display: block;
     margin-bottom: 6px;
     font-weight: 600;
@@ -50,13 +50,14 @@
 .input-group input,
 .input-group select,
 .input-group textarea{
-     font-family: 'Cairo', sans-serif;
+   
+    font-family: 'Cairo', sans-serif;
     width: 100%;
     padding: 12px;
     border: 1px solid var(--second-color);
     border-radius: 10px;
     outline: none;
-    font-size: 14px;
+    font-size: 19px;
 
 }
 
@@ -72,7 +73,6 @@ textarea{
 }
 
 .btn-submit{
-
     padding: 12px 20px;
     border: none;
     border-radius: 10px;

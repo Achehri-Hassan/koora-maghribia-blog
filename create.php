@@ -60,7 +60,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_article'])) {
 <body>
 
   <div class="form_container">
-    <form method="post" enctype="multipart/form-data" class="form_card">
+
+    <form method="post" enctype="multipart/form-data" >
 
       <h1>إضافة مقال جديد</h1>
 
@@ -103,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_article'])) {
         <textarea rows="8" name="content" placeholder="اكتب محتوى المقال هنا..." required></textarea>
       </div>
        
-      
+
       <div class="buttons">
         <button type="submit" class="btn-submit" name="add_article"> نشر المقال </button>
         <a href="dashboard.php" class="btn-back"> الرجوع للوحة التحكم </a>

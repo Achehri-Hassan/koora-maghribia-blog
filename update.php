@@ -63,68 +63,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_article'])) {
 
         <div class="input-group">
             <label>عنوان المقال</label>
-
-            <input 
-                type="text" 
-                name="title"
-                value="<?= $art['title'] ?? '' ?>"
-                required
-            >
+            <input type="text" name="title value="<?= $art['title'] ?? '' ?> required >
         </div>
 
         <div class="row">
-
             <div class="input-group">
-
                 <label>التصنيف</label>
-
-                <select name="select" required>
-
-                    <option value="news"
-                        <?= ($art['category'] ?? '') == 'news' ? 'selected' : '' ?>>
-                        أخبار
-                    </option>
-
-                    <option value="Transfers"
-                        <?= ($art['category'] ?? '') == 'Transfers' ? 'selected' : '' ?>>
-                        الانتقالات
-                    </option>
-
-                </select>
-
+             <select name="select" required>
+                <option value="news" <?= ($art['category'] ?? '') == 'news' ? 'selected' : '' ?>> أخبار</option>
+                <option value="Transfers"<?= ($art['category'] ?? '') == 'Transfers' ? 'selected' : '' ?>> الانتقالات</option>
+             </select>
             </div>
 
             <div class="input-group">
-
                 <label>صورة الغلاف</label>
-
                 <input type="file" name="image">
-
             </div>
-
         </div>
 
         <div class="input-group">
-
             <label>المحتوى</label>
-
-            <textarea 
-                rows="8"
-                name="content"
-                required><?= $art['content'] ?? '' ?></textarea>
-
+            <textarea rows="8"name="content"required><?= $art['content'] ?? '' ?></textarea>
         </div>
 
         <div class="buttons">
-
-            <button type="submit" name="update_article" class="btn-submit">
-                تحديث المقال
-            </button>
-
-            <a href="dashboard.php" class="btn-back">
-                إلغاء
-            </a>
-
+            <button type="submit" name="update_article" class="btn-submit"> تحديث المقال</button> 
+            <a href="dashboard.php" class="btn-back"> إلغاء</a>
         </div>
 
     </form>
