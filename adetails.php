@@ -141,10 +141,7 @@ $comments = $comments->getCommentsByArticle($id);
 
         <div class="share-icons">
             <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
             <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-            <a href="#"><i class="fa-regular fa-envelope"></i></a>
         </div>
 
         <hr class="cta__divider" />

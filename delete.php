@@ -9,7 +9,7 @@ if (isset($_GET['id'])) {
     $article = new Article();
     $article->delete($id);
 
-    header("Location: index.php");
+    header("Location: dashboard.php");
     exit;
 }
 

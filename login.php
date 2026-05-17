@@ -23,7 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["login"])) {
       header("Location: dashboard.php");
       exit();
 
-
     } else {
       $error = "الإيميل أو كلمة المرور غلط!";
     }
@@ -57,49 +56,69 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["login"])) {
 
 <body>
 
+   <!doctype html>
+<html lang="ar" dir="rtl">
 
-  <div class="form_container">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <div class="login-card">
+  <title>تسجيل الدخول</title>
 
-      <div class="form-side">
-        <div class="form-header">
-          <i class="fa-solid fa-trophy"></i>
-          <h1>تسجيل الدخول</h1>
-          <div class="line"></div>
-          <?php if ($error): ?>
-            <p style="color: red; text-align: center;"><?php echo $error; ?></p>
-          <?php endif; ?>
+  <link rel="stylesheet" href="css/components/Form.css">
+
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+  <div class="login-container">
+
+    <form method="post" class="login-card">
+
+      <div class="form-header">
+        <i class="fa-solid fa-trophy"></i>
+        <h1>تسجيل الدخول</h1>
+
+        <?php if ($error): ?>
+          <p class="error"><?= $error ?></p>
+        <?php endif; ?>
+      </div>
+
+      <div class="input-group">
+        <label>البريد الإلكتروني</label>
+
+        <div class="input-box">
+          <input type="email" name="email" placeholder="email@example.com" required>
+          <i class="fa-regular fa-envelope"></i>
         </div>
-
-        <form method="post" action="">
-          <div class="input-group">
-            <label>البريد الإلكتروني</label>
-            <div class="input-box">
-              <input type="email" placeholder="email@example.com" name="email" />
-              <i class="fa-regular fa-envelope"></i>
-            </div>
-          </div>
-
-          <div class="input-group">
-            <label>كلمة المرور</label>
-            <div class="input-box">
-              <input type="password" placeholder="••••••••" name="password" />
-              <i class="fa-solid fa-lock"></i>
-            </div>
-          </div>
-
-          <button type="submit" class="btn-login" name="login">تسجيل الدخول</button>
-          <a href="index.php">Home page</a>
-        </form>
       </div>
 
+      <div class="input-group">
+        <label>كلمة المرور</label>
 
-      <div class="image-side">
-        <img src="assest/hakim.png" alt="Player" />
+        <div class="input-box">
+          <input type="password" name="password" placeholder="••••••••" required>
+          <i class="fa-solid fa-lock"></i>
+        </div>
       </div>
-    </div>
+
+      <button type="submit" name="login" class="btn-login">
+        تسجيل الدخول
+      </button>
+
+      <a href="index.php" class="btn-guest">
+        دخول كزائر
+      </a>
+
+    </form>
+
   </div>
+
+</body>
+</html>
+  
 </body>
 
 </html>

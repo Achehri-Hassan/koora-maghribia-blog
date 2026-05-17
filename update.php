@@ -2,6 +2,7 @@
 
 
 require_once "article.php";
+
 $article = new Article();
 
 $art = null;
@@ -18,7 +19,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_article'])) {
     $title = $_POST['title'];
     $content = $_POST['content'];
     $category = $_POST["select"];
-    $author = $_POST["author"];
 
     if (!empty($_FILES['image']['name'])) {
         
@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_article'])) {
         $imageToSave = $_POST['old_image'];
     }
 
-    $article->Update($id, $title, $content, $imageToSave, $author, $category);
+    $article->Update($id, $title, $content, $imageToSave, $category);
     header("Location: index.php");
     exit;
 }
@@ -50,88 +50,87 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_article'])) {
 </head>
 
 <body>
-    <div class="form_container">
-        <div class="login-card">
-            <div class="form-side">
-                <div class="form-header">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                    <h1>تعديل المقال</h1>
-                    <div class="line"></div>
-                </div>
-
-                <form method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="id" value="<?= $art['id'] ?? '' ?>">
-                    <input type="hidden" name="old_image" value="<?= $art['image'] ?? '' ?>">
-
-                    <div class="input-group">
-                        <label>عنوان المقال</label>
-                        <div class="input-box">
-                            <input type="text" name="title" value="<?= $art['title'] ?? '' ?>" required />
-                            <i class="fa-solid fa-heading"></i>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="input-group">
-                            <label>اسم الكاتب</label>
-                            <div class="input-box">
-                                <input type="text" name="author" value="<?= $art['author'] ?? '' ?>" required />
-                                <i class="fa-solid fa-user"></i>
-                            </div>
-                        </div>
-                        <div class="input-group">
-                            <label>التصنيف</label>
-
-                            <div class="input-box">
-                                <select name="select" required>
-                                    <option value="news" <?= ($art['category'] ?? '') == 'news' ? 'selected' : '' ?>>أخبار</option>
-                                    <option value="matches" <?= ($art['category'] ?? '') == 'matches' ? 'selected' : '' ?>>مباريات</option>
 
 
-                                    <option value="Analysis" <?= ($art['category'] ?? '') == 'Analysis' ? 'selected' : '' ?>>تحليل</option>
+  <div class="form_container">
 
+    <form method="post" enctype="multipart/form-data" class="form_card">
 
-                                    <option value="Transfers" <?= ($art['category'] ?? '') == 'Transfers' ? 'selected' : '' ?>>نتقالات</option>
-                                </select>
-                                <i class="fa-solid fa-tag"></i>
-                            </div>
-                        </div>
-                    </div>
+        <h1>تعديل المقال</h1>
 
-                    <div class="input-group">
-                        <label>صورة الغلاف (اتركها فارغة للحفاظ على الحالية)</label>
-                        <div class="input-box">
-                            <input type="file" name="image" />
-                            <i class="fa-solid fa-image"></i>
-                        </div>
-                    </div>
+        <input type="hidden" name="old_image" value="<?= $art['image'] ?>">
+        <input type="hidden" name="id" value="<?= $art['id'] ?>">
 
-                    <div class="input-group">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-                            <label style="margin: 0;">المحتوى</label>
-                            <!-- <a href="test.html" target="_blank" style="font-size: 13px; color: #007bff; text-decoration: none; font-weight: bold;">
-                                <i class="fa-solid fa-up-right-from-square"></i> فتح محرر الكتابة (Copy/Paste)
-                            </a> -->
+        <div class="input-group">
+            <label>عنوان المقال</label>
 
-
-                        </div>
-                        <div class="input-box">
-                            <textarea rows="8" name="content" id="mainContent" placeholder="الصق المحتوى هنا بعد نسخه من المحرر..." id="mainContent"><?= $art['content'] ?? ''  ?></textarea>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn-submit" name="update_article">تحديث المقال</button>
-                    <a href="index.php" class="btn-back" style="margin-top: 10px;">إلغاء</a>
-                </form>
-            </div>
-            <div class="image-side">
-                <img src="assest/hakim.png" alt="Hakim" />
-            </div>
+            <input 
+                type="text" 
+                name="title"
+                value="<?= $art['title'] ?? '' ?>"
+                required
+            >
         </div>
-    </div>
 
+        <div class="row">
 
+            <div class="input-group">
+
+                <label>التصنيف</label>
+
+                <select name="select" required>
+
+                    <option value="news"
+                        <?= ($art['category'] ?? '') == 'news' ? 'selected' : '' ?>>
+                        أخبار
+                    </option>
+
+                    <option value="Transfers"
+                        <?= ($art['category'] ?? '') == 'Transfers' ? 'selected' : '' ?>>
+                        الانتقالات
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="input-group">
+
+                <label>صورة الغلاف</label>
+
+                <input type="file" name="image">
+
+            </div>
+
+        </div>
+
+        <div class="input-group">
+
+            <label>المحتوى</label>
+
+            <textarea 
+                rows="8"
+                name="content"
+                required><?= $art['content'] ?? '' ?></textarea>
+
+        </div>
+
+        <div class="buttons">
+
+            <button type="submit" name="update_article" class="btn-submit">
+                تحديث المقال
+            </button>
+
+            <a href="dashboard.php" class="btn-back">
+                إلغاء
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+    
 </body>
-
-
 </html>

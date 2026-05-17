@@ -17,7 +17,7 @@ class User
     // Login user (IMPORTANT)
     public function login($email)
     {
-        $sql = "SELECT * FROM users WHERE email = :email ";
+        $sql = "SELECT * FROM admin WHERE email = :email ";
 
         $stmt = $this->conn->prepare($sql);
 

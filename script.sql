@@ -12,13 +12,9 @@ use botola_maghribiya;
 CREATE TABLE admin(
 
   id INT AUTO_INCREMENT PRIMARY KEY,
-
   username VARCHAR(100) NOT NULL,
-
   email VARCHAR(150) NOT NULL UNIQUE,
-
   password VARCHAR(255) NOT NULL,
-
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
 ) COMMENT = 'Table The users';
@@ -27,6 +23,7 @@ CREATE TABLE admin(
 -- table articles
 
 CREATE TABLE articles (
+    
   id INT AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
   content TEXT NOT NULL,
@@ -84,7 +81,6 @@ INSERT INTO articles (title,  content, image, category, user_id) VALUES
 ),
 (
     'بدر بانون يوضح ويعتذر للمسفيويين',
-    'Hassan',
     'خرج بدر بانون، لاعب الرجاء الرياضي لكرة القدم، بتوضيح رسمي عقب الجدل الذي رافق الفيديو المتداول بعد نهاية الديربي البيضاوي أمام الوداد الرياضي، والذي ظهر فيه في نقاش مع عبد الغفور لاميرات. وأكد بانون، عبر ستوري بحسابه الرسمي على موقع إنستغرام، أن الحديث الذي جمعه بلاميرات كان مرتبطا بسوء تفاهم سابق.',
     'A4.jpg',
     'news',

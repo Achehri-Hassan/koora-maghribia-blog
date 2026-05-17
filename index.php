@@ -2,6 +2,8 @@
 
 session_start();
 
+
+
 require_once "article.php";
 require_once "comments.php";
 
@@ -73,7 +75,7 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
 
             <a href="index.php" class="filter-pill <?= !isset($_GET['cat']) ? 'active' : '' ?>"> All </a>
             <a href="index.php?cat=news" class="filter-pill <?= (isset($_GET['cat']) && $_GET['cat'] =='news') ? 'active' : '' ?>">  أخبار</a>
-            <a href="index.php?cat=matches" class="filter-pill <?= (isset($_GET['cat']) && $_GET['cat'] =='Transfers') ? 'active' : '' ?>">انتقالات</a>
+            <a href="index.php?cat=Transfers" class="filter-pill <?= (isset($_GET['cat']) && $_GET['cat'] =='Transfers') ? 'active' : '' ?>">انتقالات</a>
 
           </div>
         </section>
@@ -140,10 +142,7 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
 
             <div class="share-icons">
                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-               <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
                <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-               <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-               <a href="#"><i class="fa-regular fa-envelope"></i></a>
             </div>
 
             <hr class="cta__divider" />

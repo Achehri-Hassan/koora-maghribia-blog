@@ -44,25 +44,26 @@ class Article
     }
 
     //   function to create article 
-    public function createArticle($title, $content, $image, $category)
+    public function createArticle($title, $content, $image, $category , $admin_id)
     {
-        $sql = "INSERT INTO articles (title, content, image,  category) 
-                VALUES (:title, :content, :image, :category)";
+        $sql = "INSERT INTO articles (title, content, image , category , user_id) 
+                VALUES (:title, :content, :image,   :category , :user_id)";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
             "title" => $title,
             "content" => $content,
             "image" => $image,
-            "category" => $category
+            "category" => $category,
+            "user_id" => $admin_id
         ]);
     }
 
 
     // function update article 
-    public function Update($id, $title, $content, $image,  $category)
+    public function Update($id, $title, $content, $image ,  $category )
     {
         $sql = "UPDATE articles SET title=:title, content=:content, category=:category, 
-                image=:image,  WHERE id=:id";
+                image=:image WHERE id=:id";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
             "id" => $id,
@@ -70,7 +71,6 @@ class Article
             "content" => $content,
             "category" => $category,
             "image" => $image,
-           
         ]);
     }
 
