@@ -2,24 +2,17 @@
 
 require_once "connection.php";
 
-class User
-{
-    private $conn;
 
-    public function __construct()
-    {
-        $db = new Database();
-        $this->conn = $db->getConnection();
-    }
-
-  
 
     // Login user (IMPORTANT)
-    public function login($email)
+    function login($email)
     {
+         
+       $conn = getConnection();
+
         $sql = "SELECT * FROM admin WHERE email = :email ";
 
-        $stmt = $this->conn->prepare($sql);
+        $stmt = $conn->prepare($sql);
 
         $stmt->execute([
             "email" => $email
@@ -29,4 +22,4 @@ class User
     }
 
    
-}
+
