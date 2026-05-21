@@ -7,7 +7,7 @@ create database botola_maghribiya;
 use botola_maghribiya;
 
 
--- tables users
+-- tables admin
 
 CREATE TABLE admin(
 
@@ -92,6 +92,22 @@ INSERT INTO articles (title,  content, image, category, user_id) VALUES
     'botola-maroc.jpg',
     'news',
     1
+);
+
+
+
+CREATE TABLE  matches_table(
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  team_one_name VARCHAR(255) NOT NULL,
+  team_one_image  VARCHAR(255) NOT NULL,
+  team_two_name VARCHAR(255) NOT NULL,
+  team_two_image VARCHAR(255) NOT NULL,
+  stadium  VARCHAR(255) NOT NULL,
+  match_date  DATE NOT NULL,
+  match_time  TIME NOT NULL,
+  team_one_score INT DEFAULT 0,
+  team_two_score INT DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 
