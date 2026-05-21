@@ -76,6 +76,8 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
             <a href="index.php?cat=news" class="filter-pill <?= (isset($_GET['cat']) && $_GET['cat'] =='news') ? 'active' : '' ?>">  أخبار</a>
             <a href="index.php?cat=Transfers" class="filter-pill <?= (isset($_GET['cat']) && $_GET['cat'] =='Transfers') ? 'active' : '' ?>">انتقالات</a>
 
+            <a href="view_matches.php" class="filter-pill">مباريات</a>
+
           </div>
         </section>
          
