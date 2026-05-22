@@ -2,11 +2,21 @@
 
 require_once "connection.php";
 
-function readAllMatches()
+// دالة جلب المباريات المفلترة بالتاريخ متوافقة 100% مع PDO وحاسوبك
+function readAllMatches($date)
 {
+    // جلب الاتصال من الدالة الخاصة بك
     $conn = getConnection();
-    $sql = "SELECT * FROM matches_table ORDER BY match_date ASC, match_time ASC";
-    $stmt = $conn->query($sql);
+    
+    // الاستعلام باستعمال المعايير الآمنة (Placeholder :date) اسم الجدول matches_table كما في الدالة الأخرى
+    $sql = "SELECT * FROM matches_table WHERE match_date = :match_date ORDER BY match_time ASC";
+    
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([
+        "match_date" => $date
+    ]);
+    
+    // إرجاع النتائج على شكل مصفوفة مرتبة
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
@@ -28,5 +38,4 @@ function createMatch($team_one_name, $team_one_image, $team_two_name, $team_two_
         "match_time"     => $match_time
     ]);
 }
-
 ?>
