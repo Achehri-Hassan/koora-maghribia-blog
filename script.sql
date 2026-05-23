@@ -50,6 +50,23 @@ CREATE TABLE comments (
 
 
 
+-- match table to add 
+CREATE TABLE matches_table (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    team_one_name VARCHAR(100),
+    team_one_image VARCHAR(255),
+    team_two_name VARCHAR(100),
+    team_two_image VARCHAR(255),
+    stadium VARCHAR(150),
+    youtube_url VARCHAR(255) NULL,
+    match_date DATE,
+    match_time TIME,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+
+
 INSERT INTO articles (title,  content, image, category, user_id) VALUES 
 (
     'التعادل السلبي يحسم مواجهة اتحاد طنجة والجيش الملكي بملعب طنجة الكبير',
