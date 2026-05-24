@@ -10,10 +10,9 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] != 1) {
     exit();
 }
 
-$today     = date('Y-m-d');
-$yesterday = date('Y-m-d', strtotime('-1 day'));
-$tomorrow  = date('Y-m-d', strtotime('+1 day'));
-$allowed_dates = [$yesterday, $today, $tomorrow];
+$today = date('Y-m-d');
+$tomorrow = date('Y-m-d', strtotime('+1 day'));
+$allowed_dates = [ $today, $tomorrow];
 
 $message = "";
 $status = "";
@@ -118,7 +117,7 @@ if (isset($_POST['add_match'])) {
             <div class="row">
                 <div class="input-group">
                     <label>تاريخ المباراة</label>
-                    <input type="date" name="match_date" required>
+                    <input type="date" name="match_date" required min="<?= date('Y-m-d') ?>">
                 </div>
                 <div class="input-group">
                     <label>توقيت المباراة</label>
