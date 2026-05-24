@@ -11,21 +11,18 @@ function createMatch($team_one_name, $team_one_image, $team_two_name, $team_two_
             
     $stmt = $pdo->prepare($sql);
     
-    $result = $stmt->execute([
-        ':team_one_name'  => $team_one_name,
-        ':team_one_image' => $team_one_image,
-        ':team_two_name'  => $team_two_name,
-        ':team_two_image' => $team_two_image,
-        ':stadium'        => $stadium,
-        ':match_date'     => $match_date,
-        ':match_time'     => $match_time,
-        ':youtube_url'    => $youtube_url
+     return $stmt->execute([
+        'team_one_name'  => $team_one_name,
+        'team_one_image' => $team_one_image,
+        'team_two_name'  => $team_two_name,
+        'team_two_image' => $team_two_image,
+        'stadium'        => $stadium,
+        'match_date'     => $match_date,
+        'match_time'     => $match_time,
+        'youtube_url'    => $youtube_url
     ]);
     
-    if ($result) {
-        return $pdo->lastInsertId();
-    }
-    return false;
+    
 }
 
 
@@ -34,9 +31,13 @@ function readAllMatches($date) {
     
     $sql = "SELECT * FROM matches_table WHERE match_date = :match_date ORDER BY match_time DESC";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([':match_date' => $date]);
+    $stmt->execute(
+        [
+        'match_date' => $date
+        ]
+        );
     
-    return $stmt->fetchAll();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 
@@ -47,7 +48,7 @@ function readMatchById($id) {
     $stmt = $pdo->prepare($sql);
     $stmt->execute([':id' => $id]);
     
-    return $stmt->fetch();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
 ?>

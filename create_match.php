@@ -32,11 +32,6 @@ if (isset($_POST['add_match'])) {
     } else {
         $target_dir = "assest/mathes/";
 
-        
-        if (!file_exists($target_dir)) {
-            mkdir($target_dir, 0777, true);
-        }
-
         $img_one_name = time() . "_" . basename($_FILES["team_one_image"]["name"]);
         $target_file_one = $target_dir . $img_one_name;
 
@@ -48,24 +43,14 @@ if (isset($_POST['add_match'])) {
             move_uploaded_file($_FILES["team_two_image"]["tmp_name"], $target_file_two)
         ) {
 
-            $match_id = createMatch(
-                $team_one_name,
-                $img_one_name,
-                $team_two_name,
-                $img_two_name,
-                $stadium,
+          $match_id = createMatch( $team_one_name, $img_one_name, $team_two_name, $img_two_name,$stadium,
                 $match_date,
                 $match_time,
                 $youtube_url
             );
 
-            if ($match_id) {
-                $message = "تمت جدولة المباراة بنجاح! ⚽";
-                $status = "success";
-            } else {
-                $message = "حدث خطأ في قاعدة البيانات أثناء الحفظ.";
-                $status = "error";
-            }
+            header("Location: index.php");
+
         } else {
             $message = "فشل رفع شعارات الفرق، يرجى التحقق من مسار ومساحة السيرفر.";
             $status = "error";

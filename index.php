@@ -60,7 +60,6 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
 
                 <a href="dashboard.php"> لوحة التحكم</a>
                 <a href="logout.php"> تسجيل الخروج </a>
-                <a href="create_match.php">Create matches</a>
             </div>
         <?php endif; ?>
 
