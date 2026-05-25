@@ -34,23 +34,6 @@ if (!$match) {
     </a>
 
 <div class="watch-container">
-    <!-- <div class="match-header-info">
-        <div class="teams-versus">
-            <div class="team-box">
-                <img src="assest/mathes/<?= htmlspecialchars($match['team_one_image']) ?>" alt="">
-                <span><?= htmlspecialchars($match['team_one_name']) ?></span>
-            </div>
-            <div class="versus-label">VS</div>
-            <div class="team-box">
-                <img src="assest/mathes/<?= htmlspecialchars($match['team_two_image']) ?>" alt="">
-                <span><?= htmlspecialchars($match['team_two_name']) ?></span>
-            </div>
-        </div>
-        <div class="stadium-info">
-            <i class="fa-solid fa-stadium"></i> الملعب: <?= htmlspecialchars($match['stadium']) ?> | 
-            <i class="fa-regular fa-calendar"></i> <?= date("d-m-Y", strtotime($match['match_date'])) ?>
-        </div>
-    </div> -->
 
     <div class="video-wrapper">
         <?php if (!empty($match['youtube_url'])): ?>

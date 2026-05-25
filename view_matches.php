@@ -37,9 +37,13 @@ $matches = readAllMatches($target_date);
 <div class="container">
     <div class="top-bar">
         <div class="filter-buttons">
+
             <a href="view_matches.php?day=tomorrow" class="btn-filter btn-tomorrow <?= $current_filter === 'tomorrow' ? 'active' : '' ?>">مباريات الغد</a>
+
             <a href="view_matches.php?day=today" class="btn-filter btn-today <?= $current_filter === 'today' ? 'active' : '' ?>">مباريات اليوم</a>
+
             <a href="view_matches.php?day=yesterday" class="btn-filter btn-yesterday <?= $current_filter === 'yesterday' ? 'active' : '' ?>">مباريات الأمس</a>
+
         </div>
         <div class="header-titles">
             <span class="badge-device">بتوقيت جهازك</span>
@@ -64,7 +68,7 @@ $matches = readAllMatches($target_date);
             <div class="match-container class-match-live"
                  data-start="<?= $start_iso ?>"
                  data-end="<?= $end_iso ?>"
-                 data-url="watch_match.php?id=<?= $match['id'] ?>">
+                 data-url="watch_match_live.php?id=<?= $match['id'] ?>">
                 <div class="match-card">
                     <div class="team">
                         <img src="assest/mathes/<?= htmlspecialchars($match['team_one_image']) ?>" alt="<?= htmlspecialchars($match['team_one_name']) ?>">
