@@ -23,13 +23,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_article'])) {
 
   if (empty($title) || empty($content) || empty($category) || empty($imageName)) {
     $error = "المرجو ملء جميع الخانات المطلوبة.";
+
   } else {
     $path = "assest/" . $imageName;
 
     if (move_uploaded_file($tmpName, $path)) {
      
-
-
       $result = createArticle($title, $content, $imageName, $category, $_SESSION['user_id']);
 
       if ($result) {

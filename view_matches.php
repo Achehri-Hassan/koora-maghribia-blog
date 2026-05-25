@@ -30,34 +30,7 @@ $matches = readAllMatches($target_date);
     <title>أهم مباريات اليوم - Live Score</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <style>
-        body { font-family: 'Cairo', sans-serif; background-color: #f4f7f9; margin: 0; padding: 20px; direction: rtl; }
-        .container { max-width: 850px; margin: 0 auto; }
-        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px; }
-        .header-titles { display: flex; flex-direction: column; align-items: flex-start; }
-        .badge-device { background-color: #510505; color: #fff; padding: 4px 12px; border-radius: 6px; font-size: 11px; margin-bottom: 5px; font-weight: 600; }
-        .main-title { background-color: #510505; color: #fff; padding: 10px 20px; border-radius: 8px; font-size: 16px; font-weight: 700; margin: 0; }
-        .filter-buttons { display: flex; gap: 8px; }
-        .btn-filter { padding: 10px 18px; border-radius: 8px; text-decoration: none; color: #fff; font-weight: 700; font-size: 13px; }
-        .btn-tomorrow { background-color: #1e70bf; }
-        .btn-today { background-color: #510505; }
-        .btn-yesterday { background-color: #7b1fa2; }
-        .btn-filter.active { outline: 3px solid #111; }
-        .matches-list { display: flex; flex-direction: column; gap: 16px; }
-        .match-container { background-color: #ffffff; border-radius: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border: 1px solid #e6ecf0; overflow: hidden; cursor: pointer; transition: transform 0.2s ease; }
-        .match-container:hover { transform: translateY(-2px); }
-        .match-card { display: grid; grid-template-columns: 1fr 180px 1fr; align-items: center; padding: 24px 30px; text-align: center; }
-        .team { display: flex; flex-direction: column; align-items: center; gap: 12px; }
-        .team img { width: 60px; height: 60px; object-fit: contain; }
-        .team-name { font-size: 15px; font-weight: 700; color: #2c3e50; }
-        .match-info { display: flex; flex-direction: column; align-items: center; }
-        .match-time { font-size: 12px; color: #8a99a6; font-weight: 600; margin-bottom: 6px; }
-        .live-score-display { font-size: 32px; font-weight: 800; color: #1e293b; letter-spacing: 6px; margin: 2px 0; }
-        .match-status { color: #fff; font-size: 11px; padding: 5px 16px; border-radius: 20px; font-weight: 700; }
-        .no-matches { text-align: center; background: #fff; padding: 50px 20px; border-radius: 14px; color: #64748b; font-size: 16px; border: 1px solid #e2e8f0; }
-        .back-home { display: inline-flex; align-items: center; gap: 8px; margin-top: 25px; color: #510505; text-decoration: none; font-weight: 700; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-    </style>
+     <link rel="stylesheet" href="css/view_match.css">
 </head>
 <body>
 
@@ -91,7 +64,7 @@ $matches = readAllMatches($target_date);
             <div class="match-container class-match-live"
                  data-start="<?= $start_iso ?>"
                  data-end="<?= $end_iso ?>"
-                 onclick="location.href='watch_match.php?id=<?= $match['id'] ?>'">
+                 data-url="watch_match.php?id=<?= $match['id'] ?>">
                 <div class="match-card">
                     <div class="team">
                         <img src="assest/mathes/<?= htmlspecialchars($match['team_one_image']) ?>" alt="<?= htmlspecialchars($match['team_one_name']) ?>">
@@ -129,11 +102,16 @@ function updateLiveScores() {
         const endTime = new Date(container.getAttribute('data-end'));
         const scoreElement = container.querySelector('.dynamic-score');
         const statusBadge = container.querySelector('.live-status');
+        const matchUrl = container.getAttribute('data-url');
 
         if (now < startTime) {
             statusBadge.textContent = "لم تبدأ بعد";
             statusBadge.style.backgroundColor = "#1e293b";
             statusBadge.style.animation = "none";
+            
+            // إلغاء كلاس التحويم والـ click
+            container.classList.remove('clickable');
+            container.onclick = null;
 
         } else if (now >= startTime && now <= endTime) {
             const diffInSeconds = Math.floor((now - startTime) / 1000);
@@ -144,10 +122,20 @@ function updateLiveScores() {
             statusBadge.textContent = `مباشر 🔴 د ${currentMinute}'`;
             statusBadge.style.backgroundColor = "#ef4444";
             statusBadge.style.animation = "pulse 1.5s infinite";
+            
+            // تفعيل كلاس التحويم والـ click فقط في المباشر
+            container.classList.add('clickable');
+            container.onclick = function() {
+                location.href = matchUrl;
+            };
         } else {
             statusBadge.textContent = "انتهت";
             statusBadge.style.backgroundColor = "#22c55e";
             statusBadge.style.animation = "none";
+            
+            // إلغاء كلاس التحويم والـ click
+            container.classList.remove('clickable');
+            container.onclick = null;
         }
         scoreElement.textContent = "0 - 0";
     });

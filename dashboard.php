@@ -61,7 +61,7 @@ foreach ($articles as $a) {
         <!-- Right Side  nav-->
         <div class="right-side">
             <a href="index.php">الرئيسية</a>
-            <a href="create.php">إضافة مقال جديد</a>
+            <a href="create_Article.php">إضافة مقال جديد</a>
             <a href="create_match.php">إضافة مباراة </a>
         </div>
 
