@@ -56,8 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["login"])) {
 
 <body>
 
-   <!doctype html>
-<html lang="ar" dir="rtl">
+
 
 <head>
   <meta charset="UTF-8">
