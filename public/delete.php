@@ -1,6 +1,6 @@
 <?php
 
-require_once "article.php";
+require_once "src/models/article.php";
 
 if (isset($_GET['id'])) {
 

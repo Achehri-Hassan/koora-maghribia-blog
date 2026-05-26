@@ -1,8 +1,8 @@
 <?php
 
 session_start();
-require_once "connection.php";
-require_once "matches.php";
+// require_once "connection.php";
+require_once "src/models/matches.php";
 
 
 if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] != 1) {

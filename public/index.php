@@ -3,11 +3,9 @@
 session_start();
 
 
-require_once "connection.php";
-require_once "article.php";
-require_once "comments.php";
-
-
+require_once "../src/config/connection.php";
+require_once "../src/models/article.php";
+require_once "../src/models/comments.php";
 
 
 $isAdmin = isset($_SESSION['user_id']) && $_SESSION['user_id'] == 1;
@@ -36,7 +34,7 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
     <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet" />
 
     <!-- CSS -->
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../assest/css/style.css" />
 
     <!-- ICONS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
@@ -94,7 +92,7 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
                     <div class="card">
                         <!-- IMAGE -->
                         <div class="card-image-wrapper">
-                            <img src="assest/<?= htmlspecialchars($art['image']) ?>" alt="<?= htmlspecialchars($art['title']) ?>">
+                            <img src="../assest/articles/<?= htmlspecialchars($art['image']) ?>" alt="<?= htmlspecialchars($art['title']) ?>">
                             <span class="card-date-badge"><?= date("d M", strtotime($art["created_at"])) ?></span>
                         </div>
                         

@@ -1,8 +1,8 @@
 <?php 
 
 session_start();
-require_once "connection.php";
-require_once "matches.php";
+require_once "src/config/connection.php";
+require_once "src/models/matches.php";
 
 $current_filter = isset($_GET['day']) ? $_GET['day'] : 'today';
 
@@ -99,7 +99,7 @@ $matches = readAllMatches($target_date);
 
 
   <!-- script  -->
-  <script src="js/view_match.js"></script>
+  <script src="assets/js/view_match.js"></script>
 
 </body>
 </html>

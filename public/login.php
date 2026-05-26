@@ -2,7 +2,7 @@
 
 
 session_start();
-require_once "admin.php";
+require_once "../src/auth/admin.php";
 $error = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["login"])) {
@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["login"])) {
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
-  <link rel="stylesheet" href="css/components/Form.css" />
+  <link rel="stylesheet" href="../assest/css/components/form.css" />
 </head>
 
 <body>

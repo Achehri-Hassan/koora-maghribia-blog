@@ -3,8 +3,8 @@
 
 session_start();
 
-require_once "article.php";
-require_once "comments.php";
+require_once "src/models/article.php";
+require_once "src/models/comments.php";
 
 
 $isAdmin = isset($_SESSION['user_id']) && $_SESSION['user_id'] == 1;

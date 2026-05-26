@@ -2,8 +2,8 @@
 
 
 session_start();
-require_once "connection.php";
-require_once "matches.php";
+require_once "src/config/connection.php";
+require_once "src/models/matches.php";
 
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     header("Location: view_matches.php");

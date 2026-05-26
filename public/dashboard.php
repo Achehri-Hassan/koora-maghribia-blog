@@ -2,8 +2,8 @@
 
 
 session_start();
-require_once "comments.php";
-require_once "article.php";
+require_once "../src/models/comments.php";
+require_once "../src/models/article.php";
 
 
 
@@ -49,7 +49,7 @@ foreach ($articles as $a) {
     <title>لوحة التحكم - إدارة المحتوى</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="../assest/css/dashboard.css">
 
 </head>
 
