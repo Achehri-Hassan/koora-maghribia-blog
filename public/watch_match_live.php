@@ -2,8 +2,8 @@
 
 
 session_start();
-require_once "src/config/connection.php";
-require_once "src/models/matches.php";
+require_once "../src/config/connection.php";
+require_once "../src/models/matches.php";
 
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     header("Location: view_matches.php");
@@ -25,7 +25,7 @@ if (!$match) {
     <title>بث مباشر: <?= htmlspecialchars($match['team_one_name']) ?> ضد <?= htmlspecialchars($match['team_two_name']) ?></title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <link rel="stylesheet" href="css/watch_match_live.css">
+    <link rel="stylesheet" href="../assest/css/watch_match_live.css">
 </head>
 <body>
 

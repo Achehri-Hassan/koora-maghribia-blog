@@ -2,7 +2,7 @@
 
 session_start();
 // require_once "connection.php";
-require_once "src/models/matches.php";
+require_once "../src/models/matches.php";
 
 
 if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] != 1) {
@@ -29,7 +29,7 @@ if (isset($_POST['add_match'])) {
         $message = "يمكنك جدولة المباريات لأيام الأمس، اليوم، أو الغد فقط.";
         $status = "error";
     } else {
-        $target_dir = "assest/mathes/";
+        $target_dir = "../assest/mathes/";
 
         $img_one_name = time() . "_" . basename($_FILES["team_one_image"]["name"]);
         $target_file_one = $target_dir . $img_one_name;
@@ -64,7 +64,7 @@ if (isset($_POST['add_match'])) {
     <title>إضافة مباراة جديدة</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <link rel="stylesheet" href="css/create.css" />
+    <link rel="stylesheet" href="../assest/css/create.css" />
     <style>
         .alert { padding: 12px; border-radius: 6px; margin-bottom: 20px; font-size: 14px; font-weight: bold; text-align: center; }
         .alert-success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }

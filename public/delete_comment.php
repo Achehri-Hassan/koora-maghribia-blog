@@ -1,6 +1,6 @@
 <?php
 
-require_once "src/models/comments.php";
+require_once "../src/models/comments.php";
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     die("Invalid request");

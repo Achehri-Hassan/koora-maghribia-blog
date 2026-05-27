@@ -1,7 +1,7 @@
 <?php
 
 
-require_once "src/models/article.php";
+require_once "../src/models/article.php";
 
 
 $art = null;
@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_article'])) {
     <title>تعديل مقال - البطولة</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <link rel="stylesheet" href="css/create.css" />
+    <link rel="stylesheet" href="../assest/css/create.css" />
 </head>
 
 <body>

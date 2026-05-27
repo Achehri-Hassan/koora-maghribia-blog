@@ -1,8 +1,8 @@
 <?php 
 
 session_start();
-require_once "src/config/connection.php";
-require_once "src/models/matches.php";
+require_once "../src/config/connection.php";
+require_once "../src/models/matches.php";
 
 $current_filter = isset($_GET['day']) ? $_GET['day'] : 'today';
 
@@ -30,7 +30,7 @@ $matches = readAllMatches($target_date);
     <title>أهم مباريات اليوم - Live Score</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-     <link rel="stylesheet" href="css/view_match.css">
+     <link rel="stylesheet" href="../assest/css/view_match.css">
 </head>
 <body>
 
@@ -70,7 +70,7 @@ $matches = readAllMatches($target_date);
                  data-url="watch_match_live.php?id=<?= $match['id'] ?>">
                 <div class="match-card">
                     <div class="team">
-                        <img src="assest/mathes/<?= htmlspecialchars($match['team_one_image']) ?>" alt="<?= htmlspecialchars($match['team_one_name']) ?>">
+                        <img src="../assest/mathes/<?= htmlspecialchars($match['team_one_image']) ?>" alt="<?= htmlspecialchars($match['team_one_name']) ?>">
                         <span class="team-name"><?= htmlspecialchars($match['team_one_name']) ?></span>
                     </div>
 
@@ -83,7 +83,7 @@ $matches = readAllMatches($target_date);
                     </div>
 
                     <div class="team">
-                        <img src="assest/mathes/<?= htmlspecialchars($match['team_two_image']) ?>" alt="<?= htmlspecialchars($match['team_two_name']) ?>">
+                        <img src="../assest/mathes/<?= htmlspecialchars($match['team_two_image']) ?>" alt="<?= htmlspecialchars($match['team_two_name']) ?>">
                         <span class="team-name"><?= htmlspecialchars($match['team_two_name']) ?></span>
                     </div>
                 </div>
@@ -99,7 +99,7 @@ $matches = readAllMatches($target_date);
 
 
   <!-- script  -->
-  <script src="assets/js/view_match.js"></script>
+  <script src="../assest/js/view_match.js"></script>
 
 </body>
 </html>

@@ -3,8 +3,8 @@
 
 session_start();
 
-require_once "src/models/article.php";
-require_once "src/models/comments.php";
+require_once "../src/models/article.php";
+require_once "../src/models/comments.php";
 
 
 $isAdmin = isset($_SESSION['user_id']) && $_SESSION['user_id'] == 1;
@@ -61,7 +61,7 @@ $comments = getCommentsByArticle($id);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($art['title']) ?></title>
-    <link rel="stylesheet" href="css/details.css">
+    <link rel="stylesheet" href="../assest//css/details.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 
       <link
@@ -99,7 +99,7 @@ $comments = getCommentsByArticle($id);
             <h1><?= htmlspecialchars($art['title']) ?></h1>
 
             <?php if (!empty($art['image'])): ?>
-                <img src="assest/<?= htmlspecialchars($art['image']) ?>" class="main-img" alt="article image">
+                <img src="../assest/articles/<?= htmlspecialchars($art['image']) ?>" class="main-img" alt="article image">
             <?php endif; ?>
 
             <div class="content-text">

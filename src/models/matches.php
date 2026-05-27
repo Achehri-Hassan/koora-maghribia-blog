@@ -1,7 +1,7 @@
 <?php
 
 
-require_once "src/config/connection.php";
+require_once "../src/config/connection.php";
 
 function createMatch($team_one_name, $team_one_image, $team_two_name, $team_two_image, $stadium, $match_date, $match_time, $youtube_url) {
     $pdo = getConnection();
