@@ -21,11 +21,11 @@ $selectedArticleTitle = "";
 
 if (isset($_GET['view_comments'])) {
 
-    $art_id = $_GET['view_comments'];
+    $view_comments = $_GET['view_comments'];
 
-    $selectedComments = getCommentsByArticle($art_id);
+    $selectedComments = getCommentsByArticle($view_comments);
 
-    $currentArt = getArticleById($art_id);
+    $currentArt = getArticleById($view_comments);
 
     if ($currentArt) {
         $selectedArticleTitle = $currentArt['title'];
@@ -149,7 +149,7 @@ foreach ($articles as $a) {
             </div>
         <?php endif; ?>
     </div>
-    </div>
+ 
 
 </body>
 

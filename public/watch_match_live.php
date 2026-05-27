@@ -39,8 +39,8 @@ if (!$match) {
         <?php if (!empty($match['youtube_url'])): ?>
             <?php 
                 
-                $embed_url = str_replace(['watch?v=', 'live/', 'youtu.be/'], ['embed/', 'embed/', 'youtube.com/embed/'], $match['youtube_url']);
-                $embed_url = explode('?', $embed_url)[0];
+               preg_match('/(?:v=|\/embed\/|youtu\.be\/|\/live\/)([a-zA-Z0-9_-]{11})/', $match['youtube_url'], $m);
+$embed_url = isset($m[1]) ? "https://www.youtube.com/embed/" . $m[1] : '';
             ?>
             <iframe 
                 src="<?= htmlspecialchars($embed_url) ?>?autoplay=1&mute=1&rel=0" 

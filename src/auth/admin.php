@@ -4,8 +4,8 @@ require_once "../src/config/connection.php";
 
 
 
-    // Login user (IMPORTANT)
-    function login($email)
+// Login admin 
+function login($email)
     {
          
        $conn = getConnection();

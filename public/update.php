@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_article'])) {
         
         $imageName = $_FILES['image']['name'];
         $tmpName = $_FILES['image']['tmp_name'];
-        $path = "assest/" . $imageName;
+        $path = "../assest/articles/" . $imageName;
         move_uploaded_file($tmpName, $path);
         $imageToSave = $imageName;
 

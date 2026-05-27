@@ -1,57 +1,45 @@
 <?php
 
-
 session_start();
 
 require_once "../src/models/article.php";
 require_once "../src/models/comments.php";
 
-
-
 $isAdmin = isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true;
-
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     die("Article not found");
 }
 
-$id =$_GET['id'];
-
-
-
+$id = (int) $_GET['id']; 
 $art = getArticleById($id);
 
 if (!$art) {
     die("Article not found");
 }
 
-
+$comment_error = ""; 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_comment'])) {
 
-    $username = trim($_POST['username']);
-
+    $username     = trim($_POST['username']);
     $comment_text = trim($_POST['comment']);
 
     if (!empty($username) && !empty($comment_text)) {
 
         $_SESSION['my_comment_name'] = $username;
 
-
         addComment($id, $username, $comment_text);
 
-     
-        header("Location: adetails.php?id=" . $id );
+        header("Location: adetails.php?id=" . $id);
         exit();
+
+    } else {
+        $comment_error = "يرجى ملء جميع الحقول قبل النشر."; 
     }
 }
 
-
-
 $comments = getCommentsByArticle($id);
-
-
-
 
 ?>
 
@@ -64,36 +52,28 @@ $comments = getCommentsByArticle($id);
     <title><?= htmlspecialchars($art['title']) ?></title>
     <link rel="stylesheet" href="../assest/css/details.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-
-      <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 </head>
 
 <body>
 
-      <!-- HEADER -->
+    <!-- HEADER -->
     <header>
-        <!-- Right Side  nav-->
         <div class="right-side">
-           <a href="index.php">الرئيسية</a>
-           <a href="#">من نحن</a>
-           <a href="#">اتصل بنا</a>
+            <a href="index.php">الرئيسية</a>
+            <a href="#">من نحن</a>
+            <a href="#">اتصل بنا</a>
         </div>
 
-        <!-- admin -->
         <?php if ($isAdmin): ?>
-          <div class="admin-actions">
-             <a href="dashboard.php"> لوحة التحكم</a>
-             <a href="logout.php"> تسجيل الخروج </a>
-           </div>
+            <div class="admin-actions">
+                <a href="dashboard.php">لوحة التحكم</a>
+                <a href="logout.php">تسجيل الخروج</a>
+            </div>
         <?php endif; ?>
-
     </header>
 
-
-    <!-- main content  -->
+    <!-- main content -->
     <main class="container">
 
         <section class="article-main">
@@ -106,20 +86,31 @@ $comments = getCommentsByArticle($id);
             <div class="content-text">
                 <?= nl2br(htmlspecialchars($art['content'])) ?>
             </div>
-
         </section>
 
         <section class="comments-section">
             <h3>التعليقات (<?= count($comments) ?>)</h3>
 
-            <form method="POST" class="comment-form">
-                <input type="text" name="username" placeholder="اسمك المستعار" required>
+            <!-- FIX: explicit action with id + error message -->
+            <form method="POST" action="adetails.php?id=<?= (int) $id ?>" class="comment-form">
+
+                <?php if (!empty($comment_error)): ?>
+                    <p style="color:red; margin-bottom:10px;"><?= $comment_error ?></p>
+                <?php endif; ?>
+
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="اسمك المستعار"
+                    value="<?= isset($_SESSION['my_comment_name']) ? htmlspecialchars($_SESSION['my_comment_name']) : '' ?>"
+                    required>
+
                 <textarea name="comment" placeholder="شاركنا برأيك حول هذا الموضوع..." required></textarea>
+
                 <button type="submit" name="submit_comment">نشر التعليق</button>
             </form>
 
             <div class="comments-list">
-
                 <?php foreach ($comments as $c): ?>
                     <div class="comment-item">
                         <span class="comment-user"><?= htmlspecialchars($c['username']) ?></span>
@@ -127,17 +118,14 @@ $comments = getCommentsByArticle($id);
                         <span class="comment-date">نُشر في: <?= date("d-m-Y H:i", strtotime($c['created_at'])) ?></span>
                     </div>
                 <?php endforeach; ?>
-
             </div>
         </section>
 
     </main>
 
-
     <footer class="footer">
-
-        <h2 class="foot__title"> تابع آخر أخبار الكرة المغربية</h2>
-        <p class="foot__text"> موقعك الأول لمتابعة أخبار البطولة الاحترافية المغربية.</p>
+        <h2 class="foot__title">تابع آخر أخبار الكرة المغربية</h2>
+        <p class="foot__text">موقعك الأول لمتابعة أخبار البطولة الاحترافية المغربية.</p>
 
         <div class="share-icons">
             <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
@@ -150,9 +138,7 @@ $comments = getCommentsByArticle($id);
             <i class="fa-brands fa-readme"></i>
             <p class="footer__copyright">2026 جميع الحقوق محفوظة</p>
         </div>
-
     </footer>
-
 
 </body>
 </html>

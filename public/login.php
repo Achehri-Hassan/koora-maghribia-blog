@@ -3,7 +3,8 @@
 
 session_start();
 require_once "../src/auth/admin.php";
-$error = "";
+
+$error_login = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["login"])) {
    
@@ -16,18 +17,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["login"])) {
 
     $admin = login($email);
      
-
-    if ($admin && password_verify($pass, $admin['password'])) {
-
-       $_SESSION['is_admin'] = $admin['id'];
+    if($admin && password_verify($pass, $admin['password'])) {
+      $_SESSION['is_admin'] = $admin['id'];
       header("Location: dashboard.php");
       exit();
-
     } else {
-      $error = "الإيميل أو كلمة المرور غلط!";
+      $error_login = "الإيميل أو كلمة المرور غلط!";
     }
   } else {
-    $error = "عمر الخانات كامل";
+    $error_login = "عمر الخانات كامل";
   }
 }
 
@@ -64,8 +62,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["login"])) {
         <i class="fa-solid fa-trophy"></i>
         <h1>تسجيل الدخول</h1>
 
-        <?php if ($error): ?>
-          <p class="error"><?= $error ?></p>
+        <?php if ($error_login): ?>
+          <p class="error"><?= $error_login ?></p>
         <?php endif; ?>
       </div>
 

@@ -1,8 +1,8 @@
 <?php
 
 
-require_once "../src/models/article.php";
 session_start();
+require_once "../src/models/article.php";
 
 if (!isset($_SESSION['user_id'])) {
   header("Location: login.php");
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_article'])) {
     $error = "المرجو ملء جميع الخانات المطلوبة.";
 
   } else {
-    $path = "assest/" . $imageName;
+    $path = "../assest/articles/" . $imageName;
 
     if (move_uploaded_file($tmpName, $path)) {
      
