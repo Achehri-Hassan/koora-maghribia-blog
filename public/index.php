@@ -8,8 +8,7 @@ require_once "../src/models/article.php";
 require_once "../src/models/comments.php";
 
 
-$isAdmin = isset($_SESSION['user_id']) && $_SESSION['user_id'] == 1;
-
+$isAdmin = isset($_SESSION['is_admin']);
 
 if (isset($_GET['cat']) && !empty($_GET['cat'])) {
     $category = trim($_GET['cat']);

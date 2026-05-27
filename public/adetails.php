@@ -7,7 +7,8 @@ require_once "../src/models/article.php";
 require_once "../src/models/comments.php";
 
 
-$isAdmin = isset($_SESSION['user_id']) && $_SESSION['user_id'] == 1;
+
+$isAdmin = isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true;
 
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
@@ -61,7 +62,7 @@ $comments = getCommentsByArticle($id);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($art['title']) ?></title>
-    <link rel="stylesheet" href="../assest//css/details.css">
+    <link rel="stylesheet" href="../assest/css/details.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 
       <link

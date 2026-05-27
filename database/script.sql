@@ -111,14 +111,15 @@ INSERT INTO articles (title,  content, image, category, user_id) VALUES
     1
 );
 
-c
+
 
 INSERT INTO admin (username, email, password)
 VALUES (
 'admin',
 'admin@gmail.com',
-'1234'
+'$2b$12$JF5C8FCg/8A900PaEirbQOHISV/zDPAJh2nieEUlSU4pCBqnIcb3G'
 );
+
 
 select * from articles;
 

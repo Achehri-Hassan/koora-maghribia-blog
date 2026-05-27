@@ -18,8 +18,8 @@ function updateLiveScores() {
     } else if (now >= startTime && now <= endTime) {
       const diffInSeconds = Math.floor((now - startTime) / 1000);
       let currentMinute = Math.floor(diffInSeconds / 60);
-      // if (currentMinute < 1) currentMinute = 1;
-      // if (currentMinute > 90) currentMinute = 90;
+      if (currentMinute < 1) currentMinute = 1;
+      if (currentMinute > 90) currentMinute = 90;
 
       statusBadge.textContent = `مباشر 🔴 د ${currentMinute}`;
       statusBadge.style.backgroundColor = "#ef4444";

@@ -2,14 +2,20 @@
 
 
 require_once "../src/models/article.php";
+session_start();
+
+
+if (!isset($_SESSION['is_admin'])) {
+    header("Location: login.php");
+    exit();
+}
 
 
 $art = null;
 
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    $art = getArticleById($id);
-}
+$id = $_GET['id'];
+$art = getArticleById($id);
+
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_article'])) {
 

@@ -5,14 +5,14 @@ session_start();
 require_once "../src/models/matches.php";
 
 
-if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] != 1) {
+if (!isset($_SESSION['is_admin'])){
     header("Location: login.php");
     exit();
 }
 
 $today = date('Y-m-d');
 $tomorrow = date('Y-m-d', strtotime('+1 day'));
-$allowed_dates = [ $today, $tomorrow];
+$allowed_dates = [$today, $tomorrow];
 
 $message = "";
 $status = "";
@@ -36,20 +36,25 @@ if (isset($_POST['add_match'])) {
 
         $img_two_name = time() . "_" . basename($_FILES["team_two_image"]["name"]);
         $target_file_two = $target_dir . $img_two_name;
+      
 
         if (
             move_uploaded_file($_FILES["team_one_image"]["tmp_name"], $target_file_one) &&
             move_uploaded_file($_FILES["team_two_image"]["tmp_name"], $target_file_two)
         ) {
 
-          $match_id = createMatch( $team_one_name, $img_one_name, $team_two_name, $img_two_name,$stadium,
+            $match_id = createMatch(
+                $team_one_name,
+                $img_one_name,
+                $team_two_name,
+                $img_two_name,
+                $stadium,
                 $match_date,
                 $match_time,
                 $youtube_url
             );
 
             header("Location: index.php");
-
         } else {
             $message = "فشل رفع شعارات الفرق، يرجى التحقق من مسار ومساحة السيرفر.";
             $status = "error";
@@ -59,6 +64,7 @@ if (isset($_POST['add_match'])) {
 ?>
 <!doctype html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8" />
     <title>إضافة مباراة جديدة</title>
@@ -66,11 +72,29 @@ if (isset($_POST['add_match'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="stylesheet" href="../assest/css/create.css" />
     <style>
-        .alert { padding: 12px; border-radius: 6px; margin-bottom: 20px; font-size: 14px; font-weight: bold; text-align: center; }
-        .alert-success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .alert-error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .alert {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
     </style>
 </head>
+
 <body>
     <div class="form_container">
         <form method="post" enctype="multipart/form-data">
@@ -132,4 +156,5 @@ if (isset($_POST['add_match'])) {
         </form>
     </div>
 </body>
+
 </html>

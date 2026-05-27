@@ -7,7 +7,7 @@ require_once "../src/models/article.php";
 
 
 
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['is_admin'])) {
     header("Location: login.php");
     exit();
 }
@@ -34,9 +34,13 @@ if (isset($_GET['view_comments'])) {
 
 
 $totalArticles = count($articles);
+
 $totalCommentsCount = 0;
+$commentCounts = [];
+
 foreach ($articles as $a) {
-    $totalCommentsCount += getCommentsCount($a['id']);
+    $commentCounts[$a['id']] = getCommentsCount($a['id']);
+    $totalCommentsCount += $commentCounts[$a['id']];
 }
 ?>
 
@@ -97,7 +101,7 @@ foreach ($articles as $a) {
                         <td><strong><?= htmlspecialchars($art['title']) ?></strong></td>
                         <td>
                             <a href="dashboard.php?view_comments=<?= $art['id'] ?>#comments-section" class="view-comments">
-                                <?= getCommentsCount($art['id']) ?> عرض تعليقات
+                                 <?= $commentCounts[$art['id']]  ?> عرض تعليقات
                             </a>
                         </td>
                         <td>

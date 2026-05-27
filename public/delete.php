@@ -2,14 +2,19 @@
 
 require_once "../src/models/article.php";
 
-if (isset($_GET['id'])) {
 
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}else{
     $id = $_GET['id'];
-
-   
-  deleteArticle($id);
-
+   deleteArticle($id);
     header("Location: dashboard.php");
     exit;
 }
 
+
+
+?>

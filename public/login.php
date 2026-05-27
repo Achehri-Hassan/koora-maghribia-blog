@@ -14,12 +14,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["login"])) {
   if (!empty($email) && !empty($pass)) {
   
 
-    $user = login($email);
+    $admin = login($email);
      
 
-    if ($user &&   $pass === $user['password']) {
+    if ($admin && password_verify($pass, $admin['password'])) {
 
-       $_SESSION['user_id'] = $user['id'];
+       $_SESSION['is_admin'] = $admin['id'];
       header("Location: dashboard.php");
       exit();
 
@@ -52,22 +52,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["login"])) {
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
   <link rel="stylesheet" href="../assest/css/components/form.css" />
-</head>
-
-<body>
-
-
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>تسجيل الدخول</title>
-
-  <link rel="stylesheet" href="css/components/Form.css">
-
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body>
@@ -115,9 +99,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["login"])) {
 
   </div>
 
-</body>
-</html>
-  
 </body>
 
 </html>
