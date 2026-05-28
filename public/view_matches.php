@@ -7,13 +7,16 @@ require_once "../src/models/matches.php";
 $current_filter = isset($_GET['day']) ? $_GET['day'] : 'today';
 
 switch ($current_filter) {
+
     case 'tomorrow':
         $target_date = date('Y-m-d', strtotime('+1 day'));
         break;
+
     case 'yesterday':
         $target_date = date('Y-m-d', strtotime('-1 day'));
         break;
     case 'today':
+
     default:
         $target_date = date('Y-m-d');
         $current_filter = 'today';
@@ -64,9 +67,7 @@ $matches = readAllMatches($target_date);
                 $start_iso = $match['match_date'] . 'T' . $match['match_time'];
                 $end_iso = date('Y-m-d\TH:i:s', strtotime('+105 minutes', strtotime($start_iso)));
             ?>
-            <div class="match-container class-match-live"
-                 data-start="<?= $start_iso ?>"
-                 data-end="<?= $end_iso ?>"
+            <div class="match-container class-match-live" data-start="<?= $start_iso ?>"data-end="<?= $end_iso ?>"
                  data-url="watch_match_live.php?id=<?= $match['id'] ?>">
                 <div class="match-card">
                     <div class="team">
