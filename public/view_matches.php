@@ -4,7 +4,7 @@ session_start();
 require_once "../src/config/connection.php";
 require_once "../src/models/matches.php";
 
-$current_filter = isset($_GET['day']) ? $_GET['day'] : 'today';
+$current_filter = isset($_GET['day']) ? $_GET["day"]  :'today';
 
 switch ($current_filter) {
 
@@ -37,15 +37,20 @@ $matches = readAllMatches($target_date);
 </head>
 <body>
 
+
+    <a href="index.php" class="back-home">
+        <i class="fa-solid fa-arrow-right"></i> الرجوع للرئيسية
+    </a>
+    
 <div class="container">
     <div class="top-bar">
         <div class="filter-buttons">
 
-            <a href="view_matches.php?day=tomorrow" class="btn-filter btn-tomorrow <?= $current_filter === 'tomorrow' ? 'active' : '' ?>">مباريات الغد</a>
+            <a href="view_matches.php?day=tomorrow" class="btn-filter btn-tomorrow <?= $current_filter === 'tomorrow'?>">مباريات الغد</a>
 
-            <a href="view_matches.php?day=today" class="btn-filter btn-today <?= $current_filter === 'today' ? 'active' : '' ?>">مباريات اليوم</a>
+            <a href="view_matches.php?day=today" class="btn-filter btn-today <?= $current_filter === 'today'?>">مباريات اليوم</a>
 
-            <a href="view_matches.php?day=yesterday" class="btn-filter btn-yesterday <?= $current_filter === 'yesterday' ? 'active' : '' ?>">مباريات الأمس</a>
+            <a href="view_matches.php?day=yesterday" class="btn-filter btn-yesterday <?= $current_filter === 'yesterday'?>">مباريات الأمس</a>
 
         </div>
         <div class="header-titles">
@@ -93,9 +98,6 @@ $matches = readAllMatches($target_date);
         <?php endif; ?>
     </div>
 
-    <a href="index.php" class="back-home">
-        <i class="fa-solid fa-arrow-right"></i> الرجوع للرئيسية
-    </a>
 </div>
 
 

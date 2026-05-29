@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_comment'])) {
         exit();
 
     } else {
-        $comment_error = "يرجى ملء جميع الحقول قبل النشر."; // ← show error
+        $comment_error = "يرجى ملء جميع الحقول قبل النشر."; 
     }
 }
 

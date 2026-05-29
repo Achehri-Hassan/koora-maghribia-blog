@@ -1,45 +1,54 @@
 <?php
 
-
 session_start();
 require_once "../src/models/article.php";
 
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['is_admin'])) {
   header("Location: login.php");
   exit();
 }
 
 $error = "";
 
+
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_article'])) {
 
-  $title    = trim($_POST['title']);
-  $content  = trim($_POST['content']);
-  $category = $_POST["select"];
+
+  $title    = htmlspecialchars(trim($_POST['title']));
+  $content  = htmlspecialchars(trim($_POST['content']));
+  $category = $_POST["select"] ?? '';
 
 
-  $imageName = $_FILES['image']['name'];
-  $tmpName   = $_FILES['image']['tmp_name'];
+  if (empty($title) || empty($content) || empty($category)) {
 
-  if (empty($title) || empty($content) || empty($category) || empty($imageName)) {
     $error = "المرجو ملء جميع الخانات المطلوبة.";
 
-  } else {
-    $path = "../assest/articles/" . $imageName;
+  } elseif (!isset($_FILES['image']) || $_FILES['image']['error'] !== UPLOAD_ERR_OK) {
 
-    if (move_uploaded_file($tmpName, $path)) {
+     $error = "المرجو اختيار صورة غلاف صالحة.";
      
-      $result = createArticle($title, $content, $imageName, $category, $_SESSION['user_id']);
+  } else {
+    $tmpName   = $_FILES['image']['tmp_name'];
+    $ori_gName  = $_FILES['image']['name'];
+    $extension = strtolower(pathinfo($ori_gName, PATHINFO_EXTENSION));
 
-      if ($result) {
+
+    $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp'];
+
+    if (!in_array($extension, $allowedExtensions)) {
+      $error = "صيغة الصورة غير مدعومة! المرجو رفع (JPG, JPEG, PNG, WEBP).";
+    } else {
+
+      $newImageName = uniqid('art_', true) . "." . $extension;
+      $uploadPath   = "../assets/articles/" . $newImageName;
+
+      if (move_uploaded_file($tmpName, $uploadPath)) {
+
+        $result = createArticle($title, $content, $newImageName, $category, $_SESSION['is_admin']);
 
         header("Location: index.php");
         exit();
-      } else {
-        $error = "خطأ في قاعدة البيانات.";
       }
-    } else {
-      $error = "فشل في رفع الصورة.";
     }
   }
 }
@@ -53,14 +62,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_article'])) {
   <title>إضافة مقال جديد</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <link rel="stylesheet" href="../assest/css/create.css"/>
+  <link rel="stylesheet" href="../assest/css/create.css" />
 </head>
 
 <body>
 
   <div class="form_container">
 
-    <form method="post" enctype="multipart/form-data" >
+    <form method="post" enctype="multipart/form-data">
 
       <h1>إضافة مقال جديد</h1>
 
@@ -81,12 +90,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_article'])) {
         <div class="input-group">
 
           <label>التصنيف</label>
-            <select name="select" required>
-              <option value="" disabled selected>  اختر النوع </option>
-              <option value="news"> أخبار </option>
-              <option value="Transfers"> الانتقالات</option>
-            </select>
-            
+          <select name="select" required>
+            <option value="" disabled selected> اختر النوع </option>
+            <option value="news"> أخبار </option>
+            <option value="Transfers"> الانتقالات</option>
+          </select>
+
         </div>
 
         <div class="input-group">
@@ -102,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_article'])) {
         <label>المحتوى</label>
         <textarea rows="8" name="content" placeholder="اكتب محتوى المقال هنا..." required></textarea>
       </div>
-       
+
 
       <div class="buttons">
         <button type="submit" class="btn-submit" name="add_article"> نشر المقال </button>

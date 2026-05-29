@@ -3,11 +3,13 @@
  
  @import url(components/stracture.css);
  @import url(components/variable.css);
- 
+
+
 
  .container {
      max-width: 850px;
-     margin: 0 auto;
+     margin: 70px auto;
+     
  }
 
  .top-bar {
@@ -25,26 +27,18 @@
      align-items: flex-start;
  }
 
- .badge-device {
-     background-color: #510505;
-     color: #fff;
-     padding: 4px 12px;
-     border-radius: 6px;
-     font-size: 11px;
-     margin-bottom: 5px;
-     font-weight: 600;
- }
 
  .main-title {
-     background-color: #510505;
-     color: #fff;
+     background-color: var(--second-color);
+     color: var(--white);
      padding: 10px 20px;
      border-radius: 8px;
      font-size: 16px;
      font-weight: 700;
-     margin: 0;
  }
 
+
+ /* 3 buttons about day tomorrow and yestorday */
  .filter-buttons {
      display: flex;
      gap: 8px;
@@ -57,6 +51,7 @@
      color: #fff;
      font-weight: 700;
      font-size: 13px;
+    
  }
 
  .btn-tomorrow {
@@ -71,22 +66,15 @@
      background-color: #7b1fa2;
  }
 
- .btn-filter.active {
-     outline: 3px solid #111;
- }
 
- .matches-list {
-     display: flex;
-     flex-direction: column;
-     gap: 16px;
- }
+
 
  .match-container {
-     background-color: #ffffff;
+     background-color: var(--white);
+     border: 1px solid var(--second-color);
      border-radius: 14px;
-     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
-     border: 1px solid #e6ecf0;
-     overflow: hidden;
+     box-shadow: 0 4px 15px #0000000a;
+    
      cursor: pointer;
      transition: transform 0.2s ease;
  }
@@ -101,6 +89,7 @@
      align-items: center;
      padding: 24px 30px;
      text-align: center;
+    
  }
 
  .team {
@@ -108,29 +97,31 @@
      flex-direction: column;
      align-items: center;
      gap: 12px;
+     
  }
 
  .team img {
-     width: 60px;
-     height: 60px;
+     width: 100px;
+     height: 100px;
      object-fit: contain;
  }
 
  .team-name {
      font-size: 15px;
      font-weight: 700;
-     color: #2c3e50;
+     color: var(--second-color) ;
  }
 
- .match-info {
+.match-info {
      display: flex;
      flex-direction: column;
      align-items: center;
+    
  }
 
  .match-time {
      font-size: 12px;
-     color: #8a99a6;
+     color: var(--text);
      font-weight: 600;
      margin-bottom: 6px;
  }
@@ -138,28 +129,22 @@
  .live-score-display {
      font-size: 32px;
      font-weight: 800;
-     color: #1e293b;
+     color: var(--second-color);
      letter-spacing: 6px;
      margin: 2px 0;
  }
 
+
  .match-status {
-     color: #fff;
+     color: var(--white);
      font-size: 11px;
      padding: 5px 16px;
      border-radius: 20px;
      font-weight: 700;
+     background-color: red;
  }
 
- .no-matches {
-     text-align: center;
-     background: #fff;
-     padding: 50px 20px;
-     border-radius: 14px;
-     color: #64748b;
-     font-size: 16px;
-     border: 1px solid #e2e8f0;
- }
+
 
  .back-home {
      display: inline-flex;
