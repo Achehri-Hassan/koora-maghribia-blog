@@ -126,34 +126,6 @@ Open phpMyAdmin (or MySQL CLI) and import:
 mysql -u root -p < database/script.sql
 ```
 
-**3. Configure environment**
-
-Copy the example env file and fill in your values:
-```bash
-cp .env.example .env
-```
-
-```env
-DB_HOST=localhost
-DB_NAME=botola_maghribiya
-DB_USER=root
-DB_PASS=
-```
-
-Update `src/config/connection.php` to read from `.env`:
-```php
-$server   = getenv('DB_HOST');
-$dbname   = getenv('DB_NAME');
-$username = getenv('DB_USER');
-$password = getenv('DB_PASS');
-```
-
-**4. Set upload permissions**
-
-```bash
-chmod 755 public/assets/images/mathes/
-chmod 755 public/assets/images/articles/
-```
 
 **5. Run locally**
 
@@ -175,7 +147,7 @@ echo password_hash('your_password', PASSWORD_DEFAULT);
 Then insert the admin manually into the DB:
 ```sql
 INSERT INTO admin (username, email, password)
-VALUES ('admin', 'admin@gmail.com', '$2y$12$YOUR_HASH_HERE');
+VALUES ('admin', 'admin@gmail.com', 'YOUR_HASH');
 ```
 
 Then log in at `/login.php`.
@@ -222,6 +194,21 @@ botola_maghribiya
 - [ ] Rate-limit comment submissions to prevent spam
 
 ---
+
+
+## 🎯 Learning Outcomes
+
+This project helped me practice:
+
+- PHP CRUD operations
+- Authentication & Session Management
+- PDO & Prepared Statements
+- File Upload Handling
+- MySQL Database Design
+- Frontend Development with HTML, CSS and JavaScript
+- Secure Coding Practices
+
+
 
 ## 👨‍💻 Author
 
