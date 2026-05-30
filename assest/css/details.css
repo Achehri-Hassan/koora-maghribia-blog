@@ -64,6 +64,12 @@
   padding: 20px;
   border-radius: 8px;
 }
+
+.error{
+  color: red;
+  margin-bottom: 20px;
+}
+
 .comment-form input,
 .comment-form textarea {
   width: 100%;

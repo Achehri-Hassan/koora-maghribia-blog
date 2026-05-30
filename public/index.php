@@ -8,7 +8,7 @@ require_once "../src/models/article.php";
 require_once "../src/models/comments.php";
 
 
-$isAdmin = isset($_SESSION['is_admin']);
+
 
 if (isset($_GET['cat']) && !empty($_GET['cat'])) {
     $category = trim($_GET['cat']);
@@ -40,27 +40,10 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
 </head>
 
 <body>
+    
+    <!-- call header -->
+   <?php include '../includes/header.php'; ?>
 
-    <!-- HEADER -->
-    <header>
-
-        <!-- Right Side  nav-->
-        <div class="right-side">
-            <a href="index.php">الرئيسية</a>
-            <a href="#">من نحن</a>
-            <a href="#">اتصل بنا</a>
-        </div>
-
-        <!-- admin -->
-        <?php if ($isAdmin): ?>
-            <div class="admin-actions">
-
-                <a href="dashboard.php"> لوحة التحكم</a>
-                <a href="logout.php"> تسجيل الخروج </a>
-            </div>
-        <?php endif; ?>
-
-    </header>
 
     <!-- main content-->
     <main>
@@ -92,15 +75,15 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
                         <!-- IMAGE -->
                         <div class="card-image-wrapper">
                             <img src="../assest/articles/<?= htmlspecialchars($art['image']) ?>" alt="<?= htmlspecialchars($art['title']) ?>">
-                            <span class="card-date-badge"><?= date("d M", strtotime($art["created_at"])) ?></span>
+                            <span class="card-date"><?= date("d M", strtotime($art["created_at"])) ?></span>
                         </div>
                         
 
                         <!-- CONTENT -->
                         <div class="card-content">
 
-                            <span class="category_card"> <?= htmlspecialchars($art['category']) ?></span>
-                            <h3 class="card-title"><?= htmlspecialchars($art['title']) ?></h3>
+                            <span class="category_name_articles"> <?= htmlspecialchars($art['category']) ?></span>
+                            <h3 class="articles-title"><?= htmlspecialchars($art['title']) ?></h3>
                             <div class="div_read">
                                 <span class="card_read_more">  ا قرأ المزيد ...</span>
                                 <span class="card_comment"> <?= $commentsCount ?> تعليقات </span>
@@ -133,24 +116,7 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
 
     <!-- FOOTER -->
 
-    <footer class="footer">
-
-          <h2 class="foot__title"> تابع آخر أخبار الكرة المغربية</h2>
-          <p class="foot__text"> موقعك الأول لمتابعة أخبار البطولة الاحترافية المغربية.</p>
-
-            <div class="share-icons">
-               <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-               <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-            </div>
-
-            <hr class="cta__divider" />
-
-           <div class="footer__bottom">
-             <i class="fa-brands fa-readme"></i>
-             <p class="footer__copyright">2026 جميع الحقوق محفوظة</p>
-           </div>
-
-    </footer>
+    <?php include '../includes/footer.php'; ?>
 
 </body>
 

@@ -4,13 +4,13 @@
 require_once "../src/models/article.php";
 session_start();
 
-// 1. تحقق من الصلاحيات أولاً وبسرعة
+
 if (!isset($_SESSION['is_admin'])) {
     header("Location: login.php");
     exit();
 }
 
-// 2. التحقق من الـ ID وتأمينه
+
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if (!$id) {
     header("Location: index.php");
@@ -28,6 +28,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_article'])) {
     
     
     $id       = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+
+      if (!$id) {
+        header("Location: index.php");
+        exit();
+    }
+
+
     $title    = htmlspecialchars(trim($_POST['title']));
     $content  = htmlspecialchars(trim($_POST['content']));
     $category = $_POST["select"];
@@ -40,15 +47,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_article'])) {
         $extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
         
     
-        $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp'];
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp' ,"jfif"];
 
         if (in_array(strtolower($extension), $allowedExtensions)) {
         
             $imageName   = uniqid('art_', true) . "." . $extension;
-            $uploadPath  = "../assets/articles/" . $imageName; 
+            $uploadPath  = "../assest/articles/" . $imageName; 
 
             if (move_uploaded_file($tmpName, $uploadPath)) {
+
                 $imageToSave = $imageName;
+                $oldImagePath = "../assest/articles/" . $_POST['old_image'];
+                if (!empty($_POST['old_image']) && file_exists($oldImagePath)) {
+                    
+                    unlink($oldImagePath); 
+                }
             }
         }
     }
@@ -81,12 +94,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_article'])) {
 
         <h1>تعديل المقال</h1>
 
-        <input type="hidden" name="old_image" value="<?= $art['image'] ?>">
+        <input type="hidden" name="old_image" value="<?= htmlspecialchars($art['image'] )?>">
         <input type="hidden" name="id" value="<?= $art['id'] ?>">
 
         <div class="input-group">
             <label>عنوان المقال</label>
-            <input type="text" name="title" value="<?= $art['title'] ?? '' ?>" required >
+            <input type="text" name="title" value="<?= htmlspecialchars($art['title']  ?? '') ?>" required >
         </div>
 
         <div class="row">
@@ -106,11 +119,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_article'])) {
 
         <div class="input-group">
             <label>المحتوى</label>
-            <textarea rows="8"name="content"required><?= $art['content'] ?? '' ?></textarea>
+            <textarea rows="8" name="content" required ><?= htmlspecialchars($art['content']  ?? '') ?></textarea>
         </div>
 
         <div class="buttons">
-            <button type="submit" name="update_article" class="btn-submit"> تحديث المقال</button> 
+            <button type="submit" name="update_article" class="btn-submit" > تحديث المقال</button> 
             <a href="dashboard.php" class="btn-back"> إلغاء</a>
         </div>
 

@@ -6,6 +6,19 @@
 
 
 
+
+.back-home {
+     display: inline-flex;
+     align-items: center;
+     gap: 8px;
+     margin-top: 25px;
+     margin-right: 50px;
+     color: #510505;
+     text-decoration: none;
+     font-weight: 700;
+ }
+
+
  .container {
      max-width: 850px;
      margin: 70px auto;
@@ -74,6 +87,7 @@
      border: 1px solid var(--second-color);
      border-radius: 14px;
      box-shadow: 0 4px 15px #0000000a;
+     margin-bottom: 25px;
     
      cursor: pointer;
      transition: transform 0.2s ease;
@@ -146,15 +160,7 @@
 
 
 
- .back-home {
-     display: inline-flex;
-     align-items: center;
-     gap: 8px;
-     margin-top: 25px;
-     color: #510505;
-     text-decoration: none;
-     font-weight: 700;
- }
+
 
  @keyframes pulse {
      0% {
@@ -169,3 +175,97 @@
          opacity: 1;
      }
  }
+
+
+ /* responsive */
+ /* ===== RESPONSIVE ===== */
+
+/* Tablet */
+@media (max-width: 768px) {
+    .container {
+        margin: 30px 16px;
+    }
+
+    .back-home {
+        margin-right: 16px;
+        margin-top: 16px;
+    }
+
+    .top-bar {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .header-titles {
+        align-items: center;
+    }
+
+    .main-title {
+        font-size: 14px;
+        text-align: center;
+        width: 100%;
+    }
+
+    .filter-buttons {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .match-card {
+        grid-template-columns: 1fr 120px 1fr;
+        padding: 16px 12px;
+    }
+
+    .team img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .team-name {
+        font-size: 13px;
+    }
+
+    .live-score-display {
+        font-size: 24px;
+        letter-spacing: 3px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .match-card {
+        grid-template-columns: 1fr 90px 1fr;
+        padding: 14px 8px;
+        gap: 4px;
+       
+       
+    }
+
+    .team img {
+        width: 52px;
+        height: 52px;
+    }
+
+    .team-name {
+        font-size: 11px;
+    }
+
+    .live-score-display {
+        font-size: 20px;
+        letter-spacing: 2px;
+    }
+
+    .match-time {
+        font-size: 10px;
+    }
+
+    .match-status {
+        font-size: 10px;
+        padding: 4px 10px;
+    }
+
+    .btn-filter {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+}

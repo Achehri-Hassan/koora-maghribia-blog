@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_article'])) {
     } else {
 
       $newImageName = uniqid('art_', true) . "." . $extension;
-      $uploadPath   = "../assets/articles/" . $newImageName;
+      $uploadPath   = "../assest/articles/" . $newImageName;
 
       if (move_uploaded_file($tmpName, $uploadPath)) {
 

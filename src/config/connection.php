@@ -24,3 +24,5 @@ function getConnection()
         die("Error: " . $e->getMessage());
     }
 }
+
+?>

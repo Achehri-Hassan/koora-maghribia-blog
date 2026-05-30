@@ -1,47 +1,45 @@
 <?php
 
-session_start();
 
+session_start();
 require_once "../src/models/article.php";
 require_once "../src/models/comments.php";
 
-$isAdmin = isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true;
 
-if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    die("Article not found");
+
+$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+
+if (!$id) {
+    header("Location: index.php");
+    exit();
 }
-
-$id = (int) $_GET['id']; 
 
 $art = getArticleById($id);
-
 if (!$art) {
-    die("Article not found");
+    header("Location: index.php");
+    exit();
 }
 
-$comment_error = ""; 
+$comment_error = "";
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_comment'])) {
-
-    $username     = trim($_POST['username']);
-    $comment_text = trim($_POST['comment']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_comment'])) {
+    $username     = htmlspecialchars(trim($_POST['username']));
+    $comment_text = htmlspecialchars(trim($_POST['comment']));
 
     if (!empty($username) && !empty($comment_text)) {
 
         $_SESSION['my_comment_name'] = $username;
-
         addComment($id, $username, $comment_text);
 
         header("Location: adetails.php?id=" . $id);
         exit();
 
     } else {
-        $comment_error = "يرجى ملء جميع الحقول قبل النشر."; 
+        $comment_error = "يرجى ملء جميع الحقول قبل النشر.";
     }
 }
 
 $comments = getCommentsByArticle($id);
-
 ?>
 <!doctype html>
 <html lang="ar" dir="rtl">
@@ -50,6 +48,7 @@ $comments = getCommentsByArticle($id);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($art['title']) ?></title>
+
     <link rel="stylesheet" href="../assest/css/details.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -59,25 +58,8 @@ $comments = getCommentsByArticle($id);
 
 <body>
 
-      <!-- HEADER -->
-    <header>
-        <!-- Right Side  nav-->
-        <div class="right-side">
-           <a href="index.php">الرئيسية</a>
-           <a href="#">من نحن</a>
-           <a href="#">اتصل بنا</a>
-        </div>
-
-        <!-- admin -->
-        <?php if ($isAdmin): ?>
-          <div class="admin-actions">
-             <a href="dashboard.php"> لوحة التحكم</a>
-             <a href="logout.php"> تسجيل الخروج </a>
-           </div>
-        <?php endif; ?>
-
-    </header>
-
+     <!-- call header -->
+    <?php include '../includes/header.php'; ?>
 
     <!-- main content  -->
     <main class="container">
@@ -97,9 +79,12 @@ $comments = getCommentsByArticle($id);
 
         <section class="comments-section">
             <h3>التعليقات (<?= count($comments) ?>)</h3>
-
+             <?php if ($comment_error): ?>
+                <p class="error"><?= $comment_error ?></p>
+              <?php endif; ?>
+              
             <form method="POST" class="comment-form">
-                <input type="text" name="username" placeholder="اسمك المستعار" required>
+                <input type="text" name="username" placeholder="اسمك المستعار" >
                 <textarea name="comment" placeholder="شاركنا برأيك حول هذا الموضوع..." required></textarea>
                 <button type="submit" name="submit_comment">نشر التعليق</button>
             </form>
@@ -120,24 +105,8 @@ $comments = getCommentsByArticle($id);
     </main>
 
 
-    <footer class="footer">
-
-        <h2 class="foot__title"> تابع آخر أخبار الكرة المغربية</h2>
-        <p class="foot__text"> موقعك الأول لمتابعة أخبار البطولة الاحترافية المغربية.</p>
-
-        <div class="share-icons">
-            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-        </div>
-
-        <hr class="cta__divider" />
-
-        <div class="footer__bottom">
-            <i class="fa-brands fa-readme"></i>
-            <p class="footer__copyright">2026 جميع الحقوق محفوظة</p>
-        </div>
-
-    </footer>
+    <!-- footer -->
+    <?php include '../includes/footer.php'; ?>
 
 
 </body>

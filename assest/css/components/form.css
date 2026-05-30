@@ -5,6 +5,7 @@
 
 
 
+
 .login-container {
     min-height: 100vh;
     display: flex;
@@ -13,8 +14,9 @@
     padding: 20px;
 }
 
-.login-card {
 
+/* form */
+form {
     width: 100%;
     max-width: 400px;
     background: var(--white);
@@ -23,27 +25,34 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
+
+/* header form */
 .form-header {
     text-align: center;
     margin-bottom: 25px;
 }
 
+/* icon header form */
 .form-header i {
     font-size: 35px;
     color: var(--second-color);
     margin-bottom: 10px;
 }
 
+
 .form-header h1 {
     color: var(--second-color);
     margin-bottom: 10px;
 }
 
+/* error  */
 .error {
     color: red;
     font-size: 14px;
 }
 
+
+/* input group */
 .input-group {
     margin-bottom: 18px;
 }
@@ -74,6 +83,7 @@
     color: gray;
 }
 
+/* button login */
 .btn-login {
     width: 100%;
     padding: 12px;
@@ -86,6 +96,7 @@
     margin-top: 10px;
 }
 
+/* link to visitor */
 .btn-guest {
     display: block;
     text-align: center;

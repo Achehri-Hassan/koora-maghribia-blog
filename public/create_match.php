@@ -1,49 +1,67 @@
 <?php
 
+
 session_start();
-// require_once "connection.php";
 require_once "../src/models/matches.php";
 
-
-if (!isset($_SESSION['is_admin'])){
+if (!isset($_SESSION['is_admin'])) {
     header("Location: login.php");
     exit();
 }
 
-$today = date('Y-m-d');
-$tomorrow = date('Y-m-d', strtotime('+1 day'));
+$today         = date('Y-m-d');
+$tomorrow      = date('Y-m-d', strtotime('+1 day'));
 $allowed_dates = [$today, $tomorrow];
 
 $message = "";
-$status = "";
+$status  = "";
 
 if (isset($_POST['add_match'])) {
-    $team_one_name = trim($_POST['team_one_name']);
-    $team_two_name = trim($_POST['team_two_name']);
-    $stadium       = trim($_POST['stadium']);
+
+    $team_one_name = htmlspecialchars(trim($_POST['team_one_name']));
+    $team_two_name = htmlspecialchars(trim($_POST['team_two_name']));
+    $stadium       = htmlspecialchars(trim($_POST['stadium']));
     $match_date    = $_POST['match_date'];
     $match_time    = $_POST['match_time'];
-    $youtube_url   = trim($_POST['youtube_url']);
+    $youtube_url   = htmlspecialchars(trim($_POST['youtube_url']));
 
-    if (!in_array($match_date, $allowed_dates)) {
-        $message = "يمكنك جدولة المباريات لأيام الأمس، اليوم، أو الغد فقط.";
-        $status = "error";
+    $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp'];
+
+    $ext_one = strtolower(pathinfo($_FILES["team_one_image"]["name"], PATHINFO_EXTENSION));
+    $ext_two = strtolower(pathinfo($_FILES["team_two_image"]["name"], PATHINFO_EXTENSION));
+
+    if (empty($team_one_name) || empty($team_two_name) || empty($stadium)) {
+        $message = "المرجو ملء جميع الخانات المطلوبة.";
+        $status  = "error";
+        
+    } elseif (
+        !isset($_FILES['team_one_image']) || $_FILES['team_one_image']['error'] !== UPLOAD_ERR_OK ||
+        !isset($_FILES['team_two_image']) || $_FILES['team_two_image']['error'] !== UPLOAD_ERR_OK
+    ){
+        $message = "المرجو رفع شعاري الفريقين.";
+        $status  = "error";
+
+    } elseif (!in_array($ext_one, $allowedExtensions) || !in_array($ext_two, $allowedExtensions)) {
+
+        $message = "صيغة الصورة غير مدعومة! المرجو رفع (JPG, JPEG, PNG, WEBP).";
+        $status  = "error";
+
+    } elseif (!in_array($match_date, $allowed_dates)) {
+        $message = "يمكنك جدولة المباريات لليوم أو الغد فقط.";
+        $status  = "error";
     } else {
-        $target_dir = "../assest/mathes/";
+        $img_one_name = uniqid('team1_', true) . "." . $ext_one;
+        $img_two_name = uniqid('team2_', true) . "." . $ext_two;
 
-        $img_one_name = time() . "_" . basename($_FILES["team_one_image"]["name"]);
+        $target_dir      = "../assest/mathes/";
         $target_file_one = $target_dir . $img_one_name;
-
-        $img_two_name = time() . "_" . basename($_FILES["team_two_image"]["name"]);
         $target_file_two = $target_dir . $img_two_name;
-      
 
         if (
             move_uploaded_file($_FILES["team_one_image"]["tmp_name"], $target_file_one) &&
             move_uploaded_file($_FILES["team_two_image"]["tmp_name"], $target_file_two)
         ) {
-
-            $match_id = createMatch(
+            createMatch(
                 $team_one_name,
                 $img_one_name,
                 $team_two_name,
@@ -53,15 +71,16 @@ if (isset($_POST['add_match'])) {
                 $match_time,
                 $youtube_url
             );
-
             header("Location: index.php");
+            exit();
         } else {
-            $message = "فشل رفع شعارات الفرق، يرجى التحقق من مسار ومساحة السيرفر.";
-            $status = "error";
+            $message = "فشل رفع شعارات الفرق.";
+            $status  = "error";
         }
     }
 }
 ?>
+
 <!doctype html>
 <html lang="ar" dir="rtl">
 
@@ -101,7 +120,7 @@ if (isset($_POST['add_match'])) {
             <h1>إضافة مباراة جديدة ⚽</h1>
 
             <?php if (!empty($message)): ?>
-                <div class="alert alert-<?= $status ?>">
+                <div class="alert alert">
                     <?= htmlspecialchars($message) ?>
                 </div>
             <?php endif; ?>

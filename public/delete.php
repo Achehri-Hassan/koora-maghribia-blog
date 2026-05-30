@@ -1,9 +1,10 @@
 <?php
 
-require_once "../src/models/article.php";
 
 
 session_start();
+
+require_once "../src/models/article.php";
 
 if (!isset($_SESSION['is_admin'])) {
     header("Location: login.php");
