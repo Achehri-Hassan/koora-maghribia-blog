@@ -139,6 +139,7 @@ main {
 }
 
 
+/* parent about read details articles and total comment */
 .div_read{
     margin-top: auto;
     display: flex;
@@ -150,13 +151,14 @@ main {
 }
 
 
+/* read more details articles */
 .div_read .card_read_more{
     border-bottom: 2px solid var(--white);
     transition: 0.3s ease;
      
 }
 
-
+/* hover */
 .div_read .card_read_more:hover{
     border-bottom: 2px solid var(--second-color);
      

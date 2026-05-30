@@ -13,6 +13,7 @@
     padding: 20px;
 }
 
+
 form{
 
     width: 100%;
@@ -32,6 +33,7 @@ form h1{
 .row{
     display: flex;
     gap: 15px;
+  
 }
 
 
@@ -58,6 +60,7 @@ form h1{
     border-radius: 10px;
     outline: none;
     font-size: 19px;
+   
 
 }
 

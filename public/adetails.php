@@ -64,16 +64,16 @@ $comments = getCommentsByArticle($id);
     <!-- main content  -->
     <main class="container">
 
-        <section class="article-main">
+        <section class="article-details">
             <h1><?= htmlspecialchars($art['title']) ?></h1>
 
             <?php if (!empty($art['image'])): ?>
-                <img src="../assest/articles/<?= htmlspecialchars($art['image']) ?>" class="main-img" alt="article image">
+                <img src="../assest/articles/<?= htmlspecialchars($art['image']) ?>" class="image_details" alt="article image">
             <?php endif; ?>
 
-            <div class="content-text">
+            <p class="content-details">
                 <?= nl2br(htmlspecialchars($art['content'])) ?>
-            </div>
+            </p>
 
         </section>
 
@@ -92,7 +92,7 @@ $comments = getCommentsByArticle($id);
             <div class="comments-list">
 
                 <?php foreach ($comments as $c): ?>
-                    <div class="comment-item">
+                    <div class="comment-result">
                         <span class="comment-user"><?= htmlspecialchars($c['username']) ?></span>
                         <p><?= htmlspecialchars($c['comment']) ?></p>
                         <span class="comment-date">نُشر في: <?= date("d-m-Y H:i", strtotime($c['created_at'])) ?></span>

@@ -90,28 +90,7 @@ if (isset($_POST['add_match'])) {
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="stylesheet" href="../assest/css/create.css" />
-    <style>
-        .alert {
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            font-weight: bold;
-            text-align: center;
-        }
-
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .alert-error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-    </style>
+   
 </head>
 
 <body>
@@ -120,9 +99,7 @@ if (isset($_POST['add_match'])) {
             <h1>إضافة مباراة جديدة ⚽</h1>
 
             <?php if (!empty($message)): ?>
-                <div class="alert alert">
-                    <?= htmlspecialchars($message) ?>
-                </div>
+                 <p class="error">  <?= htmlspecialchars($message) ?></p>
             <?php endif; ?>
 
             <div class="row">
