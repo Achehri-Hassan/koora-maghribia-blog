@@ -14,7 +14,7 @@ $tomorrow      = date('Y-m-d', strtotime('+1 day'));
 $allowed_dates = [$today, $tomorrow];
 
 $message = "";
-$status  = "";
+
 
 if (isset($_POST['add_match'])) {
 
@@ -32,23 +32,23 @@ if (isset($_POST['add_match'])) {
 
     if (empty($team_one_name) || empty($team_two_name) || empty($stadium)) {
         $message = "المرجو ملء جميع الخانات المطلوبة.";
-        $status  = "error";
+        
         
     } elseif (
         !isset($_FILES['team_one_image']) || $_FILES['team_one_image']['error'] !== UPLOAD_ERR_OK ||
         !isset($_FILES['team_two_image']) || $_FILES['team_two_image']['error'] !== UPLOAD_ERR_OK
     ){
         $message = "المرجو رفع شعاري الفريقين.";
-        $status  = "error";
+       
 
     } elseif (!in_array($ext_one, $allowedExtensions) || !in_array($ext_two, $allowedExtensions)) {
 
         $message = "صيغة الصورة غير مدعومة! المرجو رفع (JPG, JPEG, PNG, WEBP).";
-        $status  = "error";
+      
 
     } elseif (!in_array($match_date, $allowed_dates)) {
         $message = "يمكنك جدولة المباريات لليوم أو الغد فقط.";
-        $status  = "error";
+       
     } else {
         $img_one_name = uniqid('team1_', true) . "." . $ext_one;
         $img_two_name = uniqid('team2_', true) . "." . $ext_two;
@@ -75,7 +75,7 @@ if (isset($_POST['add_match'])) {
             exit();
         } else {
             $message = "فشل رفع شعارات الفرق.";
-            $status  = "error";
+        
         }
     }
 }
@@ -99,7 +99,7 @@ if (isset($_POST['add_match'])) {
             <h1>إضافة مباراة جديدة ⚽</h1>
 
             <?php if (!empty($message)): ?>
-                 <p class="error">  <?= htmlspecialchars($message) ?></p>
+                 <p class="error"> <?= htmlspecialchars($message) ?></p>
             <?php endif; ?>
 
             <div class="row">

@@ -28,7 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_comment'])) {
 
     if (!empty($username) && !empty($comment_text)) {
 
-        $_SESSION['my_comment_name'] = $username;
         addComment($id, $username, $comment_text);
 
         header("Location: adetails.php?id=" . $id);
@@ -101,7 +100,7 @@ $comments = getCommentsByArticle($id);
 
             </div>
         </section>
-
+ 
     </main>
 
 
