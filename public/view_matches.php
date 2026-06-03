@@ -3,7 +3,7 @@
 
 session_start();
 
-require_once "../src/config/connection.php";
+
 require_once "../src/models/matches.php";
 
 $allowed        = ['today', 'tomorrow', 'yesterday'];
@@ -52,7 +52,7 @@ $matches = readAllMatches($target_date);
                 <a href="view_matches.php?day=yesterday" class="btn-filter btn-yesterday <?= $current_filter === 'yesterday' ? 'active' : '' ?>">مباريات الأمس</a>
             </div>
             <div class="header-titles">
-                <h1 class="main-title"><?= $titles[$current_filter] ?></h1>
+                <h1 class="main-title"><?= htmlspecialchars($titles[$current_filter]) ?></h1>
             </div>
         </div>
 
@@ -65,9 +65,9 @@ $matches = readAllMatches($target_date);
                     $end_iso   = date('Y-m-d\TH:i:s', strtotime('+105 minutes', strtotime($start_iso)));
                 ?>
                 <div class="match-container class-match-live"
-                     data-start="<?= $start_iso ?>"
-                     data-end="<?= $end_iso ?>"
-                     data-url="watch_match_live.php?id=<?= $match['id'] ?>">
+                     data-start="<?= htmlspecialchars($start_iso) ?>"
+                     data-end="<?= htmlspecialchars($end_iso) ?>"
+                     data-url="watch_match_live.php?id=<?= htmlspecialchars($match['id']) ?>">
                     <div class="match-card">
 
                         <div class="team">

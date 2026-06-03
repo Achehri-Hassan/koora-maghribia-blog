@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["login"])) {
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
    <!-- link style css -->
-  <link rel="stylesheet" href="../assest/css/components/login.css" />
+  <link rel="stylesheet" href="../assest/css/components/login.css"/>
 </head>
 
 <body>

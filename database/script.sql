@@ -1,73 +1,98 @@
-drop database if exists  botola_maghribiya;
-
--- start to create database 
-create database botola_maghribiya; 
-
--- use this botola_maghribiya
-use botola_maghribiya;
 
 
--- tables admin
 
-CREATE TABLE admin(
+DROP DATABASE IF EXISTS botola_maghribiya;
+CREATE DATABASE botola_maghribiya CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci; 
+USE botola_maghribiya;
 
+
+
+
+CREATE TABLE admin (
   id INT AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(100) NOT NULL,
   email VARCHAR(150) NOT NULL UNIQUE,
   password VARCHAR(255) NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-
 ) COMMENT = 'Table The users';
 
 
--- table articles
+
+CREATE TABLE teams (
+  id VARCHAR(50) PRIMARY KEY,                 
+  team_name VARCHAR(100) NOT NULL UNIQUE,     
+  team_image VARCHAR(100) NOT NULL             
+) COMMENT = 'Table the teams where ID is the image name key';
+
+
+
 
 CREATE TABLE articles (
-    
   id INT AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
   content TEXT NOT NULL,
   image VARCHAR(255),
   category VARCHAR(50),
-  user_id int not null, 
+  user_id INT NOT NULL, 
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES admin(id) ON DELETE CASCADE
-
 ) COMMENT = 'Table the articles';
 
 
 
 CREATE TABLE comments (
-
     id INT AUTO_INCREMENT PRIMARY KEY,
     article_id INT NOT NULL,
     username VARCHAR(100) NOT NULL,
     comment TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (article_id) REFERENCES articles(id) ON DELETE CASCADE
-
 ) COMMENT = 'Table the comments';
 
 
 
--- match table to add 
 CREATE TABLE matches_table (
-    id INT(11) AUTO_INCREMENT PRIMARY KEY,
-    team_one_name VARCHAR(100),
-    team_one_image VARCHAR(255),
-    team_two_name VARCHAR(100),
-    team_two_image VARCHAR(255),
-    stadium VARCHAR(150),
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    team_one_id VARCHAR(50) NOT NULL,                    
+    team_two_id VARCHAR(50) NOT NULL,                   
+    stadium VARCHAR(150) NOT NULL,
     youtube_url VARCHAR(255) NULL,
-    match_date DATE,
-    match_time TIME,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    match_date DATE NOT NULL,
+    match_time TIME NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (team_one_id) REFERENCES teams(id) ON DELETE CASCADE,
+    FOREIGN KEY (team_two_id) REFERENCES teams(id) ON DELETE CASCADE
+) COMMENT = 'Table the matches connected to teams';
+
+
+
+INSERT INTO admin (id, username, email, password) VALUES (
+  1,
+  'admin',
+  'admin@gmail.com',
+  '$2b$12$JF5C8FCg/8A900PaEirbQOHISV/zDPAJh2nieEUlSU4pCBqnIcb3G'
 );
 
 
 
+INSERT INTO teams (id, team_name, team_image) VALUES 
+('wac', 'الوداد الرياضي', 'wydad.png'),
+('raja', 'الرجاء الرياضي', 'raja.png'),
+('irt', 'اتحاد طنجة', 'tanger.png'),
+('asfar', 'الجيش الملكي', 'asfar.png'),
+('husa', 'حسنية أكادير', 'husa.png'),
+('rsb', 'النهضة البركانية', 'rsb.png'),
+('mas', 'المغرب الفاسي', 'mas.png'),
+('fus', 'الفتح الرياضي', 'fus.png'),
+('codm', 'النادي المكناسي', 'meknes.png'),
+('dhj', 'الدفاع الحسني الجديدي', 'jdida.png'),
+('jmd', 'أولمبيك الدشيرة', 'dcheira.png'),
+('kacm', 'الكوكب المراكشي', 'Kawkab.png'),
+('rcaz', 'نهضة الزمامرة', 'Zemamra.png');
 
-INSERT INTO articles (title,  content, image, category, user_id) VALUES 
+
+-
+INSERT INTO articles (title, content, image, category, user_id) VALUES 
 (
     'التعادل السلبي يحسم مواجهة اتحاد طنجة والجيش الملكي بملعب طنجة الكبير',
     'حسم التعادل السلبي نتيجة المباراة التي جمعت نادي اتحاد طنجة بضيفه الجيش الملكي، مساء يومه الأحد، على أرضية ملعب طنجة الكبير، ضمن منافسات الجولة 18 من البطولة الاحترافية. وانتهى الشوط الأول على نتيجة البياض رغم المحاولات المتبادلة من الجانبين، حيث سعى كل طرف لافتتاح حصة التسجيل مبكرا وأخذ الأسبقية، غير أن الحذر الدفاعي طغى على معظم فترات هذا الشوط. وخلال الشوط الثاني، ارتفع نسق اللقاء، وشهد محاولات جادة من الطرفين لفك شفرة الدفاع، غير أن تألق حارسي الفريقين ويقظتهما حالا دون بلوغ أي طرف الشباك، لتنتهي المباراة بنتيجة البياض 0-0.',
@@ -91,7 +116,7 @@ INSERT INTO articles (title,  content, image, category, user_id) VALUES
 ),
 (
     'التعادل الإيجابي يحسم مواجهة آسفي والفتح',
-    'حسم التعادل الإيجابي مواجهة أولمبيك آسفي وضيفه الفتح الرياضي، بهدف لمثله، في المباراة التي جمعتهما مساء اليوم الإثنين، على أرضية ملعب المسيرة بمدينة آسفي، لحساب الجولة 20 من البطولة الاحترافية. وأنهى أولمبيك آسفي الشوط الأول متقدما بهدف نظيف، سجله اللاعب فراجي كرمون في الدقيقة 28 عن طريق ضربة جزاء.',
+    'حسم التعادل الإيجابي مواجهة أولمبيك آسفي وضيفه الفتح الرياضي، بهدف لمثله، في المباراة التي جمعتهما مساء اليوم الإثنين، على أرضية ملعب المسيرة بمدينة آسفي، لحساب الجولة 20 من منافسات البطولة الاحترافية. وأنهى أولمبيك آسفي الشوط الأول متقدما بهدف نظيف، سجله اللاعب فراجي كرمون في الدقيقة 28 عن طريق ضربة جزاء.',
     'A3.jpeg',
     'news',
     1
@@ -113,17 +138,7 @@ INSERT INTO articles (title,  content, image, category, user_id) VALUES
 
 
 
-INSERT INTO admin (username, email, password)
-VALUES (
-'admin',
-'admin@gmail.com',
-'$2b$12$JF5C8FCg/8A900PaEirbQOHISV/zDPAJh2nieEUlSU4pCBqnIcb3G'
-);
-
-
-select * from articles;
-
-select * from admin;
-
-select * from comments;
-
+SELECT * FROM admin;
+SELECT * FROM teams;
+SELECT * FROM articles;
+SELECT * FROM matches_table;
