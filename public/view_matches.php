@@ -25,6 +25,8 @@ $titles = [
 
 $matches = readAllMatches($target_date);
 ?>
+
+
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
@@ -68,6 +70,7 @@ $matches = readAllMatches($target_date);
                      data-start="<?= htmlspecialchars($start_iso) ?>"
                      data-end="<?= htmlspecialchars($end_iso) ?>"
                      data-url="watch_match_live.php?id=<?= htmlspecialchars($match['id']) ?>">
+                    
                     <div class="match-card">
 
                         <div class="team">
@@ -79,7 +82,6 @@ $matches = readAllMatches($target_date);
                             <span class="match-time">
                                 <i class="fa-regular fa-clock"></i> <?= date("g:i A", strtotime($match['match_time'])) ?>
                             </span>
-                            <div class="live-score-display dynamic-score">0 - 0</div>
                             <span class="match-status live-status">جاري التحميل...</span>
                         </div>
 
@@ -89,6 +91,17 @@ $matches = readAllMatches($target_date);
                         </div>
 
                     </div>
+                    <div class="match-details-bar">
+                        <span class="detail-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <b>الملعب:</b> <?= htmlspecialchars($match['stadium_name']) ?>
+                        </span>
+                        <span class="detail-item">
+                            <i class="fa-solid fa-microphone"></i>
+                            <b>المعلق:</b> <?= htmlspecialchars($match['commentator_name']) ?>
+                        </span>
+                    </div>
+
                 </div>
                 <?php endforeach; ?>
             <?php endif; ?>

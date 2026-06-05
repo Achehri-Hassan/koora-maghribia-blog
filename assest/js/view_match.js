@@ -4,7 +4,6 @@ function updateLiveScores() {
   document.querySelectorAll(".class-match-live").forEach((container) => {
     const startTime = new Date(container.getAttribute("data-start"));
     const endTime = new Date(container.getAttribute("data-end"));
-    const scoreElement = container.querySelector(".dynamic-score");
     const statusBadge = container.querySelector(".live-status");
     const matchUrl = container.getAttribute("data-url");
 
@@ -37,7 +36,7 @@ function updateLiveScores() {
       container.classList.remove("clickable");
       container.onclick = null;
     }
-    scoreElement.textContent = "0 - 0";
+
   });
 }
 updateLiveScores();

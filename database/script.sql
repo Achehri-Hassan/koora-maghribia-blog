@@ -26,6 +26,20 @@ CREATE TABLE teams (
 
 
 
+CREATE TABLE stadiums (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  stadium_name VARCHAR(150) NOT NULL UNIQUE,
+  city VARCHAR(100) NOT NULL
+) COMMENT = 'Table for Moroccan stadiums';
+
+
+
+CREATE TABLE commentators (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  commentator_name VARCHAR(100) NOT NULL UNIQUE
+) COMMENT = 'Table for commentators';
+
+
 
 CREATE TABLE articles (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -91,6 +105,26 @@ INSERT INTO teams (id, team_name, team_image) VALUES
 ('rcaz', 'نهضة الزمامرة', 'Zemamra.png');
 
 
+
+INSERT INTO stadiums (stadium_name, city) VALUES 
+('مركب محمد الخامس', 'الدار البيضاء'),
+('المجمع الرياضي الأمير مولاي عبد الله', 'الرباط'),
+('الملعب الكبير لطنجة', 'طنجة'),
+('الملعب الكبير لأكادير (أدرار)', 'أكادير'),
+('الملعب الكبير لمراكش', 'مراكش'),
+('المركب الرياضي بفاس', 'فاس');
+
+
+
+
+INSERT INTO commentators (commentator_name) VALUES 
+('جواد بدة'),
+('خليل البلوشي'),
+('عصام الشوالي'),
+('حفيظ دراجي'),
+('سفيان الرشيدي');
+
+
 -
 INSERT INTO articles (title, content, image, category, user_id) VALUES 
 (
@@ -135,7 +169,6 @@ INSERT INTO articles (title, content, image, category, user_id) VALUES
     'news',
     1
 );
-
 
 
 SELECT * FROM admin;
