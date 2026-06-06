@@ -7,6 +7,9 @@
 @import url(components/header.css);
 @import url(components/footer.css);
 
+
+
+
 main {
     max-width: 1300px;
     margin: 0 auto;
@@ -19,7 +22,7 @@ main {
 }
 
 .hero-section h1 {
-    font-size: 2.8rem;
+    font-size: 3rem;
     font-weight: 800;
     margin-bottom: 2rem;
     color: var(--second-color);
@@ -62,14 +65,9 @@ main {
 
 
 .btn-matches-link {
-    background: #1e70bf;
-    color: #fff;
-    border-color: #1e70bf;
-}
-.btn-matches-link:hover {
-    background: #155799;
-    color: #fff;
-    border-color: #155799;
+  
+    color: var(--second-color);
+    border-color: var(--second-color);
 }
 
 
@@ -147,8 +145,8 @@ main {
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: #ff4757;
-    background: rgba(255, 71, 87, 0.08);
+    color: var(--second-color);
+   border: 1px solid var(--second-color);
     padding: 4px 12px;
     border-radius: 6px;
     width: fit-content;
@@ -161,16 +159,14 @@ main {
     font-size: 1.2rem;
     font-weight: 700;
     line-height: 1.5;
-    color: #222;
+    color: var(--second-color);
     margin-bottom: 20px;
     display: -webkit-box;
     overflow: hidden;
     transition: color 0.2s ease;
 }
 
-.card:hover .articles-title {
-    color: var(--second-color);
-}
+
 
 
 .div_read {
@@ -181,7 +177,7 @@ main {
     font-size: 0.88rem;
     font-weight: 600;
     padding-top: 15px;
-    border-top: 1px solid #f1f3f5;
+    border-top: 1px solid var(--second-color);
 }
 
 .card_read_more {
@@ -209,11 +205,9 @@ main {
 
 
 .no-articles-found {
-    grid-column: 1 / -1;
-    text-align: center;
     padding: 4rem 2rem;
-    color: #bdc3c7;
-    background-color: red;
+    color: var(--second-color);
+  
 }
 .no-articles-found i {
     font-size: 4rem;
@@ -221,7 +215,7 @@ main {
 }
 .no-articles-found h2 {
     font-size: 1.5rem;
-    color: #7f8c8d;
+    color: var(--second-color);
 }
 
 
@@ -237,8 +231,7 @@ main {
     min-width: 42px;
     height: 42px;
     padding: 0 10px;
-    background-color: #fff;
-    color: #495057;
+    color: var(--second-color);
     text-decoration: none;
     display: inline-flex;
     justify-content: center;
@@ -246,15 +239,10 @@ main {
     border-radius: 10px;
     font-weight: 700;
     font-size: 0.95rem;
-    border: 1px solid #dee2e6;
+    border: 1px solid var(--second-color);
     transition: all 0.2s ease;
 }
 
-.pagination__btn:hover:not(.active) {
-    border-color: var(--second-color);
-    color: var(--second-color);
-    background: #fff8f8;
-}
 
 .pagination__btn.active {
     background-color: var(--second-color);

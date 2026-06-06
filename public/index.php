@@ -88,7 +88,7 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
         </section>
 
         <!-- PAGINATION -->
-        <?php if (!empty($articles)): ?>
+        
         <section>
             <div class="pagination">
               <a href="#" class="pagination__btn nav-btn"><i class="fa-solid fa-chevron-right"></i> السابق</a>
@@ -97,7 +97,7 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
               <a href="#" class="pagination__btn nav-btn">التالي <i class="fa-solid fa-chevron-left"></i></a>
             </div>
         </section>
-        <?php endif; ?>
+        
 
     </main>
 

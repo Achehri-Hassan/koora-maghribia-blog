@@ -11,9 +11,9 @@ function updateLiveScores() {
       statusBadge.textContent = "لم تبدأ بعد";
       statusBadge.style.backgroundColor = "#1e293b";
       statusBadge.style.animation = "none";
-
       container.classList.remove("clickable");
       container.onclick = null;
+
     } else if (now >= startTime && now <= endTime) {
       const diffInSeconds = Math.floor((now - startTime) / 1000);
       let currentMinute = Math.floor(diffInSeconds / 60);
@@ -28,6 +28,7 @@ function updateLiveScores() {
       container.onclick = function () {
         location.href = matchUrl;
       };
+      
     } else {
       statusBadge.textContent = "انتهت";
       statusBadge.style.backgroundColor = "#22c55e";

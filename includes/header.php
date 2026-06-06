@@ -16,6 +16,7 @@ $isAdmin = isset($_SESSION['is_admin']);
         <a href="index.php">الرئيسية</a>
         <a href="#">من نحن</a>
         <a href="#">اتصل بنا</a>
+        <a href="logout.php"> تسجيل الخروج </a>
     </div>
 
     <!-- admin -->

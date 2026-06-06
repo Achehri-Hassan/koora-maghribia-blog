@@ -32,20 +32,26 @@ $matches = readAllMatches($target_date);
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- title page -->
     <title>أهم مباريات اليوم - Live Score</title>
+
+    <!-- font family -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
+
+    <!-- font icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+     <!-- link css -->
     <link rel="stylesheet" href="../assest/css/view_match.css">
+    <link rel="stylesheet" href="../assest/css/components/header.css">
+    <link rel="stylesheet" href="../assest/css/components/footer.css">
 </head>
 <body>
-
     
-  <div>
-      <a href="index.php" class="back-home">
-        <i class="fa-solid fa-arrow-right"></i> الرجوع للرئيسية
-    </a>
-  </div>
-
+     <!-- call header -->
+     <?php include '../includes/header.php'; ?>
+    
     <div class="container">
         <div class="top-bar">
             <div class="filter-buttons">
@@ -107,6 +113,9 @@ $matches = readAllMatches($target_date);
             <?php endif; ?>
         </div>
     </div>
+
+     <!-- call header -->
+     <?php include '../includes/footer.php'; ?>
 
     <script src="../assest/js/view_match.js"></script>
 </body>
