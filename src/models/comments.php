@@ -5,6 +5,7 @@ require_once "../src/config/connection.php";
 
 
 
+// function to add comments
 function addComment($article_id, $username, $comment)
 {
     $conn = getConnection();
@@ -22,7 +23,7 @@ function addComment($article_id, $username, $comment)
 }
 
 
-
+// get comments by article id 
 function getCommentsByArticle($article_id)
 {
     $conn = getConnection();
@@ -41,6 +42,7 @@ function getCommentsByArticle($article_id)
 
 
 
+// total about comment inside articles 
 function getCommentsCount($article_id)
 {
     $conn = getConnection();
@@ -58,7 +60,7 @@ function getCommentsCount($article_id)
 }
 
 
-
+// delete comments
 function deleteComment($id)
 {
     $conn = getConnection();

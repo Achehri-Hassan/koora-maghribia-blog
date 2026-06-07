@@ -112,4 +112,122 @@ td {
   align-items: center;
 }
 
+/* ===========================
+   Responsive - Dashboard
+   =========================== */
 
+/* Tablet: 768px - 1024px */
+@media (max-width: 1024px) {
+  .total {
+    margin-right: 20px;
+    gap: 20px;
+  }
+
+  th,
+  td {
+    padding: 14px 12px;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    padding: 0.3rem 18px;
+  }
+}
+
+/* Mobile: up to 768px */
+@media (max-width: 768px) {
+
+
+ 
+
+  /* Totals */
+  .total {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 20px 16px;
+  }
+
+  .total h2 {
+    font-size: 1rem;
+  }
+
+  /* Table – scroll on small screens */
+  .table-card {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    min-width: 520px;
+  }
+
+  th {
+    font-size: 0.85rem;
+    padding: 14px 10px;
+  }
+
+  td {
+    font-size: 0.85rem;
+    padding: 12px 10px;
+  }
+
+  .actions-wrap {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    padding: 0.3rem 14px;
+    text-align: center;
+    font-size: 0.82rem;
+  }
+
+  .view-comments {
+    font-size: 0.9rem;
+    margin-right: 6px;
+  }
+
+  /* Comments section */
+  .comments-card {
+    margin: 16px;
+    padding: 16px;
+  }
+
+  .comments-card .title_article {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .comment-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px 0;
+  }
+
+  .comment-row .delete-btn {
+    align-self: flex-end;
+    padding: 0.3rem 16px;
+  }
+}
+
+/* Small phones: up to 480px */
+@media (max-width: 480px) {
+  
+
+  .total h2 {
+    font-size: 0.95rem;
+  }
+
+  table {
+    min-width: 420px;
+  }
+
+  th,
+  td {
+    font-size: 0.8rem;
+    padding: 10px 8px;
+  }
+}

@@ -1,7 +1,11 @@
 <?php
 
+
+
 require_once "../src/config/connection.php";
 
+
+// get all teams 
 function getAllTeams() {
     $pdo = getConnection();
     $sql = "SELECT * FROM teams ORDER BY team_name ASC";
@@ -10,6 +14,7 @@ function getAllTeams() {
 }
 
 
+// get all Stadiums
 function getAllStadiums() {
     $pdo = getConnection();
     $sql = "SELECT * FROM stadiums ORDER BY stadium_name ASC";
@@ -17,7 +22,7 @@ function getAllStadiums() {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-
+// get all Commentators
 function getAllCommentators() {
     $pdo = getConnection();
     $sql = "SELECT * FROM commentators ORDER BY commentator_name ASC";
@@ -26,6 +31,7 @@ function getAllCommentators() {
 }
 
 
+// function to create match 
 function createMatch($team_one_id, $team_two_id, $stadium_id, $commentator_id, $match_date, $match_time, $youtube_url) {
     $pdo = getConnection();
     
@@ -46,6 +52,7 @@ function createMatch($team_one_id, $team_two_id, $stadium_id, $commentator_id, $
 }
 
 
+// function to reade all match date
 function readAllMatches($date) {
     $pdo = getConnection();
     
@@ -75,6 +82,8 @@ function readAllMatches($date) {
     
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+
 
 function readMatchById($id) {
     $pdo = getConnection();

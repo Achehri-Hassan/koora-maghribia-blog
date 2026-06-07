@@ -4,7 +4,7 @@
 
 
 
-
+/* form container */
 .form_container{
     min-height: 100vh;
     display: flex;
@@ -14,6 +14,7 @@
 }
 
 
+/* form */
 form{
 
     width: 100%;
@@ -24,24 +25,29 @@ form{
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
+
+/* header form h1 */
 form h1{
     text-align: center;
     margin-bottom: 25px;
     color: var(--second-color);
 }
 
+
+/* row  he is 2 div*/
 .row{
     display: flex;
     gap: 15px;
-  
 }
 
 
+/* input name class div */
 .input-group{
     width: 100%;
     margin-bottom: 18px;
 }
 
+/* label */
 .input-group label{
     display: block;
     margin-bottom: 6px;
@@ -49,6 +55,7 @@ form h1{
     color: var(--second-color);
 }
 
+/* input select textarea */
 .input-group input,
 .input-group select,
 .input-group textarea{
@@ -68,6 +75,8 @@ textarea{
     resize: vertical;
 }
 
+
+/*div buttons   */
 .buttons{
     display: flex;
     align-items: center;
@@ -75,6 +84,7 @@ textarea{
     margin-top: 10px;
 }
 
+/* name buttons to submit data */
 .btn-submit{
     padding: 12px 20px;
     border: none;
@@ -85,6 +95,7 @@ textarea{
     font-weight: bold;
 }
 
+/* back in dashboard */
 .btn-back{
     text-decoration: none;
     color: var(--second-color);
@@ -92,6 +103,7 @@ textarea{
 }
 
 
+/* responsive design  */
 @media(max-width:768px){
     .row{
         flex-direction: column;

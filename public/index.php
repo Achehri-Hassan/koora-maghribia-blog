@@ -1,12 +1,16 @@
 <?php
 
+// session start
 session_start();
 
 require_once "../src/config/connection.php";
 require_once "../src/models/article.php";
 require_once "../src/models/comments.php";
 
+
+// add condition 
 if (isset($_GET['cat']) && !empty($_GET['cat'])) {
+    // decal variable 
     $category = trim($_GET['cat']);
     $articles = getArticlesByCategory($category);
 } else {
@@ -43,26 +47,41 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
         <!-- hero section -->
         <section class="hero-section">
           <h1>آخر أخبار البطولة الاحترافية المغربية</h1>
+
+          <!-- category filters -->
           <div class="category-filters">
+
+            <!-- all articles -->
             <a href="index.php" class="filter-pill <?= !isset($_GET['cat']) ? 'active' : '' ?>">الكل</a>
+
+             <!-- news articles -->
             <a href="index.php?cat=news" class="filter-pill <?= isset($_GET['cat']) && $_GET['cat'] =='news' ? 'active' : '' ?>">الأخبار</a>
+             
+            <!-- Transfers articles -->
             <a href="index.php?cat=Transfers" class="filter-pill <?= isset($_GET['cat']) && $_GET['cat'] =='Transfers' ? 'active' : '' ?>">الانتقالات</a>
+
+             <!-- matches  -->
             <a href="view_matches.php" class="filter-pill btn-matches-link"><i class="fa-solid fa-calendar-days"></i> جدول المباريات</a>
           </div>
         </section>
          
         <!-- Article card -->
         <section class="article_card">
-
+            
+            <!-- empty articles -->
            <?php if (empty($articles)): ?>
              <div class="no-articles-found">
                  <i class="fa-regular fa-folder-open"></i>
                  <h2>لا توجد مقالات حالياً في هذا التصنيف</h2>
              </div>
            <?php else: ?>
-
+            
+            <!-- create loop to call all articles  -->
            <?php foreach ($articles as $art): ?>
+             <!-- get count comments -->
              <?php $commentsCount = getCommentsCount($art['id']); ?>
+
+                <!-- add card link to click visitor & admin he see details in  adetails.php-->
                 <a href="adetails.php?id=<?= $art['id'] ?>" class="card-link">
                     <div class="card">
                         <!-- IMAGE -->
@@ -88,7 +107,6 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
         </section>
 
         <!-- PAGINATION -->
-        
         <section>
             <div class="pagination">
               <a href="#" class="pagination__btn nav-btn"><i class="fa-solid fa-chevron-right"></i> السابق</a>

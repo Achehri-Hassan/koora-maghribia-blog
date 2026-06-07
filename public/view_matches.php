@@ -49,8 +49,8 @@ $matches = readAllMatches($target_date);
 </head>
 <body>
     
-     <!-- call header -->
-     <?php include '../includes/header.php'; ?>
+    <!-- call header -->
+    <?php include '../includes/header.php'; ?>
     
     <div class="container">
         <div class="top-bar">
@@ -68,12 +68,12 @@ $matches = readAllMatches($target_date);
             <?php if (empty($matches)): ?>
                 <div class="no-matches">لا توجد مباريات لهذا اليوم</div>
             <?php else: ?>
-                <?php foreach ($matches as $match):
-                    $start_iso = $match['match_date'] . 'T' . $match['match_time'];
-                    $end_iso   = date('Y-m-d\TH:i:s', strtotime('+105 minutes', strtotime($start_iso)));
+            <?php foreach ($matches as $match):
+                    $start_ma = $match['match_date'] . 'T' . $match['match_time'];
+                    $end_iso   = date('Y-m-d\TH:i:s', strtotime('+105 minutes', strtotime($start_ma)));
                 ?>
                 <div class="match-container class-match-live"
-                     data-start="<?= htmlspecialchars($start_iso) ?>"
+                     data-start="<?= htmlspecialchars($start_ma) ?>"
                      data-end="<?= htmlspecialchars($end_iso) ?>"
                      data-url="watch_match_live.php?id=<?= htmlspecialchars($match['id']) ?>">
                     
@@ -117,6 +117,7 @@ $matches = readAllMatches($target_date);
      <!-- call header -->
      <?php include '../includes/footer.php'; ?>
 
+     <!-- script js -->
     <script src="../assest/js/view_match.js"></script>
 </body>
 </html>
