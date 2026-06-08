@@ -61,19 +61,7 @@ foreach ($articles as $a) {
 
 
     <!-- header -->
-    <header>
-        <!-- Right Side  nav-->
-        <div class="right-side">
-            <a href="index.php">الرئيسية</a>
-            <a href="create_Article.php">إضافة مقال جديد</a>
-            <a href="create_match.php">إضافة مباراة </a>
-        </div>
-
-        <div class="admin-actions">
-            <a href="logout.php"> تسجيل الخروج </a>
-        </div>
-
-    </header>
+      <?php include '../includes/header.php'; ?>
     <!-- End Header -->
 
     <!-- total article and comments -->
