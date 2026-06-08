@@ -112,9 +112,11 @@ td {
   align-items: center;
 }
 
-/* ===========================
-   Responsive - Dashboard
-   =========================== */
+
+
+
+/* Responsive - Dashboard */
+  
 
 /* Tablet: 768px - 1024px */
 @media (max-width: 1024px) {

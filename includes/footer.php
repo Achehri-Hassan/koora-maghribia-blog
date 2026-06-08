@@ -1,11 +1,10 @@
 
     <!-- FOOTER -->
-
     <footer class="footer">
 
           <h2 class="foot__title"> تابع آخر أخبار الكرة المغربية</h2>
           <p class="foot__text"> موقعك الأول لمتابعة أخبار البطولة الاحترافية المغربية.</p>
-
+            <!-- icon media -->
             <div class="share-icons">
                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
                <a href="#"><i class="fa-brands fa-x-twitter"></i></a>

@@ -95,6 +95,7 @@ foreach ($articles as $a) {
                 </tr>
             </thead>
             <tbody>
+                <!-- call variable articles tile and id comments -->
                 <?php foreach ($articles as $art): ?>
                     <tr>
                         <td>#<?= $art['id'] ?></td>
@@ -105,11 +106,12 @@ foreach ($articles as $a) {
                             </a>
                         </td>
                         <td>
+                            <!-- remove articles or update -->
                             <div class="actions-wrap">
 
                                 <a href="update.php?id=<?= $art['id'] ?>" class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></a>
-
                                 <a href="delete.php?id=<?= $art['id'] ?>" class="delete-btn" onclick="return confirm('حذف المقال نهائياً؟')"><i class="fa-solid fa-trash"></i></a>
+
                             </div>
                         </td>
                     </tr>
@@ -117,21 +119,21 @@ foreach ($articles as $a) {
             </tbody>
         </table>
     </div>
-
+     <!-- comments section -->
     <div id="comments-section">
         <?php if ($selectedComments !== null): ?>
+            <!-- card comments -->
             <div class="comments-card">
-
                 <h3 class="title_article">
                     <a href="dashboard.php"><i class="fa-solid fa-circle-xmark fa-xl"></i></a> تعليقات المقال: <span><?= htmlspecialchars($selectedArticleTitle) ?></span>
                 </h3>
 
-
+                 <!-- not empty comment -->
                 <?php if (empty($selectedComments)): ?>
                     <p>لا توجد تعليقات منشورة لهذا المقال حتى الآن.</p>
-
                 <?php else: ?>
-
+                      
+                    <!-- loop all comment to add name and content -->
                     <?php foreach ($selectedComments as $sc): ?>
                         <div class="comment-row">
                             <div>
@@ -139,6 +141,7 @@ foreach ($articles as $a) {
                                 <span><?= htmlspecialchars($sc['comment']) ?></span>
                                 <p> <?= date("Y-m-d H:i", strtotime($sc['created_at'])) ?></p>
                             </div>
+                             <!-- remove comments -->
                             <a href="delete_comment.php?id=<?= $sc['id'] ?>" class="delete-btn"
                                 onclick="return confirm('هل تريد حذف هذا التعليق؟')">
                                 <i class="fa-solid fa-trash-can"></i>
@@ -149,6 +152,7 @@ foreach ($articles as $a) {
             </div>
         <?php endif; ?>
     </div>
+    <!-- end -->
  
 
 </body>

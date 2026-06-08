@@ -63,9 +63,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_match'])) {
 
 <head>
     <meta charset="UTF-8" />
+     <!-- title page -->
     <title>إضافة مباراة جديدة</title>
+     <!-- font family -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
+    <!-- icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <!-- style css link -->
     <link rel="stylesheet" href="../assest/css/create.css" />
 </head>
 
@@ -160,7 +164,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_match'])) {
                 <a href="dashboard.php" class="btn-back">الرجوع للوحة التحكم</a>
             </div>
         </form>
+        <!-- end div -->
     </div>
+    <!-- end container -->
 </body>
 
 </html>

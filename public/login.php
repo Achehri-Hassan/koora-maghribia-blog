@@ -4,18 +4,25 @@
 session_start();
 require_once "../src/auth/admin.php";
 
+
+// declare variable to store error
 $error_login = "";
 
+
+// handel form
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["login"])) {
    
+  //  create variable to add name input
   $email = $_POST['email'];
   $pass  = $_POST['password'];
   
- 
+  // condition is not empty  name variable
   if (!empty($email) && !empty($pass)) {
   
+    // create variable  to add function login
     $admin = login($email);
      
+    //  condition to verification 
     if($admin && password_verify($pass, $admin['password'])) {
 
       $_SESSION['is_admin'] = $admin['id'];
