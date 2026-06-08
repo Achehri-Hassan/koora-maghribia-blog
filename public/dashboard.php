@@ -60,8 +60,34 @@ foreach ($articles as $a) {
 <body>
 
 
-    <!-- header -->
-      <?php include '../includes/header.php'; ?>
+     <!-- header -->
+    <header>
+      
+       <div class="header-inner">
+        
+        <a href="index.php" class="header-logo">الرئيسية </a>
+
+         <button class="nav-toggle">
+            <i class="fa-solid fa-bars"></i>
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+
+        <!-- Right Side  nav-->
+        <nav class="nav-menu">
+            <div class="nav-links">
+              
+              <a href="create_Article.php">إضافة مقال جديد</a>
+              <a href="create_match.php">إضافة مباراة </a>
+          </div>
+
+          <div class="admin-actions">
+            <a href="logout.php"> تسجيل الخروج </a>
+          </div>
+        </nav>
+      </div>
+
+    </header>
     <!-- End Header -->
 
     <!-- total article and comments -->
@@ -142,7 +168,8 @@ foreach ($articles as $a) {
     </div>
     <!-- end -->
  
-
+<!-- script js -->
+<script src="../assest/js/header.js"></script>
 </body>
 
 </html>
