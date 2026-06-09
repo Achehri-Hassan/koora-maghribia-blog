@@ -61,7 +61,7 @@ foreach ($articles as $a) {
     <div class="total">
         <h2> <i class="fa-solid fa-newspaper"></i> إجمالي المقالات: <?= $totalArticles ?></h2>
         <br>
-        <h2> <i class="fa-solid fa-comments"></i> إجمالي التعليقات الكلية: <?= $totalCommentsCount ?></h2>
+        <h2> <i class="fa-solid fa-comments"></i> إجمالي التعليقات:<?= $totalCommentsCount ?></h2>
     </div>
 
     <div class="table-card">
@@ -96,6 +96,7 @@ foreach ($articles as $a) {
         </table>
     </div>
 
+     <!-- js script -->
     <script src="../assest/js/header.js"></script>
 </body>
 </html>

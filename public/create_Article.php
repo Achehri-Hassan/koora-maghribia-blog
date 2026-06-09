@@ -19,8 +19,8 @@ $error = "";
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_article'])) {
 
   // declare variable to add name input 
-  $title    = htmlspecialchars(trim($_POST['title']));
-  $content  = htmlspecialchars(trim($_POST['content']));
+  $title    = trim($_POST['title']);
+  $content  = trim($_POST['content']);
   $category = $_POST["select"] ?? '';
 
   //  empty name input 
@@ -64,6 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_article'])) {
 
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <!-- title page  -->
   <title>إضافة مقال جديد</title>
    <!-- font family -->
@@ -87,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_article'])) {
       <!-- error -->
       <?php if ($error): ?>
         <p style="color:#ff4d4d; margin-bottom:15px;">
-          <?= $error ?>
+          <?=  htmlspecialchars($error) ?>
         </p>
       <?php endif; ?>
 
@@ -111,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_article'])) {
          <!-- choice image  -->
         <div class="input-group">
           <label>صورة الغلاف</label>
-          <input type="file" name="image" required>
+          <input type="file" name="image" required accept=".jpg,.jpeg,.png,.webp">
         </div>
 
       </div>

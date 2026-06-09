@@ -58,17 +58,3 @@ function getCommentsCount($article_id)
 
     return $result['total'] ?? 0;
 }
-
-
-// delete comments
-function deleteComment($id)
-{
-    $conn = getConnection();
-
-    $sql = "DELETE FROM comments WHERE id = :id";
-    $stmt = $conn->prepare($sql);
-
-    return $stmt->execute([
-        "id" => $id
-    ]);
-}

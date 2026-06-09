@@ -63,6 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_match'])) {
 
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <!-- title page -->
     <title>إضافة مباراة جديدة</title>
      <!-- font family -->
@@ -121,7 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_match'])) {
                     <select name="stadium_id" required>
                         <option value="">-- اختر ملعب المباراة --</option>
                         <?php foreach ($stadiums as $st): ?>
-                            <option value="<?= htmlspecialchars($st['id']) ?>"><?= htmlspecialchars($st['stadium_name']) ?> <?= htmlspecialchars($st['city']) ?></option>
+                            <option value="<?= htmlspecialchars($st['id']) ?>"><?= htmlspecialchars($st['stadium_name']) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>

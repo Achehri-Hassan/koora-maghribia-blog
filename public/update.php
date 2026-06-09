@@ -38,8 +38,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_article'])) {
     }
 
     // declare variable to add name input
-    $title    = htmlspecialchars(trim($_POST['title']));
-    $content  = htmlspecialchars(trim($_POST['content']));
+    $title    = trim($_POST['title']);
+    $content  = trim($_POST['content']);
     $category = $_POST["select"];
     
     $imageToSave = $_POST['old_image']; 
@@ -82,6 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_article'])) {
 
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <!-- title page -->
     <title>تعديل مقال - البطولة</title>
      <!-- font family -->
@@ -123,7 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_article'])) {
 
             <div class="input-group">
                 <label>صورة الغلاف</label>
-                <input type="file" name="image">
+                <input type="file" name="image" accept=".jpg,.jpeg,.png,.webp">
             </div>
         </div>
         <!-- return content -->

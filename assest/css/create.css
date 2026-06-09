@@ -1,22 +1,24 @@
-
 @import url(components/variable.css);
 @import url(components/stracture.css);
 
 
 
+
+
+
+
 /* form container */
-.form_container{
+.form_container {
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
+    background-color: #f9f9f9; 
 }
 
-
 /* form */
-form{
-
+form {
     width: 100%;
     max-width: 850px;
     background: var(--white);
@@ -25,30 +27,28 @@ form{
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
-
 /* header form h1 */
-form h1{
+form h1 {
     text-align: center;
     margin-bottom: 25px;
     color: var(--second-color);
+    font-size: 24px;
 }
 
-
-/* row  he is 2 div*/
-.row{
+/* row containing 2 divs */
+.row {
     display: flex;
     gap: 15px;
 }
 
-
 /* input name class div */
-.input-group{
+.input-group {
     width: 100%;
     margin-bottom: 18px;
 }
 
 /* label */
-.input-group label{
+.input-group label {
     display: block;
     margin-bottom: 6px;
     font-weight: 600;
@@ -58,34 +58,31 @@ form h1{
 /* input select textarea */
 .input-group input,
 .input-group select,
-.input-group textarea{
-   
+.input-group textarea {
     font-family: 'Cairo', sans-serif;
     width: 100%;
     padding: 12px;
     border: 1px solid var(--second-color);
     border-radius: 10px;
     outline: none;
-    font-size: 19px;
-   
-
+    font-size: 16px; 
+    background: #fff;
 }
 
-textarea{
+textarea {
     resize: vertical;
 }
 
 
-/*div buttons   */
-.buttons{
+.buttons {
     display: flex;
     align-items: center;
     gap: 20px;
     margin-top: 10px;
 }
 
-/* name buttons to submit data */
-.btn-submit{
+
+.btn-submit {
     padding: 12px 20px;
     border: none;
     border-radius: 10px;
@@ -93,23 +90,43 @@ textarea{
     color: var(--white);
     cursor: pointer;
     font-weight: bold;
+    font-size: 16px;
 }
 
-/* back in dashboard */
-.btn-back{
+
+.btn-back {
     text-decoration: none;
     color: var(--second-color);
     font-weight: bold;
+    font-size: 16px;
 }
 
 
-/* responsive design  */
-@media(max-width:768px){
-    .row{
-        flex-direction: column;
+@media(max-width: 767px) {
+    
+   
+    form {
+        padding: 20px;
     }
 
-    .form_card{
-        padding: 25px;
+  
+    .row {
+        flex-direction: column;
+        gap: 0; 
+    }
+
+  
+    .buttons {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    /* جعل الأزرار تأخذ العرض الكامل */
+    .btn-submit, 
+    .btn-back {
+        width: 100%;
+        text-align: center;
+        padding: 14px; /* زيادة الـ padding شوية للموبايل */
     }
 }

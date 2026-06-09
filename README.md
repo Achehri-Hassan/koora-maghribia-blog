@@ -38,7 +38,6 @@ The project is built with a clean separation between public and private code —
 - Dashboard showing article and comment totals at a glance
 - **Create, edit, and delete articles** with image upload and MIME type validation
 - **Schedule matches** by selecting teams from the DB, choosing a stadium, commentator, date/time, and YouTube URL
-- View and delete comments per article
 - All admin routes protected by `$_SESSION['is_admin']` auth guards
 
 ---

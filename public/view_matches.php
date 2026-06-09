@@ -1,29 +1,33 @@
 <?php
 
-
 session_start();
-
 
 require_once "../src/models/matches.php";
 
-$allowed        = ['today', 'tomorrow', 'yesterday'];
+$allowed = ['today', 'tomorrow', 'yesterday'];
+
 $current_filter = in_array($_GET['day'] ?? '', $allowed) ? $_GET['day'] : 'today';
 
-$dateOffsets = [
-    'today'     => '0 day',
-    'tomorrow'  => '+1 day',
-    'yesterday' => '-1 day',
+$days = [
+    'today' => 0,
+    'tomorrow' => 1,
+    'yesterday' => -1
 ];
 
-$target_date = date('Y-m-d', strtotime($dateOffsets[$current_filter]));
-
-$titles = [
-    'today'     => "أهم مباريات اليوم (" . date('d-m-Y') . ")",
-    'tomorrow'  => "مباريات الغد (" . date('d-m-Y', strtotime('+1 day')) . ")",
-    'yesterday' => "مباريات الأمس (" . date('d-m-Y', strtotime('-1 day')) . ")",
+$match_days_names = [
+    'today' => "أهم مباريات اليوم",
+    'tomorrow' => "مباريات الغد",
+    'yesterday' => "مباريات الأمس"
 ];
+
+$current_date = date('d-m-Y', strtotime($days[$current_filter] . ' day'));
+
+$title = $match_days_names[$current_filter] . " ($current_date)";
+
+$target_date = date('Y-m-d', strtotime($days[$current_filter] . ' day'));
 
 $matches = readAllMatches($target_date);
+
 ?>
 
 
@@ -60,7 +64,7 @@ $matches = readAllMatches($target_date);
                 <a href="view_matches.php?day=yesterday" class="btn-filter btn-yesterday <?= $current_filter === 'yesterday' ? 'active' : '' ?>">مباريات الأمس</a>
             </div>
             <div class="header-titles">
-                <h1 class="main-title"><?= htmlspecialchars($titles[$current_filter]) ?></h1>
+                <h1 class="main-title"><?= htmlspecialchars($title) ?></h1>
             </div>
         </div>
 
