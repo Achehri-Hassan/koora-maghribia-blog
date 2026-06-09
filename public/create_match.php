@@ -21,11 +21,11 @@ $today         = date('Y-m-d');
 $tomorrow      = date('Y-m-d', strtotime('+1 day'));
 $allowed_dates = [$today, $tomorrow];
 
-$message = "";
+
+$error = "";
 
 // start to handel form
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_match'])) {
-
 
     // declare variable name input 
     $team_one_id    = $_POST['team_one_id'] ?? '';
@@ -36,26 +36,33 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_match'])) {
     $match_time     = $_POST['match_time'];
     $youtube_url    = htmlspecialchars(trim($_POST['youtube_url']));
      
+   
+    $youtube_pattern = "/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/";
+
     // add condition about if empty any variable 
     if (empty($team_one_id) || empty($team_two_id) || empty($stadium_id) || empty($commentator_id)) {
-
-        $message = "المرجو ملء جميع الخانات المطلوبة واختيار الفرق والملعب والمعلق.";
+        $error = "المرجو ملء جميع الخانات المطلوبة واختيار الفرق والملعب والمعلق.";
         
-        // you not add 2 team name like (raja vs raja)
     } elseif ($team_one_id === $team_two_id) {
-        $message = "لا يمكن مواجهة الفريق لنفسه! اختر فريقين مختلفين.";
+        $error = "لا يمكن مواجهة الفريق لنفسه! اختر فريقين مختلفين.";
        
-        // 
     } elseif (!in_array($match_date, $allowed_dates)) {
-        $message = "يمكنك جدولة المباريات لليوم أو الغد فقط.";
+        $error = "يمكنك جدولة المباريات لليوم أو الغد فقط.";
+
+    } elseif (!preg_match($youtube_pattern, $youtube_url)) {
+     
+        $error = "المرجو إدخال رابط يوتيوب صحيح (YouTube Live Link).";
 
     } else {
+
         // call function to add property
         createMatch($team_one_id, $team_two_id, $stadium_id, $commentator_id, $match_date, $match_time, $youtube_url);
         header("Location: index.php");
         exit();
     }
 }
+
+
 ?>
 
 <!doctype html>
@@ -85,8 +92,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_match'])) {
           <h1>إضافة مباراة جديدة ⚽</h1>
 
             <!-- call error -->
-            <?php if (!empty($message)): ?>
-                <p class="error"> <?= htmlspecialchars($message) ?></p>
+            <?php if (!empty($error)): ?>
+                <p class="error"> <?= htmlspecialchars($error) ?></p>
             <?php endif; ?>
 
             <!-- row  team 1 & team 2 -->
@@ -169,5 +176,4 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_match'])) {
     </div>
     <!-- end container -->
 </body>
-
 </html>
