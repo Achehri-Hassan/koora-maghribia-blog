@@ -47,9 +47,9 @@ CREATE TABLE articles (
   content TEXT NOT NULL,
   image VARCHAR(255),
   category VARCHAR(50),
-  user_id INT NOT NULL, 
+  admin_id INT NOT NULL, 
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES admin(id) ON DELETE CASCADE
+  FOREIGN KEY (admin_id) REFERENCES admin(id) ON DELETE CASCADE
 ) COMMENT = 'Table the articles';
 
 
@@ -69,14 +69,17 @@ CREATE TABLE matches_table (
     id INT AUTO_INCREMENT PRIMARY KEY,
     team_one_id VARCHAR(50) NOT NULL,                    
     team_two_id VARCHAR(50) NOT NULL,                   
-    stadium VARCHAR(150) NOT NULL,
+    stadium_id INT NOT NULL,                         
+    commentator_id INT NOT NULL,                       
     youtube_url VARCHAR(255) NULL,
     match_date DATE NOT NULL,
     match_time TIME NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (team_one_id) REFERENCES teams(id) ON DELETE CASCADE,
-    FOREIGN KEY (team_two_id) REFERENCES teams(id) ON DELETE CASCADE
-) COMMENT = 'Table the matches connected to teams';
+    FOREIGN KEY (team_two_id) REFERENCES teams(id) ON DELETE CASCADE,
+    FOREIGN KEY (stadium_id) REFERENCES stadiums(id) ON DELETE CASCADE,
+    FOREIGN KEY (commentator_id) REFERENCES commentators(id) ON DELETE CASCADE
+) COMMENT = 'Table the matches connected to teams, stadiums and commentators';
 
 
 
@@ -126,7 +129,7 @@ INSERT INTO commentators (commentator_name) VALUES
 
 
 -
-INSERT INTO articles (title, content, image, category, user_id) VALUES 
+INSERT INTO articles (title, content, image, category, admin_id) VALUES 
 (
     'التعادل السلبي يحسم مواجهة اتحاد طنجة والجيش الملكي بملعب طنجة الكبير',
     'حسم التعادل السلبي نتيجة المباراة التي جمعت نادي اتحاد طنجة بضيفه الجيش الملكي، مساء يومه الأحد، على أرضية ملعب طنجة الكبير، ضمن منافسات الجولة 18 من البطولة الاحترافية. وانتهى الشوط الأول على نتيجة البياض رغم المحاولات المتبادلة من الجانبين، حيث سعى كل طرف لافتتاح حصة التسجيل مبكرا وأخذ الأسبقية، غير أن الحذر الدفاعي طغى على معظم فترات هذا الشوط. وخلال الشوط الثاني، ارتفع نسق اللقاء، وشهد محاولات جادة من الطرفين لفك شفرة الدفاع، غير أن تألق حارسي الفريقين ويقظتهما حالا دون بلوغ أي طرف الشباك، لتنتهي المباراة بنتيجة البياض 0-0.',

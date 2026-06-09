@@ -44,19 +44,19 @@ function getArticleById($id)
 
 
 
-function createArticle($title, $content, $image, $category, $user_id)
+function createArticle($title, $content, $image, $category, $admin_id)
 {
 
     $conn = getConnection();
-    $sql = "INSERT INTO articles (title, content, image, category, user_id)
-            VALUES (:title, :content, :image, :category, :user_id)";
+    $sql = "INSERT INTO articles (title, content, image, category, admin_id)
+            VALUES (:title, :content, :image, :category, :admin_id)";
     $stmt = $conn->prepare($sql);
     return $stmt->execute([
         "title" => $title,
         "content" => $content,
         "image" => $image,
         "category" => $category,
-        "user_id" => $user_id
+        "admin_id" => $admin_id
     ]);
 }
 
