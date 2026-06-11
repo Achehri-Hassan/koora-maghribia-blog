@@ -59,7 +59,7 @@ koora-maghribia-blog/
 │   ├── create_match.php             # Schedule new match (admin)
 │   ├── update.php                   # Edit article (admin)
 │   ├── delete.php                   # Delete article (auth protected)
-│   └── delete_comment.php           # Delete comment (auth protected)
+│
 │
 ├── src/                             # 🔒 App logic — outside web root
 │   ├── config/
