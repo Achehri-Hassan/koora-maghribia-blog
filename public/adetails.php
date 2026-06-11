@@ -32,8 +32,8 @@ $comment_error = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_comment'])) {
 
     // declare variable to add name input
-    $username     = htmlspecialchars(trim($_POST['username']));
-    $comment_text = htmlspecialchars(trim($_POST['comment']));
+    $username     = trim($_POST['username']);
+    $comment_text = trim($_POST['comment']);
     
     //  condition not empty variable
     if (!empty($username) && !empty($comment_text)) {

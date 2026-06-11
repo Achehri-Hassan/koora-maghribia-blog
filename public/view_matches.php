@@ -1,9 +1,12 @@
+
 <?php
 
 session_start();
 
 require_once "../src/models/matches.php";
+require_once "../src/config/connection.php";
 
+deleteOldMatches(3);
 $allowed = ['today', 'tomorrow', 'yesterday'];
 
 $current_filter = in_array($_GET['day'] ?? '', $allowed) ? $_GET['day'] : 'today';
@@ -54,7 +57,7 @@ $matches = readAllMatches($target_date);
 <body>
     
     <!-- call header -->
-    <?php include '../includes/header.php'; ?>
+    <?php include '../includes/header.php';?>
     
     <div class="container">
         <div class="top-bar">

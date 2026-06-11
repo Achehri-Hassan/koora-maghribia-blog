@@ -74,7 +74,6 @@ CREATE TABLE matches_table (
     youtube_url VARCHAR(255) NULL,
     match_date DATE NOT NULL,
     match_time TIME NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (team_one_id) REFERENCES teams(id) ON DELETE CASCADE,
     FOREIGN KEY (team_two_id) REFERENCES teams(id) ON DELETE CASCADE,
     FOREIGN KEY (stadium_id) REFERENCES stadiums(id) ON DELETE CASCADE,
@@ -128,7 +127,7 @@ INSERT INTO commentators (commentator_name) VALUES
 ('سفيان الرشيدي');
 
 
--
+
 INSERT INTO articles (title, content, image, category, admin_id) VALUES 
 (
     'التعادل السلبي يحسم مواجهة اتحاد طنجة والجيش الملكي بملعب طنجة الكبير',

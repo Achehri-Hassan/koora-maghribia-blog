@@ -34,13 +34,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_match'])) {
     $commentator_id = $_POST['commentator_id'] ?? '';
     $match_date     = $_POST['match_date'];
     $match_time     = $_POST['match_time'];
-    $youtube_url    = htmlspecialchars(trim($_POST['youtube_url']));
+    $youtube_url    = trim($_POST['youtube_url'] ?? '');
      
    
     $youtube_pattern = "/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/";
 
     // add condition about if empty any variable 
-    if (empty($team_one_id) || empty($team_two_id) || empty($stadium_id) || empty($commentator_id)) {
+    if (empty($team_one_id) || empty($team_two_id) || empty($stadium_id) || empty($commentator_id) ||empty($match_date) ||
+    empty($match_time)) {
         $error = "المرجو ملء جميع الخانات المطلوبة واختيار الفرق والملعب والمعلق.";
         
     } elseif ($team_one_id === $team_two_id) {
@@ -49,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_match'])) {
     } elseif (!in_array($match_date, $allowed_dates)) {
         $error = "يمكنك جدولة المباريات لليوم أو الغد فقط.";
 
-    } elseif (!preg_match($youtube_pattern, $youtube_url)) {
+    } elseif (!empty($youtube_url) && !preg_match($youtube_pattern, $youtube_url)) {
      
         $error = "المرجو إدخال رابط يوتيوب صحيح (YouTube Live Link).";
 
@@ -102,9 +103,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_match'])) {
                 <div class="input-group">
                     <label>الفريق الأول</label>
                     <select name="team_one_id" required>
-                        <option value="">-- اختر الفريق الأول --</option>
+                    <option value="">-- اختر الفريق الأول --</option>
                         <?php foreach ($teams as $team): ?>
-                            <option value="<?= htmlspecialchars($team['id']) ?>"><?= htmlspecialchars($team['team_name']) ?></option>
+                    <option value="<?= htmlspecialchars($team['id']) ?>"
+                    <?= (($_POST['team_one_id'] ?? '') == $team['id']) ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($team['team_name']) ?>
+                     </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -115,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_match'])) {
                     <select name="team_two_id" required>
                         <option value="">-- اختر الفريق الثاني --</option>
                         <?php foreach ($teams as $team): ?>
-                            <option value="<?= htmlspecialchars($team['id']) ?>"><?= htmlspecialchars($team['team_name']) ?></option>
+                            <option value="<?= htmlspecialchars($team['id']) ?>"  <?= (($_POST['team_two_id'] ?? '') == $team['id']) ? 'selected' : '' ?>><?= htmlspecialchars($team['team_name']) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -129,7 +133,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_match'])) {
                     <select name="stadium_id" required>
                         <option value="">-- اختر ملعب المباراة --</option>
                         <?php foreach ($stadiums as $st): ?>
-                            <option value="<?= htmlspecialchars($st['id']) ?>"><?= htmlspecialchars($st['stadium_name']) ?></option>
+                            <option value="<?= htmlspecialchars($st['id']) ?>"
+    <?= (($_POST['stadium_id'] ?? '') == $st['id']) ? 'selected' : '' ?>>
+    <?= htmlspecialchars($st['stadium_name']) ?>
+</option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -139,7 +146,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_match'])) {
                     <select name="commentator_id" required>
                         <option value="">-- اختر معلق المباراة --</option>
                         <?php foreach ($commentators as $cm): ?>
-                            <option value="<?= htmlspecialchars($cm['id']) ?>"><?= htmlspecialchars($cm['commentator_name']) ?></option>
+                            <option value="<?= htmlspecialchars($cm['id']) ?>"   <?= (($_POST['commentator_id'] ?? '') == $cm['id']) ? 'selected' : '' ?>><?= htmlspecialchars($cm['commentator_name']) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -148,7 +155,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_match'])) {
              <!-- add links match live  -->
             <div class="input-group full-width">
                 <label>رابط البث المباشر (YouTube Live Link)</label>
-                <input type="url" name="youtube_url" placeholder="https://www.youtube.com/watch?v=xxxxx" required>
+                <input type="url" name="youtube_url" placeholder="https://www.youtube.com/watch?v=xxxxx" required   value="<?= htmlspecialchars($_POST['youtube_url'] ?? '') ?>">
             </div>
             
             <!-- row match : date & time  -->
@@ -156,13 +163,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_match'])) {
                 <!--  select date match -->
                 <div class="input-group">
                     <label>تاريخ المباراة</label>
-                    <input type="date" name="match_date" required min="<?= date('Y-m-d') ?>">
+                    <input type="date" name="match_date" required min="<?= date('Y-m-d') ?>"  value="<?= htmlspecialchars($_POST['match_date'] ?? '') ?>">
                 </div>
 
                 <!-- time match  -->
                 <div class="input-group">
                     <label>توقيت المباراة</label>
-                    <input type="time" name="match_time" required>
+                    <input type="time" name="match_time" required    value="<?= htmlspecialchars($_POST['match_time'] ?? '') ?>">
                 </div>
             </div>
 

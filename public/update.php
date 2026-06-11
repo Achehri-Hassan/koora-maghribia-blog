@@ -30,13 +30,6 @@ if (!$art) {
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_article'])) {
     
     
-    $id  = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
-
-      if (!$id) {
-        header("Location: index.php");
-        exit();
-    }
-
     // declare variable to add name input
     $title    = trim($_POST['title']);
     $content  = trim($_POST['content']);
