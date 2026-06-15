@@ -4,7 +4,7 @@ require_once "../src/config/connection.php";
 
 
 
-
+// read all article
 function readAllArticles()
 {
     $conn = getConnection();

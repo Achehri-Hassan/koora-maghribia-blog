@@ -113,16 +113,20 @@ function readMatchById($id) {
 
 
 //  function to delete more > 3 matches
-function deleteOldMatches($daysCount = 3) {
-
+function deleteOldMatches()
+{
     $pdo = getConnection();
-    $targetDate = date('Y-m-d', strtotime("-$daysCount days"));
-    $sql = "DELETE FROM matches_table WHERE match_date < :target_date";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([':target_date' => $targetDate]);
-        
-    
-}
 
+   
+    $yesterday = date('Y-m-d', strtotime('-1 day'));
+
+    $sql = "DELETE FROM matches_table WHERE match_date < :yesterday";
+
+    $stmt = $pdo->prepare($sql);
+
+    return $stmt->execute([
+        'yesterday' => $yesterday
+    ]);
+}
 
 ?>

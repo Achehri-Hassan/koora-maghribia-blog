@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["login"])) {
         <h1>تسجيل الدخول</h1>
 
         <?php if ($error_login): ?>
-          <p class="error"><?= $error_login ?></p>
+          <p class="error"><?= htmlspecialchars($error_login) ?></p>
         <?php endif; ?>
       </div>
        

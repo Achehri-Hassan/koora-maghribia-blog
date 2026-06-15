@@ -22,6 +22,7 @@ if (!$match) {
 
 $embed_url = '';
 
+// condition is not empty url youtube
 if (!empty($match['youtube_url'])) {
 
     preg_match('/(?:v=|\/embed\/|youtu\.be\/|\/live\/)([a-zA-Z0-9_-]{11})/', $match['youtube_url'], $m);
@@ -37,7 +38,7 @@ if (!empty($match['youtube_url'])) {
     <title>بث مباشر: <?= htmlspecialchars($match['team_one_name']) ?> ضد <?= htmlspecialchars($match['team_two_name']) ?></title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    
+
     <link rel="stylesheet" href="../assest/css/watch_match_live.css">
 </head>
 
