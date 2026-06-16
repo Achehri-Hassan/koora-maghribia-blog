@@ -1,107 +1,184 @@
 
 
-@import url(stracture.css);
-@import url(variable.css);
+
+@import url(components/stracture.css);
+
+:root {
+    --bg-color: #F2E9E4;
+    --second-color: #0E131F;
+    --white: #ffffff;
+}
 
 
 
 
-.login-container {
-    min-height: 100vh;
+
+.contact-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
-
-
-/* form */
-form {
-    width: 100%;
-    max-width: 400px;
-    background: var(--white);
-    padding: 35px;
-    border-radius: 18px;
+    max-width: 800px;
+    margin: 50px auto;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border-radius: 16px;
 }
 
-
-/* header form */
-.form-header {
-    text-align: center;
-    margin-bottom: 25px;
-}
-
-/* icon header form */
-.form-header i {
-    font-size: 35px;
-    color: var(--second-color);
-    margin-bottom: 10px;
-}
-
-
-.form-header h1 {
-    color: var(--second-color);
-    margin-bottom: 10px;
-}
-
-/* error  */
-.error {
-    color: red;
-    font-size: 14px;
-}
-
-
-/* input group */
-.input-group {
-    margin-bottom: 18px;
-}
-
-.input-group label {
-    display: block;
-    margin-bottom: 7px;
-    font-weight: 600;
-}
-
-.input-box {
+.contact__image {
+    flex: 1;
     position: relative;
+    min-height: 300px;
 }
 
-.input-box input {
+.contact__image img {
     width: 100%;
-    padding: 12px 40px 12px 12px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    outline: none;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
-.input-box i {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: gray;
+
+
+.contact__form-section {
+    flex: 1.2;
+    padding: 40px;
+    background-color: var(--white);
+    
 }
 
-/* button login */
-.btn-login {
+.form__header {
+    
+    text-align: center;
+}
+
+.form__header h1 {
+    color: var(--second-color);
+    font-size: 40px;
+}
+
+.form__header i{
+     font-size: 30px;
+}
+
+/* Error message */
+.error {
+    color: #e53e3e;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+
+
+.form__body {
+    padding: 30px;
+    border-radius: 15px;
+}
+
+.form__group {
+    margin-bottom: 20px;
+}
+
+.form__group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--second-color);
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.form__group input {
     width: 100%;
     padding: 12px;
-    border: none;
-    border-radius: 10px;
-    background: var(--second-color);
-    color: var(--white);
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 10px;
+    border: 1px solid var(--second-color);
+    border-radius: 12px;
+    outline: none;
+    box-sizing: border-box;
+    font-size: 14px;
+    transition: border-color 0.2s ease;
 }
 
-/* link to visitor */
+
+.form__button {
+    width: 100%;
+    background-color: var(--second-color);
+    color:var(--white);
+    padding: 15px;
+    border: none;
+    border-radius: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+
 .btn-visitor {
     display: block;
     text-align: center;
-    margin-top: 15px;
+    margin-top: 16px;
+    color:black;
+    font-size: 20px;
     text-decoration: none;
-    color: var(--second-color);
-    font-weight: bold;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.btn-visitor:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+
+
+@media (max-width: 768px) {
+    .contact-container {
+        margin: 24px 16px;
+        flex-direction: column;
+        border-radius: 12px;
+    }
+
+    
+    .contact__image {
+        display: none;
+    }
+
+    .contact__form-section {
+        padding: 32px 24px;
+    }
+
+    .form__body {
+        padding: 24px 20px;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .contact-container {
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+        min-height: 100vh;
+    }
+
+    .contact__form-section {
+        padding: 24px 16px;
+    }
+
+    .form__header {
+        margin-bottom: 20px;
+    }
+
+    .form__body {
+        padding: 20px 16px;
+        border-radius: 12px;
+    }
+
+    .form__group input {
+        padding: 14px 12px;
+        font-size: 16px; 
+    }
+
+    .form__button {
+        padding: 16px;
+        font-size: 15px;
+    }
 }

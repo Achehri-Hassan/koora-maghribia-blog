@@ -41,12 +41,15 @@ if (isset($_GET['cat']) && !empty($_GET['cat'])) {
     
     <!-- call header -->
    <?php include '../includes/header.php'; ?>
-
+   <!-- <div class="hero_image"></div> -->
     <!-- main content-->
     <main>
         <!-- hero section -->
         <section class="hero-section">
+
+       
           <h1>آخر أخبار البطولة الاحترافية المغربية</h1>
+          
 
           <!-- category filters -->
           <div class="category-filters">

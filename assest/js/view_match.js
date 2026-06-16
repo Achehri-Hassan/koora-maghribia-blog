@@ -33,6 +33,8 @@ function updateLiveScores() {
       statusBadge.textContent = "انتهت";
       statusBadge.style.backgroundColor = "#22c55e";
       statusBadge.style.animation = "none";
+      statusBadge.style.padding = "0.3rem 20px";
+    
 
       container.classList.remove("clickable");
       container.onclick = null;

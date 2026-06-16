@@ -1,5 +1,5 @@
 header {
-    background-color: var(--second-color);
+    background-color:var(--second-color);
     padding: 0 20px;
     position: sticky;
     top: 0;
@@ -28,6 +28,7 @@ header {
     background: none;
     border: 1.5px solid rgba(255, 255, 255, 0.45);
     border-radius: 8px;
+    /* color: var(--white); */
     color: var(--white);
     width: 38px;
     height: 38px;
@@ -45,6 +46,7 @@ header {
     display: flex;
     align-items: center;
     gap: 24px;
+ 
 }
 
 .nav-links {
@@ -62,11 +64,6 @@ header {
     transition: 0.3s ease;
 }
 
-.nav-links a:hover,
-.admin-actions a:hover {
-    background:var(--white);
-    color: var(--second-color);
-}
 
 .admin-actions {
     display: flex;
@@ -74,6 +71,7 @@ header {
     gap: 4px;
     padding-right: 20px;
     margin-right: 12px;
+   
     
 }
 
@@ -90,7 +88,7 @@ header {
         flex-direction: column;
         align-items: stretch;
         width: 100%;
-        background-color: var(--second-color);
+        background-color:var(--second-color);
         padding: 8px 0 16px;
         gap: 0;
         border-top: 1px solid rgba(255, 255, 255, 0.15);
@@ -121,7 +119,13 @@ header {
         border-radius: 0;
         padding: 12px 20px;
         font-size: 1rem;
-        
     }
+
+    .nav-links a:hover,
+.admin-actions a:hover {
+    background:var(--white);
+    color: var(--second-color);
+}
+
 }
 

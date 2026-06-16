@@ -9,6 +9,7 @@
 
 
 
+
 /* main content */
 main {
     max-width: 1300px;
@@ -20,6 +21,18 @@ main {
 /* hero section  he is category and h1 */
 .hero-section {
     margin-bottom: 3.5rem;
+}
+
+.hero_image{
+  
+    background-image: url("../mathes/final.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 500px;
+  
+    
 }
 
 /* h1 */
@@ -42,8 +55,8 @@ main {
 .filter-pill {
     padding: 10px 32px;
     border-radius: 30px;
-    background: #f8f9fa;
-    color: #555;
+    background: #2b9740;
+    color: var(--white);
     text-decoration: none;
     border: 1px solid #e9ecef;
     font-size: 0.95rem;
@@ -55,7 +68,7 @@ main {
 /* hover about filter links  */
 .filter-pill:hover {
     background: #fff;
-    border-color: var(--second-color);
+    border-color: #2b9740;
     color: var(--second-color);
     transform: translateY(-2px);
 }
@@ -65,13 +78,13 @@ main {
     background: var(--second-color);
     color: var(--white);
     border-color: var(--second-color);
-    box-shadow: 0 4px 12px rgba(81, 5, 5, 0.25);
+    box-shadow: 0 4px 9px rgba(81, 5, 5, 0.25);
 }
 
 
 /* match link */
 .btn-matches-link {
-    color: var(--second-color);
+    color: var(--white);
     border-color: var(--second-color);
 }
 

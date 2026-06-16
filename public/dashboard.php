@@ -5,23 +5,43 @@ session_start();
 require_once "../src/models/comments.php";
 require_once "../src/models/article.php";
 
+
+
 if (!isset($_SESSION['is_admin'])) {
     header("Location: login.php");
     exit();
 }
 
-$articles = readAllArticles();
+
+
+$articles =readAllArticles();
+
+$selectedComments = null;
+$selectedArticleTitle = "";
+
+if (isset($_GET['view_comments'])) {
+
+    $view_comments = $_GET['view_comments'];
+
+    $selectedComments = getCommentsByArticle($view_comments);
+
+    $currentArt = getArticleById($view_comments);
+
+    if ($currentArt) {
+        $selectedArticleTitle = $currentArt['title'];
+    }
+}
+
 
 $totalArticles = count($articles);
+
 $totalCommentsCount = 0;
 $commentCounts = [];
-
 
 foreach ($articles as $a) {
     $commentCounts[$a['id']] = getCommentsCount($a['id']);
     $totalCommentsCount += $commentCounts[$a['id']];
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -34,11 +54,15 @@ foreach ($articles as $a) {
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../assest/css/dashboard.css">
+
 </head>
 
 <body>
 
-    <header>
+
+   
+    <!-- call header -->
+     <header>
        <div class="header-inner">
             <a href="index.php" class="header-logo">الرئيسية </a>
             <button class="nav-toggle">
@@ -57,20 +81,23 @@ foreach ($articles as $a) {
             </nav>
        </div>
     </header>
+    <!-- End Header -->
 
+    <!-- total article and comments -->
     <div class="total">
-        <h2> <i class="fa-solid fa-newspaper"></i> إجمالي المقالات: <?= $totalArticles ?></h2>
+        <h2> <?= $totalArticles ?> إجمالي المقالات</h2>
         <br>
-        <h2> <i class="fa-solid fa-comments"></i> إجمالي التعليقات:<?= $totalCommentsCount ?></h2>
+        <h2> <?= $totalCommentsCount ?> إجمالي التعليقات</h2>
     </div>
 
+    <!-- table card -->
     <div class="table-card">
         <table>
             <thead>
                 <tr>
                     <th>المعرف</th>
                     <th>عنوان المقال</th>
-                    <th>التعليقات لكل مقال</th>
+                    <th>التعليقات</th>
                     <th>الإجراءات</th>
                 </tr>
             </thead>
@@ -80,13 +107,15 @@ foreach ($articles as $a) {
                         <td>#<?= $art['id'] ?></td>
                         <td><strong><?= htmlspecialchars($art['title']) ?></strong></td>
                         <td>
-                            <p class="view-comments">
-                                <i class="fa-regular fa-comment"></i> التعليقات: (<?= $commentCounts[$art['id']] ?>)
-                            </p>
+                            <a href="dashboard.php?view_comments=<?= $art['id'] ?>#comments-section" class="view-comments">
+                                 <?= $commentCounts[$art['id']]  ?> عرض تعليقات
+                            </a>
                         </td>
                         <td>
                             <div class="actions-wrap">
+
                                 <a href="update.php?id=<?= $art['id'] ?>" class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></a>
+
                                 <a href="delete.php?id=<?= $art['id'] ?>" class="delete-btn" onclick="return confirm('حذف المقال نهائياً؟')"><i class="fa-solid fa-trash"></i></a>
                             </div>
                         </td>
@@ -96,7 +125,39 @@ foreach ($articles as $a) {
         </table>
     </div>
 
-     <!-- js script -->
-    <script src="../assest/js/header.js"></script>
+    <div id="comments-section">
+        <?php if ($selectedComments !== null): ?>
+            <div class="comments-card">
+
+                <h3 class="title_article">
+                    <a href="dashboard.php"><i class="fa-solid fa-circle-xmark fa-xl"></i></a> تعليقات المقال: <span><?= htmlspecialchars($selectedArticleTitle) ?></span>
+                </h3>
+
+
+                <?php if (empty($selectedComments)): ?>
+                    <p>لا توجد تعليقات منشورة لهذا المقال حتى الآن.</p>
+
+                <?php else: ?>
+
+                    <?php foreach ($selectedComments as $sc): ?>
+                        <div class="comment-row">
+                            <div>
+                                <strong><?= htmlspecialchars($sc['username']) ?></strong>:
+                                <span><?= htmlspecialchars($sc['comment']) ?></span>
+                                <p> <?= date("Y-m-d H:i", strtotime($sc['created_at'])) ?></p>
+                            </div>
+                            <a href="delete_comment.php?id=<?= $sc['id'] ?>" class="delete-btn"
+                                onclick="return confirm('هل تريد حذف هذا التعليق؟')">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
+    </div>
+ 
+
 </body>
+
 </html>
